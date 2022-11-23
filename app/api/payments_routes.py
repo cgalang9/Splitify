@@ -37,3 +37,36 @@ def get_current_user_payments():
         }
 
     return {'payments': [payment_to_dict(payment) for payment in payments]}
+
+
+@payments_routes.get('/<int:payment_id>')
+@login_required
+def get_payment_by_payment_id(payment_id):
+    """
+    Get a payment by payment id
+    """
+
+    payment = Payment.query.options(joinedload(Payment.payer)).options(joinedload(Payment.payee)).options(joinedload(Payment.group)) \
+                .options(joinedload(Payment.payment_comments).options(joinedload(PaymentComment.user))) \
+                .filter(Payment.id == payment_id).one()
+
+    # validation: current user must be in group to get
+    group_members = UsersGroups.query.filter(UsersGroups.group_id == payment.group_id).all()
+    member_ids = [member.user_id for member in group_members]
+    if int(current_user.get_id()) not in member_ids:
+        return {"message": "Forbidden"}, 403
+
+    return {
+            "date_paid": payment.date_paid,
+            "id": payment.id,
+            "total": payment.total,
+            "payer": {"id": payment.payer.id, "username": payment.payer.username},
+            "payee": {"id": payment.payee.id, "username": payment.payee.username},
+            "group": {"id": payment.group.id, "name": payment.group.name},
+            "comments": [{
+                "id": payment_comment.id,
+                "text": payment_comment.text,
+                "date_created": payment_comment.date_created,
+                "user_id": payment_comment.user.id,
+                "username": payment_comment.user.username } for payment_comment in payment.payment_comments]
+        }
