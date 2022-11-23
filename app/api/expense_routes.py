@@ -48,14 +48,7 @@ def get_current_user_expenses():
                 "username": expense_comment.user.username } for expense_comment in expense.expense_comments]
         }
 
-    expenses_lst = []
-    for expense in expenses_owed:
-        expense_dict = expense_to_dict(expense)
-        expenses_lst.append(expense_dict)
-
-    for expense in expenses_paid:
-        expense_dict = expense_to_dict(expense)
-        expenses_lst.append(expense_dict)
+    expenses_lst = [expense_to_dict(expense) for expense in expenses_paid] + [expense_to_dict(expense) for expense in expenses_owed]
 
     return {"expenses": expenses_lst}
 
