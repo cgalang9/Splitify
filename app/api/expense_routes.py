@@ -65,8 +65,6 @@ def get_expense_by_expense_id(expense_id):
                 .options(joinedload(Expense.expense_comments).options(joinedload(ExpenseComment.user))) \
                 .filter(Expense.id == expense_id).one()
 
-    print(expense)
-
     # validation: expense_id not found
     if expense == None:
         return {"message": "Expense not found"}, 404
@@ -255,28 +253,33 @@ def edit_expense(expense_id):
 
     date_arr = req.get('date').split('-')
 
-    expense.payer_id = req.get('payer_id'),
-    expense.group_id = req.get('group_id'),
-    expense.description = req.get('description'),
-    expense.total = req.get('total'),
+    expense.payer_id = req.get('payer_id')
+    expense.description = req.get('description')
+    expense.total = req.get('total')
     expense.date_paid = date(int(date_arr[0]), int(date_arr[1]), int(date_arr[2]))
 
     db.session.commit()
 
-    # new_splits = []
-    # for split in req.get('splits'):
-    #     if split['user_id'] != new_expense.payer_id:
-    #         new_split = UsersExpenses(
-    #             user_id = split['user_id'],
-    #             expense_id = new_expense.id,
-    #             amount_owed = split['amount_owed']
-    #         )
-    #         db.session.add(new_split)
-    #         db.session.commit()
-    #         new_splits.append({
-    #             "user_id": new_split.user_id,
-    #             "amount_owed": new_split.amount_owed
-    #         })
+    splits = UsersExpenses.query.filter(UsersExpenses.expense_id == expense_id).all()
+    for split in splits:
+        db.session.delete(split)
+        db.session.commit()
+
+    new_splits = []
+    for split in req.get('splits'):
+        if split['user_id'] != expense.payer_id:
+            new_split = UsersExpenses(
+                user_id = split['user_id'],
+                expense_id = expense.id,
+                amount_owed = split['amount_owed']
+            )
+            db.session.add(new_split)
+            db.session.commit()
+            new_splits.append({
+                "user_id": new_split.user_id,
+                "amount_owed": new_split.amount_owed
+            })
+
 
     return {
         "id": expense.id,
@@ -285,5 +288,5 @@ def edit_expense(expense_id):
         "description": expense.description,
         "total": expense.total,
         "date_paid": expense.date_paid,
-        # "money_owed": new_splits
+        "money_owed": new_splits
     }
