@@ -8,7 +8,7 @@ groups_routes = Blueprint('groups', __name__)
 
 @groups_routes.get('/<int:group_id>/expenses')
 @login_required
-def users(group_id):
+def get_expenses_by_group_id(group_id):
     """
     Get all expenses of a group by group id
     """
