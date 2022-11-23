@@ -28,7 +28,12 @@ def get_current_user_payments():
             "payer": {"id": payment.payer.id, "username": payment.payer.username},
             "payee": {"id": payment.payee.id, "username": payment.payee.username},
             "group": {"id": payment.group.id, "name": payment.group.name},
+            "comments": [{
+                "id": payment_comment.id,
+                "text": payment_comment.text,
+                "date_created": payment_comment.date_created,
+                "user_id": payment_comment.user.id,
+                "username": payment_comment.user.username } for payment_comment in payment.payment_comments]
         }
-
 
     return {'payments': [payment_to_dict(payment) for payment in payments]}
