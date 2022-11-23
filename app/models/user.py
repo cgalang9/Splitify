@@ -14,6 +14,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
+    friendships_user1 = db.relationship('Friendship', primaryjoin="User.id == Friendship.user1_id", back_populates='user1', cascade="all, delete-orphan")
+    friendships_user2 = db.relationship('Friendship', primaryjoin="User.id == Friendship.user2_id", back_populates='user2', cascade="all, delete-orphan")
+
     @property
     def password(self):
         return self.hashed_password
