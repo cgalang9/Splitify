@@ -6,6 +6,7 @@ from .users_groups import seed_users_groups, undo_users_groups
 from .expenses import seed_expenses, undo_expenses
 from .users_expenses import seed_users_expenses, undo_users_expenses
 from .payments import seed_payments, undo_payments
+from .expenses_comments import seed_expense_comments, undo_expense_comments
 
 from app.models.db import db, environment, SCHEMA
 
@@ -29,6 +30,7 @@ def seed():
         undo_expenses()
         undo_users_expenses()
         undo_payments()
+        undo_expense_comments()
     seed_users()
     # Add other seed functions here
     seed_friendships()
@@ -37,6 +39,7 @@ def seed():
     seed_expenses()
     seed_users_expenses()
     seed_payments()
+    seed_expense_comments()
 
 
 # Creates the `flask seed undo` command
@@ -49,4 +52,5 @@ def undo():
     undo_expenses()
     undo_users_expenses()
     undo_payments()
+    undo_expense_comments()
     # Add other undo functions here

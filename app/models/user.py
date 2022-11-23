@@ -21,6 +21,7 @@ class User(db.Model, UserMixin):
     users_expenses = db.relationship('UsersExpenses', back_populates='user')
     payments_payer = db.relationship('Payment', primaryjoin="User.id == Payment.payer_id", back_populates='payer')
     payments_payee = db.relationship('Payment', primaryjoin="User.id == Payment.payee_id", back_populates='payee')
+    expense_comments = db.relationship('ExpenseComment', back_populates='user', cascade="all, delete-orphan")
 
     @property
     def password(self):
