@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     friendships_user2 = db.relationship('Friendship', primaryjoin="User.id == Friendship.user2_id", back_populates='user2', cascade="all, delete-orphan")
     users_groups = db.relationship('UsersGroups', back_populates='user')
     expenses = db.relationship('Expense', back_populates='payer', cascade="all, delete-orphan")
+    users_expenses = db.relationship('UsersExpenses', back_populates='user')
 
     @property
     def password(self):
