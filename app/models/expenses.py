@@ -16,5 +16,5 @@ class Expense(db.Model):
 
     payer = db.relationship('User', back_populates='expenses')
     group = db.relationship('Group', back_populates='expenses')
-    users_expenses = db.relationship('UsersExpenses', back_populates='expense')
+    users_expenses = db.relationship('UsersExpenses', back_populates='expense', cascade="all, delete-orphan")
     expense_comments = db.relationship('ExpenseComment', back_populates='expense', cascade="all, delete-orphan")

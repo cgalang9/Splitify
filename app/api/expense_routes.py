@@ -141,3 +141,26 @@ def create_expense():
         "date_paid": new_expense.date_paid,
         "money_owed": new_splits
     }
+
+
+@expense_routes.delete('/<int:expense_id>')
+@login_required
+def delete_expense(expense_id):
+    """
+    Delete an expense by expense id
+    """
+    expense = Expense.query.get(expense_id)
+
+    # validation: expense_id not found
+    if expense == None:
+        return {"message": "Expense not found"}, 404
+
+    # validation: current user must be in group to delete
+    group_members = UsersGroups.query.filter(UsersGroups.group_id == expense.group_id).all()
+    member_ids = [member.user_id for member in group_members]
+    if int(current_user.get_id()) not in member_ids:
+        return {"message": "Forbidden"}, 403
+
+    db.session.delete(expense)
+    db.session.commit()
+    return {"message": "Expense Successfully deleted"}
