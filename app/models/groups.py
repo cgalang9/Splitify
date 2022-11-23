@@ -10,6 +10,6 @@ class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
 
-    users = db.relationship('User', secondary='users_groups', back_populates='groups')
+    users_groups = db.relationship('UsersGroups', back_populates='group')
     # expenses = db.relationship('Expense', back_populates='group', cascade="all, delete-orphan")
     # payments = db.relationship('Payment', back_populates='group', cascade="all, delete-orphan")

@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
 
     friendships_user1 = db.relationship('Friendship', primaryjoin="User.id == Friendship.user1_id", back_populates='user1', cascade="all, delete-orphan")
     friendships_user2 = db.relationship('Friendship', primaryjoin="User.id == Friendship.user2_id", back_populates='user2', cascade="all, delete-orphan")
-    groups = db.relationship('Group', secondary='users_groups', back_populates='users')
+    users_groups = db.relationship('UsersGroups', back_populates='user')
 
     @property
     def password(self):

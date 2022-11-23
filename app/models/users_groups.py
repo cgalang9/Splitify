@@ -10,3 +10,6 @@ class UsersGroups(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     group_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('groups.id')), nullable=False)
+
+    user = db.relationship('User', back_populates='users_groups')
+    group = db.relationship('Group', back_populates='users_groups')
