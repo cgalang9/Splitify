@@ -1,6 +1,9 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .friendships import seed_friendships, undo_friendships
+from .groups import seed_groups, undo_groups
+from .users_groups import seed_users_groups, undo_users_groups
+from .expenses import seed_expenses, undo_expenses
 
 from app.models.db import db, environment, SCHEMA
 
@@ -19,9 +22,15 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_users()
         undo_friendships()
+        undo_groups()
+        undo_users_groups()
+        undo_expenses()
     seed_users()
     # Add other seed functions here
     seed_friendships()
+    seed_groups()
+    seed_users_groups()
+    seed_expenses()
 
 
 # Creates the `flask seed undo` command
@@ -29,4 +38,7 @@ def seed():
 def undo():
     undo_users()
     undo_friendships()
+    undo_groups()
+    undo_users_groups()
+    undo_expenses()
     # Add other undo functions here

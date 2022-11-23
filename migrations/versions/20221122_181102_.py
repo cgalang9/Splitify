@@ -1,4 +1,4 @@
-"""empty message
+"""add freindships table
 
 Revision ID: b27c6635c4ff
 Revises: ffdc0a98111c
