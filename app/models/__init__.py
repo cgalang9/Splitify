@@ -8,3 +8,4 @@ from .expenses import Expense
 from .users_expenses import UsersExpenses
 from .payments import Payment
 from .expenses_comments import ExpenseComment
+from .payments_comments import PaymentComment

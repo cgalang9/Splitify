@@ -17,4 +17,4 @@ class Payment(db.Model):
     payer = db.relationship('User', back_populates='payments_payer', foreign_keys=[payer_id])
     payee = db.relationship('User', back_populates='payments_payee', foreign_keys=[payee_id])
     group = db.relationship('Group', back_populates='payments')
-    # payment_comments = db.relationship('PaymentComment', back_populates='payment', cascade="all, delete-orphan")
+    payment_comments = db.relationship('PaymentComment', back_populates='payment', cascade="all, delete-orphan")
