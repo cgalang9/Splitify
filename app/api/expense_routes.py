@@ -107,16 +107,16 @@ def create_expense():
     """
     req = request.json
 
+    group = Group.query.get(req.get('group_id'))
+    # validation: group_id not found
+    if group == None:
+        return {"message": "group not found"}, 404
+
     # validation: current user must be in group to post
     group_members = UsersGroups.query.filter(UsersGroups.group_id == req.get('group_id')).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
         return {"message": "Forbidden"}, 403
-
-    group = Group.query.get(req.get('payer_id'))
-    # validation: group_id not found
-    if group == None:
-        return {"message": "group not found"}, 404
 
     payer = User.query.get(req.get('payer_id'))
     # validation: payer_id not found

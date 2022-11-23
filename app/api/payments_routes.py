@@ -70,3 +70,66 @@ def get_payment_by_payment_id(payment_id):
                 "user_id": payment_comment.user.id,
                 "username": payment_comment.user.username } for payment_comment in payment.payment_comments]
         }
+
+
+@payments_routes.post('')
+@login_required
+def create_payment():
+    """
+    Create a payment
+    """
+    req = request.json
+
+    group = Group.query.get(req.get('group_id'))
+    # validation: group_id not found
+    if group == None:
+        return {"message": "group not found"}, 404
+
+    # validation: current user must be in group to post
+    group_members = UsersGroups.query.filter(UsersGroups.group_id == req.get('group_id')).all()
+    member_ids = [member.user_id for member in group_members]
+    if int(current_user.get_id()) not in member_ids:
+        return {"message": "Forbidden"}, 403
+
+    payer = User.query.get(req.get('payer_id'))
+    # validation: payer_id not found
+    if payer == None:
+        return {"message": "payer not found"}, 404
+
+    # validation: payer_id must be in group
+    if payer.id not in member_ids:
+        return {"message": "Payer must be in group"}, 403
+
+    payee = User.query.get(req.get('payee_id'))
+    # validation: payee_id not found
+    if payee == None:
+        return {"message": "payee not found"}, 404
+
+    # validation: payer_id must be in group
+    if payee.id not in member_ids:
+        return {"message": "Payee must be in group"}, 403
+
+    # validation: total must be greater that 0
+    if req.get('total') < 0:
+        return {"message": "total must be greater than 0"}, 400
+
+    date_arr = req.get('date').split('-')
+
+    new_payment = Payment(
+        payer_id = req.get('payer_id'),
+        payee_id = req.get('payee_id'),
+        group_id = req.get('group_id'),
+        total = req.get('total'),
+        date_paid = date(int(date_arr[0]), int(date_arr[1]), int(date_arr[2]))
+    )
+
+    db.session.add(new_payment)
+    db.session.commit()
+    return {
+        "date_paid": new_payment.date_paid,
+        "id": new_payment.id,
+        "total": new_payment.total,
+        "payer_id": new_payment.payer_id,
+        "payee_id": new_payment.payee_id,
+        "group_id": new_payment.group_id
+    }
