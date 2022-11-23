@@ -258,6 +258,7 @@ def edit_expense(expense_id):
     expense.total = req.get('total')
     expense.date_paid = date(int(date_arr[0]), int(date_arr[1]), int(date_arr[2]))
 
+
     db.session.commit()
 
     splits = UsersExpenses.query.filter(UsersExpenses.expense_id == expense_id).all()
