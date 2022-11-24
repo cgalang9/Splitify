@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Group, Expense, UsersExpenses, ExpenseComment, Payment, PaymentComment, UsersGroups, User, db
 from sqlalchemy.orm import joinedload
+from sqlalchemy import and_
 
 groups_routes = Blueprint('groups', __name__)
 
@@ -93,6 +94,19 @@ def get_payments_by_group_id(group_id):
         }
 
     return {'payments': [payment_to_dict(payment) for payment in payments]}
+
+
+@groups_routes.get('/current-user')
+@login_required
+def get_groups_current_user():
+    """
+    Get groups of current user
+    """
+    user_id = int(current_user.get_id())
+
+    groups = UsersGroups.query.options(joinedload(UsersGroups.group)).filter(UsersGroups.user_id == user_id).all()
+
+    return {"groups": [{"id": group.group.id, "name": group.group.name} for group in groups]}
 
 
 @groups_routes.post('')
