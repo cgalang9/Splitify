@@ -157,7 +157,7 @@ def edit_payment(payment_id):
     if payment == None:
         return {"message": "Payment not found"}, 404
 
-     # validation: current user must be either payee or payer to edit
+    # validation: current user must be either payee or payer to edit
     if int(current_user.get_id()) != payment.payer_id and int(current_user.get_id()) != payment.payee_id:
         return {"message": "Forbidden"}, 403
 
@@ -205,3 +205,24 @@ def edit_payment(payment_id):
         "payee_id": payment.payee_id,
         "group_id": payment.group_id
     }
+
+
+@payments_routes.delete('/<int:payment_id>')
+@login_required
+def delete_payment(payment_id):
+    """
+    Delete an expense by expense id
+    """
+    payment = Payment.query.get(payment_id)
+
+    # validation: payment_id not found
+    if payment == None:
+        return {"message": "Payment not found"}, 404
+
+    # validation: current user must be either payee or payer to edit
+    if int(current_user.get_id()) != payment.payer_id and int(current_user.get_id()) != payment.payee_id:
+        return {"message": "Forbidden"}, 403
+
+    db.session.delete(payment)
+    db.session.commit()
+    return {"message": "Payment Successfully deleted"}
