@@ -136,3 +136,26 @@ def create_group():
         "name": new_group.name,
         "member_ids": list(unique_member_ids)
     }
+
+
+@groups_routes.delete('/<int:group_id>')
+@login_required
+def delete_group(group_id):
+    """
+    Delete a group
+    """
+    group = Group.query.get(group_id)
+
+    # validation: group_id not found
+    if group == None:
+        return {"message": "group not found"}, 404
+
+    # validation: current user must be in group to delete
+    group_members = UsersGroups.query.filter(UsersGroups.group_id == group_id).all()
+    member_ids = [member.user_id for member in group_members]
+    if int(current_user.get_id()) not in member_ids:
+        return {"message": "Forbidden"}, 403
+
+    db.session.delete(group)
+    db.session.commit()
+    return {"message": "Group successfully deleted"}
