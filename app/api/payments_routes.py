@@ -54,7 +54,7 @@ def get_payment_by_payment_id(payment_id):
     group_members = UsersGroups.query.filter(UsersGroups.group_id == payment.group_id).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     return {
             "date_paid": payment.date_paid,
@@ -82,40 +82,40 @@ def create_payment():
 
     # validation: User can not pay themself
     if req.get('payer_id') == req.get('payee_id'):
-        return {"message": "User can not pay themself"}, 403
+        return {"error": "User can not pay themself"}, 403
 
     group = Group.query.get(req.get('group_id'))
     # validation: group_id not found
     if group == None:
-        return {"message": "group not found"}, 404
+        return {"error": "group not found"}, 404
 
     # validation: current user must be in group to post
     group_members = UsersGroups.query.filter(UsersGroups.group_id == req.get('group_id')).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     payer = User.query.get(req.get('payer_id'))
     # validation: payer_id not found
     if payer == None:
-        return {"message": "payer not found"}, 404
+        return {"error": "payer not found"}, 404
 
     # validation: payer_id must be in group
     if payer.id not in member_ids:
-        return {"message": "Payer must be in group"}, 403
+        return {"error": "Payer must be in group"}, 403
 
     payee = User.query.get(req.get('payee_id'))
     # validation: payee_id not found
     if payee == None:
-        return {"message": "payee not found"}, 404
+        return {"error": "payee not found"}, 404
 
     # validation: payer_id must be in group
     if payee.id not in member_ids:
-        return {"message": "Payee must be in group"}, 403
+        return {"error": "Payee must be in group"}, 403
 
     # validation: total must be greater that 0
     if req.get('total') < 0:
-        return {"message": "total must be greater than 0"}, 400
+        return {"error": "total must be greater than 0"}, 400
 
     date_arr = req.get('date').split('-')
 
@@ -151,15 +151,15 @@ def edit_payment(payment_id):
 
     # validation: User can not pay themself
     if req.get('payer_id') == req.get('payee_id'):
-        return {"message": "User can not pay themself"}, 403
+        return {"error": "User can not pay themself"}, 403
 
     # validation: payment_id not found
     if payment == None:
-        return {"message": "Payment not found"}, 404
+        return {"error": "Payment not found"}, 404
 
     # validation: current user must be either payee or payer to edit
     if int(current_user.get_id()) != payment.payer_id and int(current_user.get_id()) != payment.payee_id:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     group_members = UsersGroups.query.filter(UsersGroups.group_id == payment.group_id).all()
     member_ids = [member.user_id for member in group_members]
@@ -167,24 +167,24 @@ def edit_payment(payment_id):
     payer = User.query.get(req.get('payer_id'))
     # validation: payer_id not found
     if payer == None:
-        return {"message": "payer not found"}, 404
+        return {"error": "payer not found"}, 404
 
     # validation: payer_id must be in group
     if payer.id not in member_ids:
-        return {"message": "Payer must be in group"}, 403
+        return {"error": "Payer must be in group"}, 403
 
     payee = User.query.get(req.get('payee_id'))
     # validation: payee_id not found
     if payee == None:
-        return {"message": "payee not found"}, 404
+        return {"error": "payee not found"}, 404
 
     # validation: payer_id must be in group
     if payee.id not in member_ids:
-        return {"message": "Payee must be in group"}, 403
+        return {"error": "Payee must be in group"}, 403
 
     # validation: total must be greater that 0
     if req.get('total') < 0:
-        return {"message": "total must be greater than 0"}, 400
+        return {"error": "total must be greater than 0"}, 400
 
     date_arr = req.get('date').split('-')
 
@@ -215,11 +215,11 @@ def delete_payment(payment_id):
 
     # validation: payment_id not found
     if payment == None:
-        return {"message": "Payment not found"}, 404
+        return {"error": "Payment not found"}, 404
 
     # validation: current user must be either payee or payer to edit
     if int(current_user.get_id()) != payment.payer_id and int(current_user.get_id()) != payment.payee_id:
-        return {"message": "Forbidden"}, 403
+        return {"messerrorage": "Forbidden"}, 403
 
     db.session.delete(payment)
     db.session.commit()

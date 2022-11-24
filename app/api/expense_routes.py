@@ -67,13 +67,13 @@ def get_expense_by_expense_id(expense_id):
 
     # validation: expense_id not found
     if expense == None:
-        return {"message": "Expense not found"}, 404
+        return {"error": "Expense not found"}, 404
 
     # validation: current user must be in group to get
     group_members = UsersGroups.query.filter(UsersGroups.group_id == expense.group_id).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
 
     return {
@@ -110,39 +110,39 @@ def create_expense():
     group = Group.query.get(req.get('group_id'))
     # validation: group_id not found
     if group == None:
-        return {"message": "group not found"}, 404
+        return {"error": "group not found"}, 404
 
     # validation: current user must be in group to post
     group_members = UsersGroups.query.filter(UsersGroups.group_id == req.get('group_id')).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     payer = User.query.get(req.get('payer_id'))
     # validation: payer_id not found
     if payer == None:
-        return {"message": "payer not found"}, 404
+        return {"error": "payer not found"}, 404
 
     # validation: payer_id must be in group
     if payer.id not in member_ids:
-        return {"message": "Payer must be in group"}, 403
+        return {"error": "Payer must be in group"}, 403
 
     for split in req.get('splits'):
         user = User.query.get(split['user_id'])
         # validation: user who owes money not found
         if user == None:
-            return {"message": "A user who owes money not found"}, 404
+            return {"error": "A user who owes money not found"}, 404
         # validation: user who owes money not in group
         if user.id not in member_ids:
-            return {"message": "A user who owes money is not in group"}, 403
+            return {"error": "A user who owes money is not in group"}, 403
 
     # validation: description must be less than 41 characters
     if len(req.get('description')) > 40:
-        return {"message": "description must be less than 41 characters"}, 400
+        return {"error": "description must be less than 41 characters"}, 400
 
     # validation: total must be greater that 0
     if req.get('total') < 0:
-        return {"message": "total must be greater than 0"}, 400
+        return {"error": "total must be greater than 0"}, 400
 
     date_arr = req.get('date').split('-')
 
@@ -192,13 +192,13 @@ def delete_expense(expense_id):
 
     # validation: expense_id not found
     if expense == None:
-        return {"message": "Expense not found"}, 404
+        return {"error": "Expense not found"}, 404
 
     # validation: current user must be in group to delete
     group_members = UsersGroups.query.filter(UsersGroups.group_id == expense.group_id).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     db.session.delete(expense)
     db.session.commit()
@@ -217,39 +217,39 @@ def edit_expense(expense_id):
 
     # validation: expense_id not found
     if expense == None:
-        return {"message": "Expense not found"}, 404
+        return {"error": "Expense not found"}, 404
 
     # validation: current user must be in group to edit
     group_members = UsersGroups.query.filter(UsersGroups.group_id == expense.group_id).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     payer = User.query.get(req.get('payer_id'))
     # validation: payer_id not found
     if payer == None:
-        return {"message": "payer not found"}, 404
+        return {"error": "payer not found"}, 404
 
     # validation: payer_id must be in group
     if payer.id not in member_ids:
-        return {"message": "Payer must be in group"}, 403
+        return {"error": "Payer must be in group"}, 403
 
     for split in req.get('splits'):
         user = User.query.get(split['user_id'])
         # validation: user who owes money not found
         if user == None:
-            return {"message": "A user who owes money not found"}, 404
+            return {"error": "A user who owes money not found"}, 404
         # validation: user who owes money not in group
         if user.id not in member_ids:
-            return {"message": "A user who owes money is not in group"}, 403
+            return {"error": "A user who owes money is not in group"}, 403
 
     # validation: description must be less than 41 characters
     if len(req.get('description')) > 40:
-        return {"message": "description must be less than 41 characters"}, 400
+        return {"error": "description must be less than 41 characters"}, 400
 
     # validation: total must be greater that 0
     if req.get('total') < 0:
-        return {"message": "total must be greater than 0"}, 400
+        return {"error": "total must be greater than 0"}, 400
 
     date_arr = req.get('date').split('-')
 

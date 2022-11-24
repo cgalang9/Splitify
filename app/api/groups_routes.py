@@ -16,13 +16,13 @@ def get_expenses_by_group_id(group_id):
     group = Group.query.get(group_id)
     # validation: group_id not found
     if group == None:
-        return {"message": "group not found"}, 404
+        return {"error": "group not found"}, 404
 
     # validation: current user must be in group to see expenses
     group_members = UsersGroups.query.filter(UsersGroups.group_id == group_id).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     expenses = Expense.query.filter(Expense.group_id == group_id).options(joinedload(Expense.payer)) \
                 .options(joinedload(Expense.users_expenses).options(joinedload(UsersExpenses.user))) \
@@ -65,13 +65,13 @@ def get_payments_by_group_id(group_id):
     group = Group.query.get(group_id)
     # validation: group_id not found
     if group == None:
-        return {"message": "group not found"}, 404
+        return {"error": "group not found"}, 404
 
     # validation: current user must be in group to see payments
     group_members = UsersGroups.query.filter(UsersGroups.group_id == group_id).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     payments = Payment.query.options(joinedload(Payment.payer)).options(joinedload(Payment.payee)).options(joinedload(Payment.group)) \
                 .options(joinedload(Payment.payment_comments).options(joinedload(PaymentComment.user))) \
@@ -119,19 +119,19 @@ def create_group():
 
     # validation: name length must be < 40
     if len(req.get('name')) > 40:
-        return {"message": "Name must be less than 41 characters"}, 400
+        return {"error": "Name must be less than 41 characters"}, 400
 
     unique_member_ids = set(req.get('member_ids'))
 
     # validation: group msut have at least 2 members
     if len(unique_member_ids) < 2:
-        return {"message": "Group must have at least 2 members"}, 400
+        return {"error": "Group must have at least 2 members"}, 400
 
     for member_id in unique_member_ids:
         member = User.query.get(member_id)
         # validation: member_id not found
         if member == None:
-            return {"message": "A member was not found"}, 404
+            return {"error": "A member was not found"}, 404
 
     new_group = Group(name = req.get('name'))
     db.session.add(new_group)
@@ -162,13 +162,13 @@ def delete_group(group_id):
 
     # validation: group_id not found
     if group == None:
-        return {"message": "group not found"}, 404
+        return {"error": "group not found"}, 404
 
     # validation: current user must be in group to delete
     group_members = UsersGroups.query.filter(UsersGroups.group_id == group_id).all()
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     db.session.delete(group)
     db.session.commit()
@@ -187,6 +187,41 @@ def get_group_members(group_id):
     # validation: current user must be in group to post
     member_ids = [member.user_id for member in group_members]
     if int(current_user.get_id()) not in member_ids:
-        return {"message": "Forbidden"}, 403
+        return {"error": "Forbidden"}, 403
 
     return {"groups": [{"user_id": group.user.id, "name": group.user.username} for group in group_members]}
+
+
+@groups_routes.post('/<int:group_id>/members')
+@login_required
+def add_memeber_to_group(group_id):
+    """
+    Add member to group by group id
+    """
+    # validation: group_id not found
+    group = Group.query.get(group_id)
+    if group == None:
+        return {"error": "group not found"}, 404
+
+    req = request.json
+
+    # validation: payer_id not found
+    user = User.query.get(req.get('user_id'))
+    if user == None:
+        return {"error": "user not found"}, 404
+
+
+    group_members = UsersGroups.query.filter(UsersGroups.group_id == group_id).all()
+    member_ids = [member.user_id for member in group_members]
+    # validation: checks if user already in group
+    if req.get('user_id') in member_ids:
+        return {"error": "User already in group"}, 400
+    # validation: current user must be in group to add member
+    if int(current_user.get_id()) not in member_ids:
+        return {"error": "Forbidden"}, 403
+
+    add_user = UsersGroups(user_id = req.get('user_id'), group_id = group_id)
+
+    db.session.add(add_user)
+    db.session.commit()
+    return {"message": "User successfully added to group"}
