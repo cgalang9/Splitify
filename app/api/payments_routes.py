@@ -193,8 +193,6 @@ def edit_payment(payment_id):
     payment.total = req.get('total')
     payment.date_paid = date(int(date_arr[0]), int(date_arr[1]), int(date_arr[2]))
 
-    print(payment.total)
-
     db.session.commit()
 
     return {

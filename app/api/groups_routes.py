@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Group, Expense, UsersExpenses, ExpenseComment, Payment, PaymentComment, UsersGroups, db
+from app.models import Group, Expense, UsersExpenses, ExpenseComment, Payment, PaymentComment, UsersGroups, User, db
 from sqlalchemy.orm import joinedload
 
 groups_routes = Blueprint('groups', __name__)
@@ -93,3 +93,46 @@ def get_payments_by_group_id(group_id):
         }
 
     return {'payments': [payment_to_dict(payment) for payment in payments]}
+
+
+@groups_routes.post('')
+@login_required
+def create_group():
+    """
+    Create a group
+    """
+    req = request.json
+
+    # validation: name length must be < 40
+    if len(req.get('name')) > 40:
+        return {"message": "Name must be less than 41 characters"}, 400
+
+    unique_member_ids = set(req.get('member_ids'))
+
+    # validation: group msut have at least 2 members
+    if len(unique_member_ids) < 2:
+        return {"message": "Group must have at least 2 members"}, 400
+
+    for member_id in unique_member_ids:
+        member = User.query.get(member_id)
+        # validation: member_id not found
+        if member == None:
+            return {"message": "A member was not found"}, 404
+
+    new_group = Group(name = req.get('name'))
+    db.session.add(new_group)
+    db.session.commit()
+
+    for member_id in unique_member_ids:
+        add_user_to_group = UsersGroups(
+            user_id = member_id,
+            group_id = new_group.id
+        )
+        db.session.add(add_user_to_group)
+        db.session.commit()
+
+    return {
+        "id": new_group.id,
+        "name": new_group.name,
+        "member_ids": list(unique_member_ids)
+    }

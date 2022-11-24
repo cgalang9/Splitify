@@ -136,9 +136,9 @@ def create_expense():
         if user.id not in member_ids:
             return {"message": "A user who owes money is not in group"}, 403
 
-    # validation: description must be less than 40 characters
+    # validation: description must be less than 41 characters
     if len(req.get('description')) > 40:
-        return {"message": "description must be less than 40 characters"}, 400
+        return {"message": "description must be less than 41 characters"}, 400
 
     # validation: total must be greater that 0
     if req.get('total') < 0:
@@ -243,9 +243,9 @@ def edit_expense(expense_id):
         if user.id not in member_ids:
             return {"message": "A user who owes money is not in group"}, 403
 
-    # validation: description must be less than 40 characters
+    # validation: description must be less than 41 characters
     if len(req.get('description')) > 40:
-        return {"message": "description must be less than 40 characters"}, 400
+        return {"message": "description must be less than 41 characters"}, 400
 
     # validation: total must be greater that 0
     if req.get('total') < 0:
