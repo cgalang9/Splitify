@@ -11,8 +11,10 @@
 }
 
 
-#main_left,
-#main_middle,
-#main_right {
+#main_left {
     width: 33%;
+}
+
+#main_right {
+    width: 66%;
 }

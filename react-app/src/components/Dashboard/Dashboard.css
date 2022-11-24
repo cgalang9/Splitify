@@ -1,0 +1,12 @@
+#dash_wrapper {
+    display: flex;
+
+}
+
+#dash_left,
+#dash_right {
+    width: 50%;
+    height: 100%;
+    border: 1px solid green;
+    height: 100vh;
+}

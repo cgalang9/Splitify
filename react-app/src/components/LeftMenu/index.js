@@ -21,7 +21,7 @@ const LeftMenu = () => {
                 <div id='left_menu_head'>GROUPS</div>
                 {user_groups && user_groups.groups.map(group => (
                     <div key={group.id} className='left_menu_group_li'>
-                        <NavLink to='/' style={{ textDecoration: 'none' }}><div>{group.name}</div></NavLink>
+                        <NavLink to={`/groups/${group.id}`} style={{ textDecoration: 'none' }}><div>{group.name}</div></NavLink>
                     </div>
                 ))}
             </div>

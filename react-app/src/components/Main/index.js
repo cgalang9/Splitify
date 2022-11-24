@@ -10,6 +10,7 @@ import User from '../User';
 import UsersList from '../UsersList';
 import Dashboard from '../Dashboard';
 import LeftMenu from '../LeftMenu';
+import GroupPage from '../GroupPage';
 import './Main.css'
 
 function Main() {
@@ -21,15 +22,12 @@ function Main() {
                     <div id='main_left'>
                         <LeftMenu />
                     </div>
-                    <div id='main_middle'>
+                    <div id='main_right'>
                         <Switch>
                             <Route exact path="/" component={() => <User/>} />
                             <Route exact path="/dashboard" component={() => <Dashboard />} />
-                            {/* <Route exact path="/groups/:groupId" component={() => <User/>} /> */}
+                            <Route exact path="/groups/:groupId" component={() => <GroupPage/>} />
                         </Switch>
-                    </div>
-                    <div id='main_right'>
-                        RIGHT
                     </div>
                 </div>
             </div>

@@ -96,6 +96,28 @@ def get_payments_by_group_id(group_id):
     return {'payments': [payment_to_dict(payment) for payment in payments]}
 
 
+# @groups_routes.get('/<int:group_id>')
+# @login_required
+# def get_group_by_id(group_id):
+#     """
+#     Get group by group id
+#     """
+#     group = Group.query.get(group_id)
+#     # validation: group_id not found
+#     if group == None:
+#         return {"error": "group not found"}, 404
+
+#     # validation: current user must be in group to see group
+#     group_members = UsersGroups.query.filter(UsersGroups.group_id == group_id).all()
+#     member_ids = [member.user_id for member in group_members]
+#     if int(current_user.get_id()) not in member_ids:
+#         return {"error": "Forbidden"}, 403
+
+#     groups = Group.query.options(joinedload(UsersGroups.group)).filter(Group.id == group_id).one()
+
+#     return {"groups": [{"id": group.group.id, "name": group.group.name} for group in groups]}
+
+
 @groups_routes.get('/current-user')
 @login_required
 def get_groups_current_user():
@@ -181,6 +203,11 @@ def get_group_members(group_id):
     """
     Get members of group by group id
     """
+    group = Group.query.get(group_id)
+
+    # validation: group_id not found
+    if group == None:
+        return {"error": "group not found"}, 404
 
     group_members = UsersGroups.query.options(joinedload(UsersGroups.user)).filter(UsersGroups.group_id == group_id).all()
 
@@ -189,7 +216,10 @@ def get_group_members(group_id):
     if int(current_user.get_id()) not in member_ids:
         return {"error": "Forbidden"}, 403
 
-    return {"groups": [{"user_id": group.user.id, "name": group.user.username} for group in group_members]}
+    return {
+        "group": {"id": group.id, "name": group.name},
+        "members": [{"user_id": group.user.id, "name": group.user.username} for group in group_members]
+        }
 
 
 @groups_routes.post('/<int:group_id>/members')

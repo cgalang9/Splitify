@@ -1,4 +1,3 @@
-
 //Get current user groups
 const GET_CURR_USER_GROUPS = 'groups/GET_CURR_USER_GROUPS'
 const getCurrUserGroups = (groups) => {
@@ -10,7 +9,7 @@ export const getCurrUserGroupsThunk = () => async (dispatch) => {
 
     if (response.ok) {
         const groups = await response.json()
-        dispatch(getCurrUserGroups(groups))
+        await dispatch(getCurrUserGroups(groups))
         return groups
     }
 }
@@ -19,8 +18,7 @@ export const getCurrUserGroupsThunk = () => async (dispatch) => {
 export const groupsReducer = (state = null, action) => {
     switch (action.type) {
         case GET_CURR_USER_GROUPS:
-            const stateGetItemDetails = { ...action.groups }
-            return stateGetItemDetails
+            return { ...action.groups }
         default:
             return state
     }
