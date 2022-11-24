@@ -173,3 +173,20 @@ def delete_group(group_id):
     db.session.delete(group)
     db.session.commit()
     return {"message": "Group successfully deleted"}
+
+
+@groups_routes.get('/<int:group_id>/members')
+@login_required
+def get_group_members(group_id):
+    """
+    Get members of group by group id
+    """
+
+    group_members = UsersGroups.query.options(joinedload(UsersGroups.user)).filter(UsersGroups.group_id == group_id).all()
+
+    # validation: current user must be in group to post
+    member_ids = [member.user_id for member in group_members]
+    if int(current_user.get_id()) not in member_ids:
+        return {"message": "Forbidden"}, 403
+
+    return {"groups": [{"user_id": group.user.id, "name": group.user.username} for group in group_members]}
