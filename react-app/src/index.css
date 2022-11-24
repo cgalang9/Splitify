@@ -1,1 +1,4 @@
-/* TODO Add site wide styles */
+.flex_col {
+    display: flex;
+    flex-direction: column;
+}

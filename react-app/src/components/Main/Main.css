@@ -1,0 +1,18 @@
+#main_wrapper {
+    align-items: center;
+}
+
+#main_container {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 800px;
+    gap: 40px;
+}
+
+
+#main_left,
+#main_middle,
+#main_right {
+    width: 33%;
+}

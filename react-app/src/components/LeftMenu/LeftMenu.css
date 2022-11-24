@@ -1,0 +1,10 @@
+#left_menu_wrapper {
+    gap: 30px;
+}
+
+
+#dashboard_link {
+    color: black;
+    text-decoration: none;
+    border: 1px solid red;
+}
