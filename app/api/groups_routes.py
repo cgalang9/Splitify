@@ -225,3 +225,36 @@ def add_memeber_to_group(group_id):
     db.session.add(add_user)
     db.session.commit()
     return {"message": "User successfully added to group"}
+
+
+
+@groups_routes.delete('/<int:group_id>/members/<int:user_id>')
+@login_required
+def delete_member_from_group(group_id, user_id):
+    """
+    Delete member by user_id from group by group id
+    """
+    # validation: group_id not found
+    group = Group.query.get(group_id)
+    if group == None:
+        return {"error": "group not found"}, 404
+
+    member = User.query.get(user_id)
+    # validation: user_id not found
+    if member == None:
+        return {"error": "member not found"}, 404
+
+    group_members = UsersGroups.query.filter(UsersGroups.group_id == group_id).all()
+    member_ids = [member.user_id for member in group_members]
+    # validation: checks if user is in group
+    if user_id not in member_ids:
+        return {"error": "User not in group"}, 400
+    # validation: current user must be in group to remove member
+    if int(current_user.get_id()) not in member_ids:
+        return {"error": "Forbidden"}, 403
+
+    user = UsersGroups.query.filter(and_(UsersGroups.group_id == group_id, UsersGroups.user_id == user_id)).one()
+
+    db.session.delete(user)
+    db.session.commit()
+    return {"message": "User successfully removed from group"}
