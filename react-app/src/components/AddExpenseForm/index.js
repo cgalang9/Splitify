@@ -66,12 +66,11 @@ function AddExpenseForm() {
 
             try {
                 const data = await dispatch(createExpenseThunk(expense_obj))
-                console.log(data.error)
                 if (data.error) {
                     await setErrors(data.error);
-                    console.log(errors)
+                } else {
+                    history.push('/dashboard')
                 }
-                history.push('/dashboard')
             } catch (error) {
                 console.log(error)
             }

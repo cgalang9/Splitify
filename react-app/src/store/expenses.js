@@ -51,6 +51,24 @@ export const createExpenseThunk = (expense) => async (dispatch) => {
     }
 }
 
+//Delete an expense
+const DELETE_EXPENSE = 'expenses/DELETE_EXPENSE'
+const deleteExpense = () => {
+    return { type: DELETE_EXPENSE }
+}
+
+export const deleteExpenseThunk = (expense_id) => async (dispatch) => {
+    const response = await fetch(`/api/expenses/${expense_id}`, {
+        method: 'DELETE'
+    })
+
+    if (response.ok) {
+        const message = await response.json()
+        await dispatch(deleteExpense(message))
+        return message
+    }
+}
+
 
 export const expenseReducer = (state = null, action) => {
     switch (action.type) {
@@ -58,6 +76,8 @@ export const expenseReducer = (state = null, action) => {
             return { ...action.expenses }
         case CREATE_EXPENSE:
             return null
+        case DELETE_EXPENSE:
+                return null
         default:
             return state
     }
