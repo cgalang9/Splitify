@@ -12,6 +12,7 @@ import Dashboard from '../Dashboard';
 import LeftMenu from '../LeftMenu';
 import GroupPage from '../GroupPage';
 import './Main.css'
+import AddExpenseForm from '../AddExpenseForm';
 
 function Main() {
     const history = useHistory()
@@ -27,6 +28,7 @@ function Main() {
                             <Route exact path="/" component={() => <User/>} />
                             <Route exact path="/dashboard" component={() => <Dashboard />} />
                             <Route exact path="/groups/:groupId" component={() => <GroupPage/>} />
+                            <Route exact path='/add-expense' component={() => <AddExpenseForm/>} />
                         </Switch>
                     </div>
                 </div>

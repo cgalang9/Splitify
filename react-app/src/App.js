@@ -8,7 +8,6 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import { authenticate } from './store/session';
-import Dashboard from './components/Dashboard';
 import Main from './components/Main'
 
 function App() {
@@ -30,7 +29,7 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Main />
-      {/* <Switch>
+      <Switch>
         <Route path='/login' exact={true}>
           <LoginForm />
         </Route>
@@ -43,13 +42,7 @@ function App() {
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
         </ProtectedRoute>
-        <Route path='/' exact={true} >
-          <Main />
-        </Route>
-        <Route path='/dashboard' exact={true} >
-          <Dashboard />
-        </Route>
-      </Switch> */}
+      </Switch>
     </BrowserRouter>
   );
 }
