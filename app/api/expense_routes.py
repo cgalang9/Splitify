@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import Expense, UsersExpenses, ExpenseComment, User, UsersGroups, Group, db
 from sqlalchemy.orm import joinedload
 from datetime import date
+from .auth_routes import validation_errors_to_error_messages
 
 expense_routes = Blueprint('expenses', __name__)
 

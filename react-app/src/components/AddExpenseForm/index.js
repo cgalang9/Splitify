@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import './AddExpenseForm.css'
 import { getCurrUserGroupsThunk } from '../../store/groups'
 import { getCurrGroupMembersThunk } from '../../store/currentGroupMembers'
+import { createExpenseThunk } from '../../store/expenses'
 
 
 function AddExpenseForm() {
@@ -18,20 +19,25 @@ function AddExpenseForm() {
     const members = useSelector((state) => state.currGroupMembers)
     const user = useSelector((state) => state.session)
 
-
-    const [payerId, setPayerId] = useState()
+    const [payerId, setPayerId] = useState(user.user.id)
     const [groupId, setGroupId] = useState()
     const [description, setDescription] = useState("")
     const [total, setTotal] = useState(0)
     const [date, setDate] = useState("")
-    const [split, setSplit] = useState(0)
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState()
 
 
     useEffect(async() => {
         if (groupId) {
             await dispatch(getCurrGroupMembersThunk(groupId))
         }
+        //clear checkboxes adn reset payer when changing group
+        setCheckedUsers([])
+        const boxes = document.querySelectorAll('.cbox')
+        boxes.forEach(box => {
+            box.checked = false
+        })
+        setPayerId(user.user.id)
     },[groupId])
 
 
@@ -39,34 +45,56 @@ function AddExpenseForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(groupId)
 
         setErrors([]);
 
-        // try {
-        //     const data = await dispatch(addItemReviewThunk(itemId, review))
-        //     console.log(data)
-        //     if (data.errors) {
-        //         await setErrors(data.errors);
-        //     } else {
-        //         history.push(`/items/${itemId}`)
-        //     }
-        // } catch (res) {
-        //     history.push('/404')
-        // }
+        let total_per_person = parseFloat(total/(checkedUsers.length + 1)).toFixed(2)
+        let splits = [{"user_id": user.user.id, "amount_owed": total_per_person}]
+        checkedUsers.forEach(user => {
+            splits.push({"user_id": user.id, "amount_owed": total_per_person})
+        })
+
+
+        let expense_obj = {
+            "payer_id": Number(payerId),
+            "group_id": Number(groupId),
+            "description": description,
+            "total": Number(total),
+            "date": date,
+            "splits": splits
+        }
+
+            try {
+                const data = await dispatch(createExpenseThunk(expense_obj))
+                console.log(data.error)
+                if (data.error) {
+                    await setErrors(data.error);
+                    console.log(errors)
+                }
+                history.push('/dashboard')
+            } catch (error) {
+                console.log(error)
+            }
+
     }
 
-    const [checked, setChecked] = useState(new Set())
+    //update users to split expense with when clicking checkbox
+    const [checkedUsers, setCheckedUsers] = useState(new Set())
     const handleCheck = async (e) => {
-        let newSet = new Set(checked)
+        let newArr = [...checkedUsers]
+        const value = JSON.parse(e.target.value)
         if(e.target.checked) {
-            newSet.add(e.target.value)
-            setChecked(newSet)
+            newArr.push(value)
+            setCheckedUsers(newArr)
         } else {
-            newSet.delete(e.target.value)
-            setChecked(newSet)
+            const idx = newArr.findIndex(object => {
+                return object.id === value.id;
+              });
+            newArr.splice(idx, 1)
+            setCheckedUsers(newArr)
         }
     }
+
 
     return (
         <div id='add_expense_form_wrapper'>
@@ -75,22 +103,22 @@ function AddExpenseForm() {
                     <h1>Add An Expense</h1>
                 </div>
                 <div className='errors'>
-                    {errors.errors && (errors.errors.map((error, ind) => (
-                    <div key={ind}>{error}</div>
-                    )))}
+                    {errors && (
+                        <div className='errors'>{errors}</div>
+                    )}
                 </div>
                 <div>
                     <label htmlFor="split">With you and: </label>
-                        {members && user && members.members.map(member => (
+                        {members && user && members.members.map((member) => (
                             member.user_id !== user.user.id && (
                                 <label htmlFor={member.user_id} key={member.user_id}>
                                     <input type="checkbox"
                                         id={member.user_id}
                                         name={member.user_id}
-                                        value={member.user_id}
+                                        className='cbox'
+                                        value={`{"id": ${member.user_id}, "name": "${member.name}"}`}
                                         onChange={handleCheck}
-                                        // checked={member.user_id === Number(payerId)}
-                                        // disabled={member.user_id === Number(payerId)}
+                                        disabled={payerId == member.user_id}
                                     />
                                     <span>{member.name}</span>
                                 </label>
@@ -135,18 +163,18 @@ function AddExpenseForm() {
                             value={payerId}
                             onChange={(e) => setPayerId(e.target.value)}
                             required
-                            defaultValue=''
+                            defaultValue={user.user.id}
                         >
-                            <option value="" disabled>Select Payer</option>
-                            {members && user && members.members.map(member => (
-                                  <option value={member.user_id} key={member.user_id}>{member.user_id === user.user.id ? "you" : member.name}</option>
+                            <option value={user.user.id}>you</option>
+                            {checkedUsers.length > 0 && checkedUsers.map(user => (
+                                <option value={user.id} key={user.id}>{user.name}</option>
                             ))}
                         </select>
                      and split equally​.
                     </label>
                 </div>
                 <div>
-                    {`($${total ? (parseFloat((checked.size > 0 ? total/(checked.size + 1) : total)).toFixed(2)) : 0.00.toFixed(2)}/person)`}
+                    {`($${total ? (parseFloat((checkedUsers.length > 0 ? total/(checkedUsers.length + 1) : total)).toFixed(2)) : 0.00.toFixed(2)}/person)`}
                 </div>
                 <div>
                     <label htmlFor="group">Group</label>
@@ -169,7 +197,5 @@ function AddExpenseForm() {
         </div>
     )
 }
-// let optionTemplate = surveyData.map(surveyData => (
-    //     <option value={surveyData.option} key={surveyData.surveyQuestion}>{surveyData.option.values}</option>
-    //   ));
+
 export default AddExpenseForm

@@ -38,7 +38,6 @@ const GroupPage = () => {
                 <div id='group_page_head'>
                     <div>Group Name</div>
                     <div>Add an Expense</div>
-                    <NavLink to='/add-expense' style={{ textDecoration: 'none' }}><div>Add</div></NavLink>
                     <div>Settle Up</div>
                 </div>
                 <div id='group_page_activity'>
