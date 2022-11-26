@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { getCurrUserGroupsThunk } from '../../store/groups';
 import { getFriendsThunk } from '../../store/currUserFriends';
 import './LeftMenu.css'
 
 const LeftMenu = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
 
     useEffect(async() => {
         await dispatch(getCurrUserGroupsThunk())
@@ -29,7 +30,7 @@ const LeftMenu = () => {
                 ))}
             </div>
             <div id='left_menu_friends'>
-                <div id='left_menu_friends_head'>FRIENDS</div>
+                <div id='left_menu_friends_head'>FRIENDS <button onClick={() => history.push('/add-friend')}><i className="fa-solid fa-plus" />add</button> </div>
                 {friends && friends.currUserFriends.map(friend => (
                     <div key={friend.id} className='left_menu_friend_li'>
                         <div>{friend.username}</div>

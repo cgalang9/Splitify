@@ -45,7 +45,7 @@ def create_friendship():
     Create friendship (wuth current user)
     """
     req = request.json
-    friend_id = req.get('friend_id')
+    friend_id = int(req.get('friend_id'))
     curr_user_id = int(current_user.get_id())
 
     # validation: can not friend yourself
@@ -79,4 +79,4 @@ def create_friendship():
     db.session.add(new_friendship)
     db.session.commit()
 
-    return {"message": "You are are now friends with this user"}
+    return { "id": friend.id, "username": friend.username }

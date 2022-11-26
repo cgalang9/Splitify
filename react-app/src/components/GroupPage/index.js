@@ -15,8 +15,12 @@ const GroupPage = () => {
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(async() => {
-        await dispatch(getGroupExpensesThunk(groupId))
-        await dispatch(getGroupPaymentsThunk(groupId))
+        async function fetchData() {
+            const exp = await dispatch(getGroupExpensesThunk(groupId))
+            const pay = await dispatch(getGroupPaymentsThunk(groupId))
+            setIsLoaded(true)
+          }
+          fetchData();
     },[groupId])
 
     const expenses = useSelector((state) => state.expenses)
@@ -34,7 +38,6 @@ const GroupPage = () => {
         }
         const expenses_payments = [...expenses_all, ...payments_all]
         await setSortedActivity(expenses_payments.sort((a, b) => new Date(b.date_paid).getTime() - new Date(a.date_paid).getTime()))
-        // await setIsLoaded(true)
     },[expenses, payments])
 
     const handleExpenseDelete = async(expense_id) => {
@@ -78,7 +81,6 @@ const GroupPage = () => {
     }
 
 
-    useEffect(() => setIsLoaded(true), [])
     return (
         <>
         {isLoaded && (
