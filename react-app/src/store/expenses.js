@@ -134,7 +134,6 @@ export const expenseReducer = (state = null, action) => {
             if (stateDeleteExpense) {
                 const filtered = stateDeleteExpense.expenses.filter(expense => Number(expense.id) !== Number(action.expense_id))
                 stateDeleteExpense.expenses = filtered
-                console.log(stateDeleteExpense)
                return stateDeleteExpense
             } else {
                 return null

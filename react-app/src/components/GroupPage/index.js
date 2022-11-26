@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { getGroupExpensesThunk } from '../../store/expenses';
-import { getGroupPaymentsThunk } from '../../store/payments';
+import { getGroupPaymentsThunk, deletePaymentThunk } from '../../store/payments';
 import { deleteExpenseThunk } from '../../store/expenses';
 import './GroupPage.css'
 
@@ -42,8 +42,17 @@ const GroupPage = () => {
             const data = await dispatch(deleteExpenseThunk(expense_id))
             if (data.error) {
                 history.push('/error')
-            } else {
-                history.push(`/groups/${groupId}`)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handlePaymentDelete = async(payment_id) => {
+        try {
+            const data = await dispatch(deletePaymentThunk(payment_id))
+            if (data.error) {
+                history.push('/error')
             }
         } catch (error) {
             console.log(error)
@@ -126,8 +135,46 @@ const GroupPage = () => {
                                 </div>
                             )}
                             {activity.payee && (
-                                <div className='group_page_activity_li_payment'>
-                                    {activity.payer.username} paid {activity.payee.username} ${activity.total.toFixed(2)}
+                                <div className='group_page_activity_payment'>
+                                    <div className='group_page_activity_payment_head'>
+                                        <div className='group_page_activity_li_payment'>
+                                            {activity.payer.username} paid {activity.payee.username} ${activity.total.toFixed(2)}
+                                        </div>
+                                        {activity.payer.id === user.user.id && (
+                                            <div className='group_page_activity_expense_head_quicktotal'>
+                                                you paid ${(activity.total).toFixed(2)}
+                                            </div>
+                                        )}
+                                        {activity.payee.id === user.user.id && (
+                                            <div className='group_page_activity_expense_head_quicktotal'>
+                                                you received ${(activity.total).toFixed(2)}
+                                            </div>
+                                        )}
+                                        {activity.payer.id !== user.user.id && activity.payee.id !== user.user.id && (
+                                            <div className='group_page_activity_expense_head_quicktotal'>
+                                                not involved
+                                            </div>
+                                        )}
+                                        <div className='group_page_activity_payment_delete'>
+                                            <div className='delete_payment_btn' onClick={() => handlePaymentDelete(activity.id)}><i className="fa-solid fa-x"/></div>
+                                        </div>
+                                    </div>
+                                    <div className='group_page_activity_payment_details'>
+                                        <div className='group_page_activity_payment_details_title'>Payment</div>
+                                        <div className='group_page_activity_payment_details_description'>
+                                            {activity.description}
+                                        </div>
+                                        <div className='group_page_activity_payment_details_description'>
+                                            ${activity.total}
+                                        </div>
+                                        {/* <div className='group_page_activity_payment_edit'>
+                                            <button onClick={() => history.push(`/payments/${activity.id}/edit-payment`)}>Edit payment</button>
+                                        </div> */}
+                                        <div className='group_page_activity_expense_details_breakdown'>
+                                            <div>{activity.payer.username} paid ${activity.total}</div>
+                                            <div>{activity.payee.username} paid ${activity.total}</div>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                             </div>

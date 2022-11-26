@@ -58,6 +58,31 @@ export const createPaymentsThunk = (payment) => async (dispatch) => {
 
 }
 
+//Delete a payment
+const DELETE_PAYMENT = 'expenses/DELETE_PAYMENT'
+const deletePayment = (payment_id) => {
+    return { type: DELETE_PAYMENT, payment_id }
+}
+
+export const deletePaymentThunk = (payment_id) => async (dispatch) => {
+    const response = await fetch(`/api/payments/${payment_id}`, {
+        method: 'DELETE'
+    })
+
+    if (response.ok) {
+        const message = await response.json()
+        await dispatch(deletePayment(payment_id))
+        return message
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
 
 export const paymentsReducer = (state = null, action) => {
     switch (action.type) {
@@ -65,6 +90,15 @@ export const paymentsReducer = (state = null, action) => {
             return { ...action.payments }
         case CREATE_PAYMENT:
             return null
+        case DELETE_PAYMENT:
+            const stateDeletePayment = { ...state }
+            if (stateDeletePayment) {
+                const filtered = stateDeletePayment.payments.filter(payment => Number(payment.id) !== Number(action.payment_id))
+                stateDeletePayment.payments = filtered
+               return stateDeletePayment
+            } else {
+                return null
+            }
         default:
             return state
     }

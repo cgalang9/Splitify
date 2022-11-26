@@ -18,16 +18,21 @@
     gap: 20px;
 }
 
-.group_page_activity_expense {
+.group_page_activity_expense,
+.group_page_activity_payment {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
 }
-.group_page_activity_expense_head{
+.group_page_activity_expense_head,
+.group_page_activity_payment_head {
     display: flex;
     position: relative;
+    gap: 7px;
 }
 
-.group_page_activity_expense_delete {
+
+.group_page_activity_expense_delete,
+.group_page_activity_payment_delete {
     position: absolute;
     top: 0;
     left: 0;
@@ -39,23 +44,27 @@
     color: transparent;
 }
 
-.group_page_activity_expense_delete:hover {
+.group_page_activity_expense_delete:hover,
+.group_page_activity_payment_delete:hover {
     color: red;
 }
 
-.delete_expense_btn:hover {
+.delete_expense_btn:hover,
+.delete_payment_btn:hover {
     text-decoration: underline;
     text-underline-offset: 3px;
     cursor: pointer;
 
 }
 
-.delete_expense_btn {
+.delete_expense_btn,
+.delete_payment_btn {
     display: flex;
     align-items: center;
     padding: 2px;
 }
 
-.group_page_activity_expense_details {
+.group_page_activity_expense_details,
+.group_page_activity_payment_details {
     background-color: rgb(223, 223, 223);
 }
