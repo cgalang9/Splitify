@@ -47,6 +47,15 @@ const GroupPage = () => {
         }
     }
 
+    const calcPayerOwes = (owed) => {
+        let othersOwe = 0
+        owed.forEach(ele => {
+            othersOwe += ele.amount_owed
+        });
+
+        return othersOwe / (owed.length)
+    }
+
     return (
         <div id='group_page_wrapper'>
             <div id='group_page_left' className='flex_col'>
@@ -65,11 +74,27 @@ const GroupPage = () => {
                                         <div>{new Date(activity.date_paid).toLocaleString('default', { month: 'short' })}</div>
                                         <div>{new Date(activity.date_paid).getDate()}</div>
                                     </div>
-                                    <div className='group_page_activity_expense_description'>
+                                    <div className='group_page_activity_expense_head_description'>
                                         {activity.description}
                                     </div>
                                     <div className='group_page_activity_expense_delete'>
                                         <div className='delete_expense_btn' onClick={() => handleExpenseDelete(activity.id)}><i className="fa-solid fa-x"/></div>
+                                    </div>
+                                </div>
+                                <div className='group_page_activity_expense_details'>
+                                    <div className='group_page_activity_expense_details_description'>
+                                        {activity.description}
+                                    </div>
+                                    <div className='group_page_activity_expense_details_description'>
+                                        ${activity.total}
+                                    </div>
+                                    <div className='group_page_activity_expense_details_breakdown'>
+                                        {activity.payer.username} paid ${activity.total} and owes ${calcPayerOwes(activity.money_owed)}
+                                        {activity.money_owed.length > 0 && activity.money_owed.map(owed => (
+                                            <div>
+                                                {owed.username} owes ${owed.amount_owed}
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
