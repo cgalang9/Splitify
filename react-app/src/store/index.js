@@ -5,13 +5,15 @@ import { groupsReducer } from './groups';
 import { expenseReducer } from './expenses';
 import { paymentsReducer } from './payments';
 import { currGroupMembersReducer } from './currentGroupMembers';
+import { currExpenseReducer } from './currentExpense';
 
 const rootReducer = combineReducers({
   session,
   groups: groupsReducer,
   expenses: expenseReducer,
   payments: paymentsReducer,
-  currGroupMembers: currGroupMembersReducer
+  currGroupMembers: currGroupMembersReducer,
+  currExpense: currExpenseReducer
 });
 
 

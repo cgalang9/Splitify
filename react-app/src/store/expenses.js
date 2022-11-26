@@ -11,6 +11,13 @@ export const getGroupExpensesThunk = (groupId) => async (dispatch) => {
         const expenses = await response.json()
         await dispatch(getGroupExpenses(expenses))
         return expenses
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
     }
 }
 
@@ -86,7 +93,7 @@ export const expenseReducer = (state = null, action) => {
         case DELETE_EXPENSE:
             const stateDeleteExpense = { ...state }
             if (stateDeleteExpense) {
-                const filtered = stateDeleteExpense.expenses.filter(expense => expense.id != action.expense_id)
+                const filtered = stateDeleteExpense.expenses.filter(expense => Number(expense.id) !== Number(action.expense_id))
                 stateDeleteExpense.expenses = filtered
                 console.log(stateDeleteExpense)
                return stateDeleteExpense

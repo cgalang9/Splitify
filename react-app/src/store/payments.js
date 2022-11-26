@@ -11,6 +11,13 @@ export const getGroupPaymentsThunk = (groupId) => async (dispatch) => {
         const payments = await response.json()
         await dispatch(getGroupPayments(payments))
         return payments
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
     }
 }
 
