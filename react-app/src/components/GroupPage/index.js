@@ -167,9 +167,9 @@ const GroupPage = () => {
                                         <div className='group_page_activity_payment_details_description'>
                                             ${activity.total}
                                         </div>
-                                        {/* <div className='group_page_activity_payment_edit'>
+                                        <div className='group_page_activity_payment_edit'>
                                             <button onClick={() => history.push(`/payments/${activity.id}/edit-payment`)}>Edit payment</button>
-                                        </div> */}
+                                        </div>
                                         <div className='group_page_activity_expense_details_breakdown'>
                                             <div>{activity.payer.username} paid ${activity.total}</div>
                                             <div>{activity.payee.username} paid ${activity.total}</div>

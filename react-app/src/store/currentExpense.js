@@ -6,7 +6,6 @@ const getCurrExpense = (expense) => {
 
 export const getCurrExpenseThunk = (expense_id) => async (dispatch) => {
     const response = await fetch(`/api/expenses/${expense_id}`)
-    console.log(response.status)
 
     if (response.ok) {
         const expense = await response.json()
@@ -22,7 +21,7 @@ export const getCurrExpenseThunk = (expense_id) => async (dispatch) => {
     }
 }
 
-//Clear members
+//Clear curr expense
 const CLEAR_EXPENSE = 'groups/CLEAR_GROUPCLEAR_EXPENSE_MEMBERS'
 export const clearExpense = () => {
     return { type: CLEAR_EXPENSE }

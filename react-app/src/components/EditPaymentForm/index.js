@@ -1,61 +1,63 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import './AddPaymentForm.css'
+import { useHistory, useParams } from 'react-router-dom'
+import './EditPaymentForm.css'
 import { getCurrUserGroupsThunk } from '../../store/groups'
 import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
-import { createPaymentsThunk } from '../../store/payments'
+import { getCurrPaymentThunk } from '../../store/currentPayment'
 
 
-function AddPaymentForm() {
+function EditPaymentForm() {
     const dispatch = useDispatch()
     const history = useHistory()
+    const { paymentId } = useParams()
 
-    //get list of groups user is in
     useEffect(async() => {
-        await dispatch(getCurrUserGroupsThunk())
+        try {
+            const data = await dispatch(getCurrPaymentThunk(paymentId))
+            if (data.error) {
+                await dispatch(clearGroupMembers())
+                history.push('/dashboard')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     },[])
 
-
-    const user_groups = useSelector((state) => state.groups)
     const members = useSelector((state) => state.currGroupMembers)
     const user = useSelector((state) => state.session)
+    const payment = useSelector((state) => state.currPayment)
 
     const [payerId, setPayerId] = useState()
-    const [payeeId, setPayeeId] = useState(user.user.id)
+    const [payeeId, setPayeeId] = useState()
     const [groupId, setGroupId] = useState()
     const [total, setTotal] = useState(0)
     const [date, setDate] = useState("")
     const [errors, setErrors] = useState()
 
-    //sets a default group when form opened
-    useEffect(() => {
-        if (user_groups) {
-            setGroupId(user_groups.groups[0].id)
+    //display current payment details on form when opened
+    useEffect(async() => {
+        if(payment) {
+            setGroupId(payment.group.id)
+            setPayerId(payment.payer.id)
+            setPayeeId(payment.payee.id)
+            setTotal(payment.total)
+            setDate(new Date(payment.date_paid).toISOString().split('T')[0])
         }
-    },[user_groups])
+    },[payment])
 
-    //gets members of new group when group selection changes
     useEffect(async() => {
         if (groupId) {
             await dispatch(getCurrGroupMembersThunk(groupId))
         }
     },[groupId])
 
-    //sets default payer and payee  when group selection changes
+
     useEffect(() => {
-        if (members) {
-            setPayerId(members.members[0].user_id === user.user.id ? members.members[1].user_id : members.members[0].user_id)
+        return async() => {
+            await dispatch(clearGroupMembers())
         }
-        setPayeeId(user.user.id)
-    },[members])
-
-
-    // useEffect(() => {
-    //     return async() => {
-    //         await dispatch(clearGroupMembers())
-    //     }
-    // }, [])
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -77,19 +79,17 @@ function AddPaymentForm() {
         }
 
 
-        try {
-            const data = await dispatch(createPaymentsThunk(payment_obj))
-            if (data.error) {
-                await setErrors(data.error);
-            } else {
-                await dispatch(clearGroupMembers())
-                history.push(`/groups/${groupId}`)
-            }
-        } catch (error) {
-            console.log(error)
-        }
-
-
+        // try {
+        //     const data = await dispatch(createPaymentsThunk(payment_obj))
+        //     if (data.error) {
+        //         await setErrors(data.error);
+        //     } else {
+        //         await dispatch(clearGroupMembers())
+        //         history.push(`/groups/${groupId}`)
+        //     }
+        // } catch (error) {
+        //     console.log(error)
+        // }
 
     }
 
@@ -97,10 +97,10 @@ function AddPaymentForm() {
     useEffect(() => {}, [errors])
 
     return (
-        <div id='add_payment_form_wrapper'>
-            <form id='add_payment_form' onSubmit={handleSubmit}>
+        <div id='edit_payment_form_wrapper'>
+            <form id='edit_payment_form' onSubmit={handleSubmit}>
                 <div>
-                    <h1>Settle up</h1>
+                    <h1>Edit payment</h1>
                 </div>
                 <div className='errors'>
                     {errors && (
@@ -155,19 +155,7 @@ function AddPaymentForm() {
                     />
                 </div>
                 <div>
-                    <label htmlFor="group">Group</label>
-                    <select
-                        name="group"
-                        value={groupId}
-                        onChange={(e) => setGroupId(e.target.value)}
-                        required
-                        defaultValue=''
-                    >
-                        <option value="" disabled>Select Group</option>
-                        {user_groups && user_groups.groups.map(group =>
-                              <option value={group.id} key={group.id}>{group.name}</option>
-                        )}
-                    </select>
+                    {payment && <div>Group: {payment.group.name}</div>}
                 </div>
                 <button type='submit'>Save</button>
             </form>
@@ -176,4 +164,4 @@ function AddPaymentForm() {
     )
 }
 
-export default AddPaymentForm
+export default EditPaymentForm
