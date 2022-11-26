@@ -16,7 +16,6 @@ function EditExpenseForm() {
     useEffect(async() => {
         try {
             const data = await dispatch(getCurrExpenseThunk(expenseId))
-            console.log(data)
             if (data.error) {
                 await dispatch(clearGroupMembers())
                 history.push('/dashboard')
@@ -88,8 +87,6 @@ function EditExpenseForm() {
             "date": date,
             "splits": splits
         }
-        console.log(expenseId)
-        console.log(expense_obj)
 
         try {
             const data = await dispatch(editExpenseThunk(expenseId, expense_obj))

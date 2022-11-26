@@ -76,7 +76,7 @@ function AddExpenseForm() {
                 await setErrors(data.error);
             } else {
                 await dispatch(clearGroupMembers())
-                history.push('/dashboard')
+                history.push(`/groups/${groupId}`)
             }
         } catch (error) {
             console.log(error)
@@ -100,8 +100,6 @@ function AddExpenseForm() {
             setCheckedUsers(newArr)
         }
     }
-
-    console.log(payerId)
 
     return (
         <div id='add_expense_form_wrapper'>

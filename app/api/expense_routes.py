@@ -128,6 +128,7 @@ def create_expense():
     if payer.id not in member_ids:
         return {"error": "Payer must be in group"}, 403
 
+    # validation: must split expense between at least 2 users"
     if len(req.get('splits')) < 2:
         return {"error": "Must split expense between at least 2 users"}, 400
 
@@ -237,6 +238,10 @@ def edit_expense(expense_id):
     # validation: payer_id must be in group
     if payer.id not in member_ids:
         return {"error": "Payer must be in group"}, 403
+
+    # validation: must split expense between at least 2 users"
+    if len(req.get('splits')) < 2:
+        return {"error": "Must split expense between at least 2 users"}, 400
 
     for split in req.get('splits'):
         user = User.query.get(split['user_id'])

@@ -14,6 +14,7 @@ import GroupPage from '../GroupPage';
 import './Main.css'
 import AddExpenseForm from '../AddExpenseForm';
 import EditExpenseForm from '../EditExpenseForm';
+import AddPaymentForm from '../AddPaymentForm';
 
 function Main() {
     const history = useHistory()
@@ -31,6 +32,7 @@ function Main() {
                             <Route exact path="/groups/:groupId" component={() => <GroupPage />} />
                             <Route exact path="/add-expense" component={() => <AddExpenseForm />} />
                             <Route exact path="/expenses/:expenseId/edit-expense" component={() => <EditExpenseForm />} />
+                            <Route exact path="/add-payment" component={() => <AddPaymentForm />} />
                             <Route exact path="/error">
                                 <h1>There was an error</h1>
                             </Route>

@@ -11,12 +11,15 @@ def seed_payments():
         payer_id=1, payee_id=9, group_id=2, total=80.00, date_paid=date(2022, 11, 9))
     payment4 = Payment(
         payer_id=1, payee_id=8, group_id=2, total=20.00, date_paid=date(2022, 11, 3))
+    payment5 = Payment(
+        payer_id=8, payee_id=7, group_id=1, total=20.50, date_paid=date(2022, 11, 15))
 
 
     db.session.add(payment1)
     db.session.add(payment2)
     db.session.add(payment3)
     db.session.add(payment4)
+    db.session.add(payment5)
     db.session.commit()
 
 

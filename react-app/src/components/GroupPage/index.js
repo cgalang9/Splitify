@@ -78,7 +78,7 @@ const GroupPage = () => {
                     <div id='group_page_head'>
                         <div>Group Name</div>
                         <div><button onClick={() => history.push('/add-expense')}>Add an Expense</button></div>
-                        <div>Settle Up</div>
+                        <div><button onClick={() => history.push('/add-payment')}>Settle Up</button></div>
                     </div>
                     <div id='group_page_activity' className='flex_col'>
                         {sortedActivity.length > 0 && sortedActivity.map((activity, idx) => (
