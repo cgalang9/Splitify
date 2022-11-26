@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import './AddExpenseForm.css'
 import { getCurrUserGroupsThunk } from '../../store/groups'
-import { getCurrGroupMembersThunk } from '../../store/currentGroupMembers'
+import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
 import { createExpenseThunk } from '../../store/expenses'
 
 
@@ -64,16 +64,17 @@ function AddExpenseForm() {
             "splits": splits
         }
 
-            try {
-                const data = await dispatch(createExpenseThunk(expense_obj))
-                if (data.error) {
-                    await setErrors(data.error);
-                } else {
-                    history.push('/dashboard')
-                }
-            } catch (error) {
-                console.log(error)
+        try {
+            const data = await dispatch(createExpenseThunk(expense_obj))
+            if (data.error) {
+                await setErrors(data.error);
+            } else {
+                await dispatch(clearGroupMembers())
+                history.push('/dashboard')
             }
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
@@ -143,7 +144,7 @@ function AddExpenseForm() {
                         value={total}
                         onChange={(e) => setTotal(e.target.value)}
                         required
-                        min={0.01}
+                        min={1}
                     />
                 </div>
                 <div>

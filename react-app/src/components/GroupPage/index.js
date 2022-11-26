@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { getGroupExpensesThunk } from '../../store/expenses';
 import { getGroupPaymentsThunk } from '../../store/payments';
+import { deleteExpenseThunk } from '../../store/expenses';
 import './GroupPage.css'
 
 const GroupPage = () => {
@@ -34,7 +35,16 @@ const GroupPage = () => {
     },[expenses, payments])
 
     const handleExpenseDelete = async(expense_id) => {
-
+        try {
+            const data = await dispatch(deleteExpenseThunk(expense_id))
+            if (data.error) {
+                history.push('/error')
+            } else {
+                history.push(`/groups/${groupId}`)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -59,7 +69,7 @@ const GroupPage = () => {
                                         {activity.description}
                                     </div>
                                     <div className='group_page_activity_expense_delete'>
-                                        <div className='delete_expense_btn' onClick={handleExpenseDelete(activity.id)}><i className="fa-solid fa-x"/></div>
+                                        <div className='delete_expense_btn' onClick={() => handleExpenseDelete(activity.id)}><i className="fa-solid fa-x"/></div>
                                     </div>
                                 </div>
                             </div>

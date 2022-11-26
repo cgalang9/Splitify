@@ -53,8 +53,8 @@ export const createExpenseThunk = (expense) => async (dispatch) => {
 
 //Delete an expense
 const DELETE_EXPENSE = 'expenses/DELETE_EXPENSE'
-const deleteExpense = () => {
-    return { type: DELETE_EXPENSE }
+const deleteExpense = (expense_id) => {
+    return { type: DELETE_EXPENSE, expense_id }
 }
 
 export const deleteExpenseThunk = (expense_id) => async (dispatch) => {
@@ -64,8 +64,15 @@ export const deleteExpenseThunk = (expense_id) => async (dispatch) => {
 
     if (response.ok) {
         const message = await response.json()
-        await dispatch(deleteExpense(message))
+        await dispatch(deleteExpense(expense_id))
         return message
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
     }
 }
 
@@ -77,7 +84,15 @@ export const expenseReducer = (state = null, action) => {
         case CREATE_EXPENSE:
             return null
         case DELETE_EXPENSE:
+            const stateDeleteExpense = { ...state }
+            if (stateDeleteExpense) {
+                const filtered = stateDeleteExpense.expenses.filter(expense => expense.id != action.expense_id)
+                stateDeleteExpense.expenses = filtered
+                console.log(stateDeleteExpense)
+               return stateDeleteExpense
+            } else {
                 return null
+            }
         default:
             return state
     }

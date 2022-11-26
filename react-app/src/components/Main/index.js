@@ -29,6 +29,9 @@ function Main() {
                             <Route exact path="/dashboard" component={() => <Dashboard />} />
                             <Route exact path="/groups/:groupId" component={() => <GroupPage/>} />
                             <Route exact path='/add-expense' component={() => <AddExpenseForm/>} />
+                            <Route exact path="/error">
+                                <h1>There was an error</h1>
+                            </Route>
                         </Switch>
                     </div>
                 </div>
