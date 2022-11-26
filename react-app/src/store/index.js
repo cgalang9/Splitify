@@ -7,6 +7,7 @@ import { paymentsReducer } from './payments';
 import { currGroupMembersReducer } from './currentGroupMembers';
 import { currExpenseReducer } from './currentExpense';
 import { currPaymentReducer } from './currentPayment';
+import { currUserFriendsReducer } from './currUserFriends';
 
 const rootReducer = combineReducers({
   session,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   payments: paymentsReducer,
   currGroupMembers: currGroupMembersReducer,
   currExpense: currExpenseReducer,
-  currPayment: currPaymentReducer
+  currPayment: currPaymentReducer,
+  currUserFriends: currUserFriendsReducer
 });
 
 

@@ -2,7 +2,7 @@ from app.models import db, environment, SCHEMA, Friendship
 
 
 def seed_friendships():
-    f1 = Friendship(user1_id=1, user2_id=6)
+    f1 = Friendship(user1_id=1, user2_id=11)
     f2 = Friendship(user1_id=1, user2_id=7)
     f3 = Friendship(user1_id=1, user2_id=8)
     f4 = Friendship(user1_id=9, user2_id=1)

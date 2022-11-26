@@ -24,16 +24,59 @@ def get_current_user_friends():
         if freindship.user2_id != user_id:
             friends_ids.add(freindship.user2_id)
 
-
     friends = User.query.filter(User.id.in_(friends_ids)).all()
-    print('================', friends)
 
     friends_lst = []
     for friend in friends:
         friend_dict = {
             "id": friend.id,
-            "usermane": friend.username
+            "username": friend.username
         }
         friends_lst.append(friend_dict)
 
     return {"currUserFriends": friends_lst}
+
+
+
+@friends_routes.post('')
+@login_required
+def create_friendship():
+    """
+    Create friendship (wuth current user)
+    """
+    req = request.json
+    friend_id = req.get('friend_id')
+    curr_user_id = int(current_user.get_id())
+
+    # validation: can not friend yourself
+    if friend_id == curr_user_id:
+        return {"error": "Can not add yourself as a friend"}, 400
+
+    friend = User.query.get(friend_id)
+
+    # validation: friend_id not found
+    if friend == None:
+        return {"error": "User not found"}, 404
+
+    # get curr user friends
+    freindships = Friendship.query.filter(or_(Friendship.user1_id == curr_user_id, Friendship.user2_id == curr_user_id)).all()
+    friends_ids = set()
+    for freindship in freindships:
+        if freindship.user1_id != curr_user_id:
+            friends_ids.add(freindship.user1_id)
+        if freindship.user2_id != curr_user_id:
+            friends_ids.add(freindship.user2_id)
+
+    # validation: check if already friends
+    if friend_id in friends_ids:
+        return {"error": "You are already friends with this user"}, 400
+
+    new_friendship = Friendship(
+        user1_id = curr_user_id,
+        user2_id = friend_id
+    )
+
+    db.session.add(new_friendship)
+    db.session.commit()
+
+    return {"message": "You are are now friends with this user"}
