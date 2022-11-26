@@ -22,20 +22,24 @@ export const getGroupPaymentsThunk = (groupId) => async (dispatch) => {
 }
 
 //Create a payment
-const CREATE_PAYMENT = 'payments/GET_GROUP_PAYMENTS'
+const CREATE_PAYMENT = 'payments/CREATE_PAYMENT'
 const createPayments = (payment) => {
     return { type: CREATE_PAYMENT, payment }
 }
 
 export const createPaymentsThunk = (payment) => async (dispatch) => {
-    // const { payer_id, group_id, description, total, date, splits } = payment
+    const { payer_id, payee_id, group_id, total, date } = payment
     const response = await fetch(`/api/payments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-
+            payer_id,
+            payee_id,
+            group_id,
+            total,
+            date
         })
     })
 

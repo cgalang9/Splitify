@@ -117,6 +117,8 @@ def create_payment():
     if req.get('total') < 0:
         return {"error": "total must be greater than 0"}, 400
 
+    print('==========================================')
+
     date_arr = req.get('date').split('-')
 
     new_payment = Payment(

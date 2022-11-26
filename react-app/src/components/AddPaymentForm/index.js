@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import './AddPaymentForm.css'
 import { getCurrUserGroupsThunk } from '../../store/groups'
 import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
+import { createPaymentsThunk } from '../../store/payments'
 
 
 function AddPaymentForm() {
@@ -67,7 +68,29 @@ function AddPaymentForm() {
             return
         }
 
-        console.log('out')
+        const payment_obj = {
+            "payer_id": Number(payerId),
+            "payee_id": Number(payeeId),
+            "group_id": Number(groupId),
+            "total": Number(total),
+            "date": date
+        }
+
+
+        try {
+            const data = await dispatch(createPaymentsThunk(payment_obj))
+            if (data.error) {
+                await setErrors(data.error);
+            } else {
+                await dispatch(clearGroupMembers())
+                history.push(`/groups/${groupId}`)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+
+
     }
 
 
