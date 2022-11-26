@@ -18,6 +18,10 @@
     gap: 20px;
 }
 
+.group_page_activity_expense {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
 .group_page_activity_expense_head{
     display: flex;
     position: relative;

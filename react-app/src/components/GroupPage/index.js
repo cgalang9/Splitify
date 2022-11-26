@@ -20,6 +20,7 @@ const GroupPage = () => {
 
     const expenses = useSelector((state) => state.expenses)
     const payments = useSelector((state) => state.payments)
+    const user = useSelector((state) => state.session)
 
     useEffect(async() => {
         let expenses_all = []
@@ -52,8 +53,17 @@ const GroupPage = () => {
         owed.forEach(ele => {
             othersOwe += ele.amount_owed
         });
+        return parseInt(othersOwe / (owed.length)).toFixed(2)
+    }
 
-        return othersOwe / (owed.length)
+    const calcUserOwes = (owed, id) => {
+        for (let i = 0; i < owed.length; i++) {
+            const ele = owed[i]
+            if (ele.user_id == id) {
+                return ele.amount_owed
+            }
+        }
+        return 0
     }
 
     return (
@@ -76,6 +86,13 @@ const GroupPage = () => {
                                     </div>
                                     <div className='group_page_activity_expense_head_description'>
                                         {activity.description}
+                                    </div>
+                                    <div className='group_page_activity_expense_head_quicktotal'>
+                                        {activity.payer.id === user.user.id ? 'you' : activity.payer.username} paid ${activity.total}
+                                        {activity.payer.id === user.user.id ?
+                                            `you lent $${activity.total - calcPayerOwes(activity.money_owed)}` :
+                                            `${activity.payer.username} lent you $${calcUserOwes(activity.money_owed, user.user.id)}`
+                                        }
                                     </div>
                                     <div className='group_page_activity_expense_delete'>
                                         <div className='delete_expense_btn' onClick={() => handleExpenseDelete(activity.id)}><i className="fa-solid fa-x"/></div>
