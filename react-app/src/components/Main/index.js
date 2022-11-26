@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch, useHistory, Routes, NavLink } from 'react-router-dom';
-// import LoginForm from './components/auth/LoginForm';
-// import SignUpForm from './components/auth/SignUpForm';
-// import NavBar from './components/NavBar';
-// import ProtectedRoute from './components/auth/ProtectedRoute';
-// import UsersList from './components/UsersList';
 import User from '../User';
-import UsersList from '../UsersList';
 import Dashboard from '../Dashboard';
 import LeftMenu from '../LeftMenu';
 import GroupPage from '../GroupPage';

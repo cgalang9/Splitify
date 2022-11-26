@@ -53,8 +53,8 @@ export const groupsReducer = (state = null, action) => {
         case GET_CURR_USER_GROUPS:
             return { ...action.groups }
         case CREATE_GROUP:
-            let addGroupState = {...state}
-            if (addGroupState) {
+            if (state) {
+                let addGroupState = {...state}
                 const new_groups = [action.group, ...addGroupState.groups]
                 addGroupState.groups = new_groups
                 return addGroupState

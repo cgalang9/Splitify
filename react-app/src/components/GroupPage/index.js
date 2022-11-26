@@ -41,24 +41,28 @@ const GroupPage = () => {
     },[expenses, payments])
 
     const handleExpenseDelete = async(expense_id) => {
-        try {
-            const data = await dispatch(deleteExpenseThunk(expense_id))
-            if (data.error) {
-                history.push('/error')
+        if (window.confirm("Are you sure you want to delete this expense? You can not recover this expense after deletion.")) {
+            try {
+                const data = await dispatch(deleteExpenseThunk(expense_id))
+                if (data.error) {
+                    history.push('/error')
+                }
+            } catch (error) {
+                console.log(error)
             }
-        } catch (error) {
-            console.log(error)
         }
     }
 
     const handlePaymentDelete = async(payment_id) => {
-        try {
-            const data = await dispatch(deletePaymentThunk(payment_id))
-            if (data.error) {
-                history.push('/error')
+        if (window.confirm("Are you sure you want to delete this payment? You can not recover this payment after deletion.")) {
+            try {
+                const data = await dispatch(deletePaymentThunk(payment_id))
+                if (data.error) {
+                    history.push('/error')
+                }
+            } catch (error) {
+                console.log(error)
             }
-        } catch (error) {
-            console.log(error)
         }
     }
 

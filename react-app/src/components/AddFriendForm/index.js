@@ -10,6 +10,7 @@ function AddFriendForm() {
     const history = useHistory()
 
     const [users, setUsers] = useState([])
+    const [userSelection, setUserSelection] = useState([])
     const [friendId, setFriendId] = useState()
     const [errors, setErrors] = useState()
 
@@ -25,6 +26,18 @@ function AddFriendForm() {
     }, []);
 
     const friends = useSelector((state) => state.currUserFriends)
+    const currUser = useSelector((state) => state.session)
+
+    //remove users who are already friends from list
+    useEffect(() => {
+        let filtered_users = []
+        users.forEach(user => {
+            const isFriend = friends.currUserFriends.some(el => el.id === user.id);
+            const isCurrUser = currUser.user.id === user.id
+            if (!isFriend && !isCurrUser) filtered_users.push({ 'id': user.id, 'username': user.username });
+        })
+        setUserSelection(filtered_users)
+    }, [friends]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -67,7 +80,7 @@ function AddFriendForm() {
                             defaultValue=''
                         >
                             <option value="" disabled>Select user</option>
-                            {users && users.map((user) => (
+                            {userSelection && userSelection.map((user) => (
                                 <option value={user.id} key={user.id}>{user.username}</option>
                             ))}
                     </select>
