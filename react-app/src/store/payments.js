@@ -58,8 +58,46 @@ export const createPaymentsThunk = (payment) => async (dispatch) => {
 
 }
 
+
+//Edit payment
+const EDIT_PAYMENT = 'payments/EDIT_PAYMENT'
+const editPayment = (payment) => {
+    return { type: EDIT_PAYMENT, payment }
+}
+
+export const editPaymentThunk = (payment_id, payment) => async (dispatch) => {
+    const { payer_id, payee_id, group_id, total, date } = payment
+    const response = await fetch(`/api/payments/${payment_id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            payer_id,
+            payee_id,
+            group_id,
+            total,
+            date
+        })
+    })
+
+    if (response.ok) {
+        const payment = await response.json()
+        await dispatch(editPayment(payment))
+        return payment
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
+
 //Delete a payment
-const DELETE_PAYMENT = 'expenses/DELETE_PAYMENT'
+const DELETE_PAYMENT = 'payments/DELETE_PAYMENT'
 const deletePayment = (payment_id) => {
     return { type: DELETE_PAYMENT, payment_id }
 }
@@ -89,6 +127,8 @@ export const paymentsReducer = (state = null, action) => {
         case GET_GROUP_PAYMENTS:
             return { ...action.payments }
         case CREATE_PAYMENT:
+            return null
+        case EDIT_PAYMENT:
             return null
         case DELETE_PAYMENT:
             const stateDeletePayment = { ...state }

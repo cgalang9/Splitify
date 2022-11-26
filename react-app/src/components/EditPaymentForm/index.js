@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import './EditPaymentForm.css'
-import { getCurrUserGroupsThunk } from '../../store/groups'
 import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
 import { getCurrPaymentThunk } from '../../store/currentPayment'
+import { editPaymentThunk } from '../../store/payments'
 
 
 function EditPaymentForm() {
@@ -79,17 +79,17 @@ function EditPaymentForm() {
         }
 
 
-        // try {
-        //     const data = await dispatch(createPaymentsThunk(payment_obj))
-        //     if (data.error) {
-        //         await setErrors(data.error);
-        //     } else {
-        //         await dispatch(clearGroupMembers())
-        //         history.push(`/groups/${groupId}`)
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        try {
+            const data = await dispatch(editPaymentThunk(paymentId, payment_obj))
+            if (data.error) {
+                await setErrors(data.error);
+            } else {
+                await dispatch(clearGroupMembers())
+                history.push(`/groups/${groupId}`)
+            }
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
