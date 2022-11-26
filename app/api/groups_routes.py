@@ -139,15 +139,15 @@ def create_group():
     """
     req = request.json
 
-    # validation: name length must be < 40
-    if len(req.get('name')) > 40:
-        return {"error": "Name must be less than 41 characters"}, 400
+    # validation: name length must be < 20
+    if len(req.get('name')) > 20:
+        return {"error": "Name must be less than 21 characters"}, 400
 
     unique_member_ids = set(req.get('member_ids'))
 
-    # validation: group msut have at least 2 members
+    # validation: group must have at least 2 members (including yourself)
     if len(unique_member_ids) < 2:
-        return {"error": "Group must have at least 2 members"}, 400
+        return {"error": "You must add at least 1 member to the group"}, 400
 
     for member_id in unique_member_ids:
         member = User.query.get(member_id)
@@ -169,8 +169,7 @@ def create_group():
 
     return {
         "id": new_group.id,
-        "name": new_group.name,
-        "member_ids": list(unique_member_ids)
+        "name": new_group.name
     }
 
 

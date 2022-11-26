@@ -150,7 +150,6 @@ function EditExpenseForm() {
                             member.user_id !== user.user.id && (
                                 <label htmlFor={member.user_id} key={member.user_id}>
                                     <input type="checkbox"
-                                        id={member.user_id}
                                         name={member.user_id}
                                         className='cbox'
                                         value={`{"id": ${member.user_id}, "name": "${member.name}"}`}

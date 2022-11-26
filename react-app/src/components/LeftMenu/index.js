@@ -22,7 +22,7 @@ const LeftMenu = () => {
             <NavLink to='/dashboard' style={{ textDecoration: 'none' }}><div id='dashboard_link'>Dashboard</div></NavLink>
             <NavLink to='/' style={{ textDecoration: 'none' }}><div>All Expenses(main for now)</div></NavLink>
             <div id='left_menu_groups'>
-                <div id='left_menu_groups_head'>GROUPS</div>
+                <div id='left_menu_groups_head'>GROUPS <button onClick={() => history.push('/create-group')}><i className="fa-solid fa-plus" />add</button></div>
                 {user_groups && user_groups.groups.map(group => (
                     <div key={group.id} className='left_menu_group_li'>
                         <NavLink to={`/groups/${group.id}`} style={{ textDecoration: 'none' }}><div>{group.name}</div></NavLink>
@@ -30,7 +30,7 @@ const LeftMenu = () => {
                 ))}
             </div>
             <div id='left_menu_friends'>
-                <div id='left_menu_friends_head'>FRIENDS <button onClick={() => history.push('/add-friend')}><i className="fa-solid fa-plus" />add</button> </div>
+                <div id='left_menu_friends_head'>FRIENDS <button onClick={() => history.push('/add-friend')}><i className="fa-solid fa-plus" />add</button></div>
                 {friends && friends.currUserFriends.map(friend => (
                     <div key={friend.id} className='left_menu_friend_li'>
                         <div>{friend.username}</div>
