@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import './EditExpenseForm.css'
-import { getCurrUserGroupsThunk } from '../../store/groups'
 import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
-import { createExpenseThunk } from '../../store/expenses'
 import { getCurrExpenseThunk } from '../../store/currentExpense'
+import { editExpenseThunk } from '../../store/expenses'
 
 
 
@@ -15,11 +14,18 @@ function EditExpenseForm() {
     const { expenseId } = useParams()
 
     useEffect(async() => {
-        await dispatch(getCurrUserGroupsThunk())
-        await dispatch(getCurrExpenseThunk(expenseId))
+        try {
+            const data = await dispatch(getCurrExpenseThunk(expenseId))
+            console.log(data)
+            if (data.error) {
+                await dispatch(clearGroupMembers())
+                history.push('/dashboard')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     },[])
 
-    const user_groups = useSelector((state) => state.groups)
     const members = useSelector((state) => state.currGroupMembers)
     const user = useSelector((state) => state.session)
     const expense = useSelector((state) => state.currExpense)
@@ -68,33 +74,34 @@ function EditExpenseForm() {
 
         setErrors([]);
 
-        // let total_per_person = parseFloat(total/(checkedUsers.length + 1)).toFixed(2)
-        // let splits = [{"user_id": user.user.id, "amount_owed": total_per_person}]
-        // checkedUsers.forEach(user => {
-        //     splits.push({"user_id": user.id, "amount_owed": total_per_person})
-        // })
+        let total_per_person = parseFloat(total/(checkedUsers.length + 1)).toFixed(2)
+        let splits = [{"user_id": user.user.id, "amount_owed": total_per_person}]
+        checkedUsers.forEach(user => {
+            splits.push({"user_id": user.id, "amount_owed": total_per_person})
+        })
 
 
-        // let expense_obj = {
-        //     "payer_id": Number(payerId),
-        //     "group_id": Number(groupId),
-        //     "description": description,
-        //     "total": Number(total),
-        //     "date": date,
-        //     "splits": splits
-        // }
+        let expense_obj = {
+            "payer_id": Number(payerId),
+            "description": description,
+            "total": Number(total),
+            "date": date,
+            "splits": splits
+        }
+        console.log(expenseId)
+        console.log(expense_obj)
 
-        // try {
-        //     const data = await dispatch(createExpenseThunk(expense_obj))
-        //     if (data.error) {
-        //         await setErrors(data.error);
-        //     } else {
-        //         await dispatch(clearGroupMembers())
-        //         history.push('/dashboard')
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        try {
+            const data = await dispatch(editExpenseThunk(expenseId, expense_obj))
+            if (data.error) {
+                await setErrors(data.error);
+            } else {
+                await dispatch(clearGroupMembers())
+                history.push(`/groups/${groupId}`)
+            }
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 

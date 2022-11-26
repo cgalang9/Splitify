@@ -21,7 +21,7 @@ export const getGroupExpensesThunk = (groupId) => async (dispatch) => {
     }
 }
 
-//Get expenses by group
+//Create expense
 const CREATE_EXPENSE = 'expenses/CREATE_EXPENSE'
 const createExpense = (expense) => {
     return { type: CREATE_EXPENSE, expense }
@@ -58,6 +58,43 @@ export const createExpenseThunk = (expense) => async (dispatch) => {
     }
 }
 
+//Edit expense
+const EDIT_EXPENSE = 'expenses/EDIT_EXPENSE'
+const editExpense = (expense) => {
+    return { type: EDIT_EXPENSE, expense }
+}
+
+export const editExpenseThunk = (expense_id, expense) => async (dispatch) => {
+    const { payer_id, description, total, date, splits } = expense
+    const response = await fetch(`/api/expenses/${expense_id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            payer_id,
+            description,
+            total,
+            date,
+            splits
+        })
+    })
+
+    if (response.ok) {
+        const expense = await response.json()
+        await dispatch(editExpense(expense))
+        return expense
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
+
 //Delete an expense
 const DELETE_EXPENSE = 'expenses/DELETE_EXPENSE'
 const deleteExpense = (expense_id) => {
@@ -89,6 +126,8 @@ export const expenseReducer = (state = null, action) => {
         case GET_GROUP_EXPENSES:
             return { ...action.expenses }
         case CREATE_EXPENSE:
+            return null
+        case EDIT_EXPENSE:
             return null
         case DELETE_EXPENSE:
             const stateDeleteExpense = { ...state }

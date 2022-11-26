@@ -6,6 +6,7 @@ const getCurrExpense = (expense) => {
 
 export const getCurrExpenseThunk = (expense_id) => async (dispatch) => {
     const response = await fetch(`/api/expenses/${expense_id}`)
+    console.log(response.status)
 
     if (response.ok) {
         const expense = await response.json()
@@ -17,7 +18,7 @@ export const getCurrExpenseThunk = (expense_id) => async (dispatch) => {
             return data;
         }
     } else {
-        return ['An error occurred. Please try again.']
+        return  {'error': 'An error occurred. Please try again.' }
     }
 }
 
