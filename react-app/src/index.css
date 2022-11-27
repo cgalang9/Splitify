@@ -6,3 +6,7 @@
 .errors {
     color: red;
 }
+
+body {
+    margin-top: 35px;
+}
