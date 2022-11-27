@@ -233,8 +233,8 @@ const AllExpenses = () => {
                     )}
                     {balance < 0 && (
                         <>
-                            <div>you are owed</div>
-                            <div style={{ color: 'red' }}>${balance.toFixed(2)}</div>
+                            <div>you owe</div>
+                            <div style={{ color: 'red' }}>${(balance * -1).toFixed(2)}</div>
                         </>
                     )}
                 </div>
