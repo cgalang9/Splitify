@@ -6,7 +6,6 @@ from sqlalchemy import or_
 
 friends_routes = Blueprint('friends', __name__)
 
-
 @friends_routes.get('/current-user')
 @login_required
 def get_current_user_friends():

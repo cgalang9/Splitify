@@ -18,9 +18,9 @@ const GroupPage = () => {
 
     useEffect(async() => {
         async function fetchData() {
-            const exp = await dispatch(getGroupExpensesThunk(groupId))
-            const pay = await dispatch(getGroupPaymentsThunk(groupId))
-            const members = await dispatch(getCurrGroupMembersThunk(groupId))
+            await dispatch(getGroupExpensesThunk(groupId))
+            await dispatch(getGroupPaymentsThunk(groupId))
+            await dispatch(getCurrGroupMembersThunk(groupId))
             setIsLoaded(true)
           }
           fetchData();
@@ -31,6 +31,7 @@ const GroupPage = () => {
     const user = useSelector((state) => state.session)
     const group_members = useSelector((state) => state.currGroupMembers)
 
+    //sort payments and expenses in alphabetical order on one list
     useEffect(async() => {
         let expenses_all = []
         let payments_all = []
@@ -129,7 +130,7 @@ const GroupPage = () => {
             <div id='group_page_wrapper'>
                 <div id='group_page_left' className='flex_col'>
                     <div id='group_page_head'>
-                        <div>Group Name</div>
+                        <div>{group_members.group.name}</div>
                         <div><button onClick={() => history.push('/add-expense')}>Add an Expense</button></div>
                         <div><button onClick={() => history.push('/add-payment')}>Settle Up</button></div>
                     </div>

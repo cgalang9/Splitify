@@ -8,7 +8,6 @@ import './AllExpenses.css'
 
 const AllExpenses = () => {
     const dispatch = useDispatch()
-    const { groupId } = useParams()
     const history = useHistory()
 
     const [sortedActivity, setSortedActivity] = useState([])
@@ -17,17 +16,18 @@ const AllExpenses = () => {
 
     useEffect(async() => {
         async function fetchData() {
-            const exp = await dispatch(getCurrUserExpensesThunk())
-            const pay = await dispatch(getCurrUserPaymentsThunk())
+            await dispatch(getCurrUserExpensesThunk())
+            await dispatch(getCurrUserPaymentsThunk())
             setIsLoaded(true)
           }
           fetchData();
-    },[groupId])
+    },[])
 
     const expenses = useSelector((state) => state.expenses)
     const payments = useSelector((state) => state.payments)
     const user = useSelector((state) => state.session)
 
+    //sort payments and expenses in alphabetical order on one list
     useEffect(async() => {
         let expenses_all = []
         let payments_all = []
@@ -123,7 +123,7 @@ const AllExpenses = () => {
             <div id='group_page_wrapper'>
                 <div id='group_page_left' className='flex_col'>
                     <div id='group_page_head'>
-                        <div>Group Name</div>
+                        <div>All Expenses</div>
                         <div><button onClick={() => history.push('/add-expense')}>Add an Expense</button></div>
                         <div><button onClick={() => history.push('/add-payment')}>Settle Up</button></div>
                     </div>

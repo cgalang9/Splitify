@@ -16,6 +16,7 @@ const LeftMenu = () => {
 
     const user_groups = useSelector((state) => state.groups)
     const friends = useSelector((state) => state.currUserFriends)
+    const user = useSelector((state) => state.session)
 
     return (
         <div id='left_menu_wrapper' className='flex_col'>
