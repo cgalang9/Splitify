@@ -9,8 +9,9 @@
 }
 
 #group_page_left,
+#group_page_mid,
 #group_page_right {
-    width: 50%;
+    width: 33%;
     height: 100vh;
 }
 

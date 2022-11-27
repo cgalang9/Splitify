@@ -5,6 +5,7 @@ import { getCurrUserExpensesThunk } from '../../store/expenses';
 import { getCurrUserPaymentsThunk, deletePaymentThunk } from '../../store/payments';
 import { deleteExpenseThunk } from '../../store/expenses';
 import './Dashboard.css'
+import LeftMenu from '../LeftMenu';
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -104,15 +105,18 @@ const Dashboard = () => {
 
     return (
         <div id='dash_wrapper'>
-            <div id='dash_left' className='flex_col'>
-                <div id='dash_left_head'>
-                    <div id='dash_left_head_top'>
+            <div id='dash_left'>
+                <LeftMenu />
+            </div>
+            <div id='dash_mid' className='flex_col'>
+                <div id='dash_mid_head'>
+                    <div id='dash_mid_head_top'>
                         <div>Dashboard</div>
                         <div><button onClick={() => history.push('/add-expense')}>Add an Expense</button></div>
                         <div><button onClick={() => history.push('/add-payment')}>Settle Up</button></div>
                     </div>
-                    <div id='dash_left_head_bottom'>
-                        <div id='dash_left_head_total'>
+                    <div id='dash_mid_head_bottom'>
+                        <div id='dash_mid_head_total'>
                             <div>total balance</div>
                             {balance && balance.total === 0 && (
                                 <div>$0.00</div>
@@ -124,7 +128,7 @@ const Dashboard = () => {
                                 <div style={{ color: 'red' }}>${balance.total.toFixed(2)}</div>
                             )}
                         </div>
-                        <div id='dash_left_head_owe'>
+                        <div id='dash_mid_head_owe'>
                             <div>you owe</div>
                             {balance && balance.you_owe === 0 && (
                                 <div>$0.00</div>
@@ -133,7 +137,7 @@ const Dashboard = () => {
                                 <div style={{ color: 'red' }}>${balance.you_owe.toFixed(2)}</div>
                             )}
                         </div>
-                        <div id='dash_left_head_owed'>
+                        <div id='dash_mid_head_owed'>
                             <div>you are owed</div>
                             {balance && balance.your_owed === 0 && (
                                 <div>$0.00</div>
@@ -144,10 +148,10 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div id='dash_left_main'>
-                    <div id='dash_left_main_you_owe' className='flex_col'>
-                        <div id='dash_left_owe_head'>YOU OWE</div>
-                        <div id='dash_left_owe_li'>
+                <div id='dash_mid_main'>
+                    <div id='dash_mid_main_you_owe' className='flex_col'>
+                        <div id='dash_mid_owe_head'>YOU OWE</div>
+                        <div id='dash_mid_owe_li'>
                             {balance && Object.keys(balance.splits).map(el => (
                                 balance.splits[el] < 0 && (
                                     <div>
@@ -158,9 +162,9 @@ const Dashboard = () => {
                             ))}
                         </div>
                     </div>
-                    <div id='dash_left_main_you_are_owed' className='flex_col'>
-                        <div id='dash_left_owed_head'>YOU ARE OWED</div>
-                        <div id='dash_left_owed_li'>
+                    <div id='dash_mid_main_you_are_owed' className='flex_col'>
+                        <div id='dash_mid_owed_head'>YOU ARE OWED</div>
+                        <div id='dash_mid_owed_li'>
                         {balance && Object.keys(balance.splits).map(el => (
                                 balance.splits[el] > 0 && (
                                     <div>

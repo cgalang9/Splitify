@@ -6,6 +6,7 @@ import { getGroupPaymentsThunk, deletePaymentThunk } from '../../store/payments'
 import { deleteExpenseThunk } from '../../store/expenses';
 import { getCurrGroupMembersThunk } from '../../store/currentGroupMembers';
 import './GroupPage.css'
+import LeftMenu from '../LeftMenu';
 
 const GroupPage = () => {
     const dispatch = useDispatch()
@@ -128,7 +129,10 @@ const GroupPage = () => {
         <>
         {isLoaded && (
             <div id='group_page_wrapper'>
-                <div id='group_page_left' className='flex_col'>
+                <div id='group_page_left'>
+                    <LeftMenu />
+                </div>
+                <div id='group_page_mid' className='flex_col'>
                     <div id='group_page_head'>
                         <div>{group_members.group.name}</div>
                         <div><button onClick={() => history.push('/add-expense')}>Add an Expense</button></div>
