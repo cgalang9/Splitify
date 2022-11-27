@@ -12,6 +12,7 @@ import AddPaymentForm from '../AddPaymentForm';
 import EditPaymentForm from '../EditPaymentForm';
 import AddFriendForm from '../AddFriendForm';
 import CreateGroup from '../CreateGroup';
+import AllExpenses from '../AllExpenses';
 
 function Main() {
     const history = useHistory()
@@ -33,6 +34,7 @@ function Main() {
                             <Route exact path="/payments/:paymentId/edit-payment" component={() => <EditPaymentForm />} />
                             <Route exact path="/add-friend" component={() => <AddFriendForm />} />
                             <Route exact path="/create-group" component={() => <CreateGroup />} />
+                            <Route exact path="/all" component={() => <AllExpenses />} />
                             <Route exact path="/error">
                                 <h1>There was an error</h1>
                             </Route>
