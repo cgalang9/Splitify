@@ -40,7 +40,8 @@ function AddExpenseForm() {
         setPayerId(user.user.id)
     },[groupId])
 
-    useEffect(() => {
+    useEffect(async() => {
+        await dispatch(clearGroupMembers())
         return async() => {
             await dispatch(clearGroupMembers())
         }

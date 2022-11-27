@@ -4,6 +4,7 @@ import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { getGroupExpensesThunk } from '../../store/expenses';
 import { getGroupPaymentsThunk, deletePaymentThunk } from '../../store/payments';
 import { deleteExpenseThunk } from '../../store/expenses';
+import { getCurrGroupMembersThunk } from '../../store/currentGroupMembers';
 import './GroupPage.css'
 
 const GroupPage = () => {
@@ -13,11 +14,13 @@ const GroupPage = () => {
 
     const [sortedActivity, setSortedActivity] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
+    const [balances, setBalances] = useState()
 
     useEffect(async() => {
         async function fetchData() {
             const exp = await dispatch(getGroupExpensesThunk(groupId))
             const pay = await dispatch(getGroupPaymentsThunk(groupId))
+            const members = await dispatch(getCurrGroupMembersThunk(groupId))
             setIsLoaded(true)
           }
           fetchData();
@@ -26,6 +29,7 @@ const GroupPage = () => {
     const expenses = useSelector((state) => state.expenses)
     const payments = useSelector((state) => state.payments)
     const user = useSelector((state) => state.session)
+    const group_members = useSelector((state) => state.currGroupMembers)
 
     useEffect(async() => {
         let expenses_all = []
@@ -85,6 +89,40 @@ const GroupPage = () => {
     }
 
 
+    const getBalancePerUser = () => {
+        let totals = {}
+
+        if(group_members) {
+            group_members.members.forEach(member => {
+                totals[member.user_id] = 0
+            })
+        }
+
+        if (expenses){
+            expenses.expenses.forEach(expense => {
+                let money_owed = 0
+                expense.money_owed.forEach(owed => {
+                    totals[owed.user_id] -= owed.amount_owed
+                    money_owed += owed.amount_owed
+                })
+                totals[expense.payer.id] += money_owed
+            })
+        }
+
+        if(payments) {
+            payments.payments.forEach(payment => {
+                totals[payment.payee.id] -= payment.total
+                totals[payment.payer.id] += payment.total
+            })
+        }
+        setBalances(totals)
+    }
+
+    useEffect(() => {
+        getBalancePerUser()
+    },[sortedActivity, group_members])
+
+
     return (
         <>
         {isLoaded && (
@@ -132,7 +170,7 @@ const GroupPage = () => {
                                         <div className='group_page_activity_expense_details_breakdown'>
                                             {activity.payer.username} paid ${activity.total} and owes ${calcPayerOwes(activity.money_owed)}
                                             {activity.money_owed.length > 0 && activity.money_owed.map(owed => (
-                                                <div>
+                                                <div key={owed.id}>
                                                     {owed.username} owes ${owed.amount_owed.toFixed(2)}
                                                 </div>
                                             ))}
@@ -188,7 +226,25 @@ const GroupPage = () => {
                     </div>
                 </div>
                 <div id='group_page_right'>
-                    RIGHT
+                    {group_members && group_members.members.map(member => (
+                        <div key={member.user_id}>
+                            <div>{member.name}</div>
+                            {balances && (
+                                <>
+                                {balances[member.user_id] === 0 && (
+                                    <div>settled up</div>
+                                )}
+                                {balances[member.user_id] > 0 && (
+                                    <div style={{ color: 'green' }}>gets back ${balances[member.user_id].toFixed(2)}</div>
+                                )}
+                                {balances[member.user_id] < 0 && (
+                                    <div style={{ color: 'red' }}>owes ${-(balances[member.user_id].toFixed(2))}</div>
+                                )}
+                                </>
+                                // <div>${balances[member.user_id] ? balances[member.user_id].toFixed(2) : 0.00.toFixed(2)}</div>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
         )}
