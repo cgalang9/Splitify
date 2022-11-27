@@ -5,7 +5,7 @@ import { getGroupExpensesThunk } from '../../store/expenses';
 import { getGroupPaymentsThunk, deletePaymentThunk } from '../../store/payments';
 import { deleteExpenseThunk } from '../../store/expenses';
 import { getCurrGroupMembersThunk } from '../../store/currentGroupMembers';
-import './GroupPage.css'
+import './AllExpenses.css'
 
 const AllExpenses = () => {
     const dispatch = useDispatch()

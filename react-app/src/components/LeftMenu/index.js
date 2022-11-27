@@ -20,7 +20,7 @@ const LeftMenu = () => {
     return (
         <div id='left_menu_wrapper' className='flex_col'>
             <NavLink to='/dashboard' style={{ textDecoration: 'none' }}><div id='dashboard_link'>Dashboard</div></NavLink>
-            <NavLink to='/' style={{ textDecoration: 'none' }}><div>All Expenses(main for now)</div></NavLink>
+            <NavLink to='/all' style={{ textDecoration: 'none' }}><div>All Expenses</div></NavLink>
             <div id='left_menu_groups'>
                 <div id='left_menu_groups_head'>GROUPS <button onClick={() => history.push('/create-group')}><i className="fa-solid fa-plus" />add</button></div>
                 {user_groups && user_groups.groups.map(group => (
