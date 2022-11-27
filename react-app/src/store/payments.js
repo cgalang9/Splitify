@@ -21,6 +21,29 @@ export const getGroupPaymentsThunk = (groupId) => async (dispatch) => {
     }
 }
 
+//Get all payments of current user
+const GET_CURR_USER_PAYMENTS = 'payments/GET_CURR_USER_PAYMENTS'
+const getCurrUserPayments = (payments) => {
+    return { type: GET_CURR_USER_PAYMENTS, payments }
+}
+
+export const getCurrUserPaymentsThunk = () => async (dispatch) => {
+    const response = await fetch(`/api/payments/current-user`)
+
+    if (response.ok) {
+        const payments = await response.json()
+        await dispatch(getCurrUserPayments(payments))
+        return payments
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
 //Create a payment
 const CREATE_PAYMENT = 'payments/CREATE_PAYMENT'
 const createPayments = (payment) => {
@@ -125,6 +148,8 @@ export const deletePaymentThunk = (payment_id) => async (dispatch) => {
 export const paymentsReducer = (state = null, action) => {
     switch (action.type) {
         case GET_GROUP_PAYMENTS:
+            return { ...action.payments }
+        case GET_CURR_USER_PAYMENTS:
             return { ...action.payments }
         case CREATE_PAYMENT:
             return null

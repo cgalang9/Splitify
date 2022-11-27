@@ -21,6 +21,30 @@ export const getGroupExpensesThunk = (groupId) => async (dispatch) => {
     }
 }
 
+//Get all expenses of current user
+const GET_CURR_USER_EXPENSES = 'expenses/GET_CURR_USER_EXPENSES'
+const getCurrUserExpenses = (expenses) => {
+    return { type: GET_CURR_USER_EXPENSES, expenses }
+}
+
+export const getCurrUserExpensesThunk = () => async (dispatch) => {
+    const response = await fetch(`/api/expenses/current-user`)
+
+    if (response.ok) {
+        const expenses = await response.json()
+        await dispatch(getCurrUserExpenses(expenses))
+        return expenses
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
+
 //Create expense
 const CREATE_EXPENSE = 'expenses/CREATE_EXPENSE'
 const createExpense = (expense) => {
@@ -124,6 +148,8 @@ export const deleteExpenseThunk = (expense_id) => async (dispatch) => {
 export const expenseReducer = (state = null, action) => {
     switch (action.type) {
         case GET_GROUP_EXPENSES:
+            return { ...action.expenses }
+        case GET_CURR_USER_EXPENSES:
             return { ...action.expenses }
         case CREATE_EXPENSE:
             return null
