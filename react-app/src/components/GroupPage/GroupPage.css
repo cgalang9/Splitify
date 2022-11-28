@@ -6,6 +6,8 @@
 
 #group_page_wrapper {
     display: flex;
+    /* border: 1px solid blue; */
+    width: 100%;
 }
 
 #group_page_left,
@@ -13,6 +15,7 @@
 #group_page_right {
     width: 33%;
     height: 100vh;
+    border: 1px solid red;
 }
 
 #group_page_activity {
