@@ -214,12 +214,12 @@ const GroupPage = () => {
                                             <div className='group_page_activity_expense_details_breakdown flex_col'>
                                                 <div>
                                                     <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
-                                                    <span>{activity.payer.username}</span> paid <span>${activity.total}</span> and owes <span>${calcPayerOwes(activity.money_owed)}</span>
+                                                    <div><span>{activity.payer.username}</span> paid <span>${activity.total.toFixed(2)}</span> and owes <span>${calcPayerOwes(activity.money_owed)}</span></div>
                                                 </div>
                                                 {activity.money_owed.length > 0 && activity.money_owed.map(owed => (
                                                     <div key={owed.id}>
                                                         <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
-                                                        <span>{owed.username}</span> owes <span>${owed.amount_owed.toFixed(2)}</span>
+                                                        <div><span>{owed.username}</span> owes <span>${owed.amount_owed.toFixed(2)}</span></div>
                                                     </div>
                                                 ))}
                                             </div>
@@ -274,11 +274,11 @@ const GroupPage = () => {
                                             <div className='group_page_activity_payment_details_breakdown'>
                                                 <div>
                                                     <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
-                                                    <span>{activity.payer.username}</span> paid <span>${activity.total}</span>
+                                                    <div><span>{activity.payer.username}</span> paid <span>${activity.total.toFixed(2)}</span></div>
                                                 </div>
                                                 <div>
                                                     <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
-                                                    <span>{activity.payee.username}</span> paid <span>${activity.total}</span>
+                                                    <div><span>{activity.payee.username}</span> paid <span>${activity.total.toFixed(2)}</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -290,22 +290,26 @@ const GroupPage = () => {
                     </div>
                 </div>
                 <div id='group_page_right'>
+                    <div id='group_page_right_title'>GROUP BALANCES</div>
                     {group_members && group_members.members.map(member => (
-                        <div key={member.user_id}>
-                            <div>{member.name}</div>
-                            {balances && (
-                                <>
-                                {balances[member.user_id] === 0 && (
-                                    <div>settled up</div>
+                        <div key={member.user_id} id='group_page_right_member_item'>
+                            <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_group_right' />
+                            <div id='group_page_right_member_details'>
+                                <div>{member.name}</div>
+                                {balances && (
+                                    <>
+                                    {balances[member.user_id] === 0 && (
+                                        <div>settled up</div>
+                                    )}
+                                    {balances[member.user_id] > 0 && (
+                                        <div style={{ color: 'green' }}>gets back ${balances[member.user_id].toFixed(2)}</div>
+                                    )}
+                                    {balances[member.user_id] < 0 && (
+                                        <div style={{ color: 'red' }}>owes ${-(balances[member.user_id].toFixed(2))}</div>
+                                    )}
+                                    </>
                                 )}
-                                {balances[member.user_id] > 0 && (
-                                    <div style={{ color: 'green' }}>gets back ${balances[member.user_id].toFixed(2)}</div>
-                                )}
-                                {balances[member.user_id] < 0 && (
-                                    <div style={{ color: 'red' }}>owes ${-(balances[member.user_id].toFixed(2))}</div>
-                                )}
-                                </>
-                            )}
+                            </div>
                         </div>
                     ))}
                 </div>

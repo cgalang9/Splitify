@@ -34,6 +34,7 @@
 #group_page_left,
 #group_page_right {
     padding: 0 30px;
+    width: 500px;
 }
 
 #group_page_mid {
@@ -260,15 +261,23 @@
 .group_page_activity_payment_details_breakdown > div {
     display: flex;
     align-items: center;
+    gap: 5px;
+}
+
+.group_page_activity_expense_details_breakdown > div > div,
+.group_page_activity_payment_details_breakdown > div > div {
+    display: flex;
+    align-items: center;
     overflow-x: hidden;
     word-break: break-word;
     font-size: 14px;
     gap: 5px;
     width: 290px;
+    flex-wrap: wrap;
 }
 
-.group_page_activity_expense_details_breakdown > div > span,
-.group_page_activity_payment_details_breakdown > div > span {
+.group_page_activity_expense_details_breakdown > div > div > span,
+.group_page_activity_payment_details_breakdown > div > div > span {
     font-weight: 700;
 }
 
@@ -290,4 +299,33 @@
 
 .group_page_activity_payment_head_quicktotal {
     padding-right: 10px;
+}
+
+/* RIGHT */
+#group_page_right{
+    padding-top: 20px;
+}
+
+#group_page_right_title {
+    color: gray;
+    font-size: 14px;
+}
+
+#group_page_right_member_item {
+    display: flex;
+    padding-top: 7px;
+}
+
+#group_page_right_member_details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 8px;
+    font-size: 14px;
+}
+
+.user_icon_group_right {
+    border-radius: 50%;
+    width: 40px;
+    padding: 10px 0;
 }
