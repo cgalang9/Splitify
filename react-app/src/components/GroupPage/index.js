@@ -22,7 +22,7 @@ const GroupPage = () => {
             await dispatch(getGroupExpensesThunk(groupId))
             await dispatch(getGroupPaymentsThunk(groupId))
             await dispatch(getCurrGroupMembersThunk(groupId))
-            setIsLoaded(true)
+            // setIsLoaded(true)
           }
           fetchData();
     },[groupId])
@@ -44,6 +44,7 @@ const GroupPage = () => {
         }
         const expenses_payments = [...expenses_all, ...payments_all]
         await setSortedActivity(expenses_payments.sort((a, b) => new Date(b.date_paid).getTime() - new Date(a.date_paid).getTime()))
+        setIsLoaded(true)
     },[expenses, payments])
 
     const handleExpenseDelete = async(expense_id) => {
@@ -134,7 +135,7 @@ const GroupPage = () => {
                 </div>
                 <div id='group_page_mid' className='flex_col'>
                     <div id='group_page_head'>
-                        <div>{group_members.group.name}</div>
+                        <div>{group_members ? group_members.group.name : ""}</div>
                         <div><button onClick={() => history.push('/add-expense')}>Add an Expense</button></div>
                         <div><button onClick={() => history.push('/add-payment')}>Settle Up</button></div>
                     </div>
