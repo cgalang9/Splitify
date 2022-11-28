@@ -7,7 +7,9 @@ const Splash = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     return (
-        <h1>Splash Page</h1>
+        <div id='splash_wrapper'>
+            <h1>Splash Page</h1>
+        </div>
     )
 };
 

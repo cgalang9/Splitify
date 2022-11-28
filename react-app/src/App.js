@@ -18,6 +18,7 @@ import AddPaymentForm from './components/AddPaymentForm';
 import EditPaymentForm from './components/EditPaymentForm';
 import AddFriendForm from './components/AddFriendForm';
 import CreateGroup from './components/CreateGroup';
+import SplashNav from './components/SplashNav';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -36,50 +37,63 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
       <Switch>
         <Route path='/' exact={true}>
+          <SplashNav />
           <Splash />
         </Route>
         <Route path='/dashboard' exact={true}>
+          <NavBar />
           <Dashboard />
         </Route>
         <Route path='/groups/:groupId' exact={true}>
+          <NavBar />
           <GroupPage />
         </Route>
         <Route path='/all' exact={true}>
+          <NavBar />
           <AllExpenses />
         </Route>
         <Route path='/add-expense' exact={true}>
+          <NavBar />
           <AddExpenseForm />
         </Route>
         <Route path='/expenses/:expenseId/edit-expense' exact={true}>
+          <NavBar />
           <EditExpenseForm />
         </Route>
         <Route path='/add-payment' exact={true}>
+          <NavBar />
           <AddPaymentForm />
         </Route>
         <Route path='/payments/:paymentId/edit-payment' exact={true}>
+          <NavBar />
           <EditPaymentForm />
         </Route>
         <Route path='/create-group' exact={true}>
+          <NavBar />
           <CreateGroup />
         </Route>
         <Route path='/add-friend' exact={true}>
+          <NavBar />
           <AddFriendForm />
         </Route>
         <Route path='/login' exact={true}>
+          <SplashNav />
           <LoginForm />
         </Route>
-        <Route path='/sign-up' exact={true}>
+        <Route path='/signup' exact={true}>
+          <SplashNav />
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
+        {/* <ProtectedRoute path='/users' exact={true} >
+          <NavBar />
           <UsersList/>
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
+          <NavBar />
           <User />
-        </ProtectedRoute>
+        </ProtectedRoute> */}
       </Switch>
     </BrowserRouter>
   );
