@@ -125,6 +125,17 @@ const GroupPage = () => {
         getBalancePerUser()
     },[sortedActivity, group_members])
 
+    function toggleDetails(e) {
+        const details = e.target.parentNode.nextElementSibling
+        if (e.target.parentNode.nextElementSibling) {
+            if(details.classList.contains('active_details')) {
+                details.classList.remove('active_details')
+            } else {
+                details.classList.add('active_details')
+            }
+        }
+    }
+
 
     return (
         <>
@@ -135,73 +146,110 @@ const GroupPage = () => {
                 </div>
                 <div id='group_page_mid' className='flex_col'>
                     <div id='group_page_head'>
-                        <div>{group_members ? group_members.group.name : ""}</div>
-                        <div><button onClick={() => history.push('/add-expense')}>Add an Expense</button></div>
-                        <div><button onClick={() => history.push('/add-payment')}>Settle Up</button></div>
+                        <div id='group_page_head_title'>
+                            <img src='https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/avatar-teal41-house-50px.png' alt='group_icon'></img>
+                            {group_members ? group_members.group.name : ""}
+                        </div>
+                        <div id='group_page_head_buttons_container'>
+                            <div><button onClick={() => history.push('/add-expense')} className='add_expense_btn'>Add an Expense</button></div>
+                            <div><button onClick={() => history.push('/add-payment')} className='settle_up_btn'>Settle Up</button></div>
+                        </div>
                     </div>
                     <div id='group_page_activity' className='flex_col'>
                         {sortedActivity.length > 0 && sortedActivity.map((activity, idx) => (
                             <div key={idx} className='group_page_activity_li'>
                             {activity.money_owed && (
                                 <div className='group_page_activity_expense'>
-                                    <div className='group_page_activity_expense_head'>
-                                        <div className='group_page_activity_expense_date flex_col'>
-                                            <div>{new Date(activity.date_paid).toLocaleString('default', { month: 'short' })}</div>
-                                            <div>{new Date(activity.date_paid).getDate()}</div>
-                                        </div>
-                                        <div className='group_page_activity_expense_head_description'>
-                                            {activity.description}
+                                    <div className='group_page_activity_expense_head' onClick={toggleDetails}>
+                                        <div className='group_page_activity_expense_head_left'>
+                                            <div className='group_page_activity_expense_date flex_col'>
+                                                <div className='group_page_activity_expense_date_top'>{new Date(activity.date_paid).toLocaleString('default', { month: 'short' }).toUpperCase()}</div>
+                                                <div className='group_page_activity_expense_date_bottom'>{new Date(activity.date_paid).getDate()}</div>
+                                            </div>
+                                            <div>
+                                                <img src='https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/uncategorized/general@2x.png' alt='category_icon' className='category_icon'></img>
+                                            </div>
+                                            <div className='group_page_activity_expense_head_description'>
+                                                {activity.description}
+                                            </div>
                                         </div>
                                         <div className='group_page_activity_expense_head_quicktotal'>
-                                            {activity.payer.id === user.user.id ? 'you' : activity.payer.username} paid ${(activity.total).toFixed(2)}
-                                            {activity.payer.id === user.user.id ?
-                                                `you lent $${(activity.total - calcPayerOwes(activity.money_owed)).toFixed(2)}` :
-                                                `${activity.payer.username} lent you $${calcUserOwes(activity.money_owed, user.user.id).toFixed(2)}`
-                                            }
+                                            <div className='group_page_activity_expense_head_quicktotal_payer'>
+                                                <div style={{ color: 'gray' }}>
+                                                    {activity.payer.id === user.user.id ? 'you' : activity.payer.username} paid
+                                                </div>
+                                                <div style={{ fontWeight: 700, fontSize: 14 }}>
+                                                    ${(activity.total).toFixed(2)}
+                                                </div>
+                                            </div>
+                                            <div className='group_page_activity_expense_head_quicktotal_net'>
+                                                <div style={{ color: 'gray' }}>
+                                                    {activity.payer.id === user.user.id ? `you lent` : `${activity.payer.username} lent you`}
+                                                </div>
+                                                <div style={{ fontWeight: 700, fontSize: 14 }}>
+                                                    {activity.payer.id === user.user.id ? <span className='green'>${(activity.total - calcPayerOwes(activity.money_owed)).toFixed(2)}</span> : <span className='red'>${calcUserOwes(activity.money_owed, user.user.id).toFixed(2)}</span>}
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className='group_page_activity_expense_delete'>
                                             <div className='delete_expense_btn' onClick={() => handleExpenseDelete(activity.id)}><i className="fa-solid fa-x"/></div>
                                         </div>
                                     </div>
                                     <div className='group_page_activity_expense_details'>
-                                        <div className='group_page_activity_expense_details_description'>
-                                            {activity.description}
-                                        </div>
-                                        <div className='group_page_activity_expense_details_description'>
-                                            ${activity.total}
-                                        </div>
-                                        <div className='group_page_activity_expense_edit'>
-                                            <button onClick={() => history.push(`/expenses/${activity.id}/edit-expense`)}>Edit Expense</button>
-                                        </div>
-                                        <div className='group_page_activity_expense_details_breakdown'>
-                                            {activity.payer.username} paid ${activity.total} and owes ${calcPayerOwes(activity.money_owed)}
-                                            {activity.money_owed.length > 0 && activity.money_owed.map(owed => (
-                                                <div key={owed.id}>
-                                                    {owed.username} owes ${owed.amount_owed.toFixed(2)}
+                                        <div className='group_page_activity_expense_details_head'>
+                                            <img src='https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/uncategorized/general@2x.png' alt='category_icon' className='category_icon'></img>
+                                            <div className='flex_col'>
+                                                <div className='group_page_activity_expense_details_description'>
+                                                    {activity.description}
                                                 </div>
-                                            ))}
+                                                <div className='group_page_activity_expense_details_total'>
+                                                    ${activity.total.toFixed(2)}
+                                                </div>
+                                                <div className='group_page_activity_expense_edit'>
+                                                    <button className='edit_expense_btn' onClick={() => history.push(`/expenses/${activity.id}/edit-expense`)}>Edit Expense</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='group_page_activity_expense_details_bottom'>
+                                            <div className='group_page_activity_expense_details_breakdown flex_col'>
+                                                <div>
+                                                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
+                                                    <span>{activity.payer.username}</span> paid <span>${activity.total}</span> and owes <span>${calcPayerOwes(activity.money_owed)}</span>
+                                                </div>
+                                                {activity.money_owed.length > 0 && activity.money_owed.map(owed => (
+                                                    <div key={owed.id}>
+                                                        <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
+                                                        <span>{owed.username}</span> owes <span>${owed.amount_owed.toFixed(2)}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             )}
                             {activity.payee && (
                                 <div className='group_page_activity_payment'>
-                                    <div className='group_page_activity_payment_head'>
-                                        <div className='group_page_activity_li_payment'>
-                                            {activity.payer.username} paid {activity.payee.username} ${activity.total.toFixed(2)}
+                                    <div className='group_page_activity_payment_head' onClick={toggleDetails}>
+                                        <div className='group_page_activity_payment_head_left'>
+                                            <img src='https://assets.splitwise.com/assets/api/payment_icon/square/small/offline.png' alt='money_icon' className='money_icon_payment_li'></img>
+                                            <div className='group_page_activity_li_payment'>
+                                                {activity.payer.username} paid {activity.payee.username} ${activity.total.toFixed(2)}
+                                            </div>
                                         </div>
                                         {activity.payer.id === user.user.id && (
-                                            <div className='group_page_activity_expense_head_quicktotal'>
-                                                you paid ${(activity.total).toFixed(2)}
+                                            <div className='group_page_activity_payment_head_quicktotal'>
+                                                <div className='align_right' style={{ color: 'gray'}}>you paid </div>
+                                                <div className='red' style={{ fontWeight: 700, fontSize: 14 }}>${(activity.total).toFixed(2)}</div>
                                             </div>
                                         )}
                                         {activity.payee.id === user.user.id && (
-                                            <div className='group_page_activity_expense_head_quicktotal'>
-                                                you received ${(activity.total).toFixed(2)}
+                                            <div className='group_page_activity_payment_head_quicktotal'>
+                                                <div className='align_right' style={{ color: 'gray'}}>you received</div>
+                                                <div className='green' style={{ fontWeight: 700, fontSize: 14 }}>${(activity.total).toFixed(2)}</div>
                                             </div>
                                         )}
                                         {activity.payer.id !== user.user.id && activity.payee.id !== user.user.id && (
-                                            <div className='group_page_activity_expense_head_quicktotal'>
+                                            <div className='group_page_activity_payment_head_quicktotal' style={{ color: 'gray'}}>
                                                 not involved
                                             </div>
                                         )}
@@ -210,19 +258,29 @@ const GroupPage = () => {
                                         </div>
                                     </div>
                                     <div className='group_page_activity_payment_details'>
-                                        <div className='group_page_activity_payment_details_title'>Payment</div>
-                                        <div className='group_page_activity_payment_details_description'>
-                                            {activity.description}
+                                        <div className='group_page_activity_payment_details_head'>
+                                            <img src='https://assets.splitwise.com/assets/api/payment_icon/square/small/offline.png' alt='category_icon' className='category_icon'></img>
+                                            <div className='flex_col'>
+                                                <div className='group_page_activity_payment_details_description'>Payment</div>
+                                                <div className='group_page_activity_payment_details_total'>
+                                                    ${activity.total.toFixed(2)}
+                                                </div>
+                                                <div>
+                                                    <button className='edit_payment_btn' onClick={() => history.push(`/expenses/${activity.id}/edit-expense`)}>Edit Expense</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className='group_page_activity_payment_details_description'>
-                                            ${activity.total}
-                                        </div>
-                                        <div className='group_page_activity_payment_edit'>
-                                            <button onClick={() => history.push(`/payments/${activity.id}/edit-payment`)}>Edit payment</button>
-                                        </div>
-                                        <div className='group_page_activity_expense_details_breakdown'>
-                                            <div>{activity.payer.username} paid ${activity.total}</div>
-                                            <div>{activity.payee.username} paid ${activity.total}</div>
+                                        <div className='group_page_activity_payment_details_bottom'>
+                                            <div className='group_page_activity_payment_details_breakdown'>
+                                                <div>
+                                                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
+                                                    <span>{activity.payer.username}</span> paid <span>${activity.total}</span>
+                                                </div>
+                                                <div>
+                                                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
+                                                    <span>{activity.payee.username}</span> paid <span>${activity.total}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
