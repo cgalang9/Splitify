@@ -33,8 +33,16 @@
 
 #group_page_left,
 #group_page_right {
+    width: 300px;
+}
+
+#group_page_right {
     padding: 0 30px;
-    width: 500px;
+}
+
+#group_page_left {
+    display: flex;
+    justify-content: flex-end;
 }
 
 #group_page_mid {
@@ -270,9 +278,9 @@
     align-items: center;
     overflow-x: hidden;
     word-break: break-word;
-    font-size: 14px;
+    font-size: 13px;
     gap: 5px;
-    width: 290px;
+    width: 250px;
     flex-wrap: wrap;
 }
 

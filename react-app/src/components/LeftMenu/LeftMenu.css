@@ -1,9 +1,55 @@
 #left_menu_wrapper {
-    gap: 30px;
+    gap: 20px;
+    width: 250px;
+    padding-top: 20px;
+    padding-right: 20px;
 }
 
 
-#dashboard_link {
-    color: black;
-    text-decoration: none;
+.left_nav_link > i,
+.left_menu_friend_li >i {
+    padding-right: 5px;
+}
+
+.left_menu_friend_li {
+    color: gray;
+    overflow: scroll;
+
+}
+
+.left_nav_link {
+    overflow: hidden;
+    flex-wrap: nowrap;
+    word-break: break-word;
+}
+
+#left_menu_groups_head,
+#left_menu_friends_head {
+    background-color: rgb(245, 245, 245);
+    border-bottom: 1px solid rgb(227, 227, 227);
+    padding: 3px 10px;
+    color: gray;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.add_btn {
+    border: none;
+    background-color: rgb(245, 245, 245);
+    color: gray;
+    cursor: pointer;
+}
+
+.add_btn:hover {
+    color: #70caae;
+}
+
+.add_btn > i {
+    padding-right: 3px;
+}
+
+#left_menu_groups,
+#left_menu_friends {
+    gap: 5px;
 }
