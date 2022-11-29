@@ -36,7 +36,6 @@ const NavBar = () => {
       <nav id='nav'>
         <div id='logo'>
           <i className="fa-solid fa-envelope" />Splitify
-          {/* <LoginFormModal/> */}
         </div>
         <div id='menu' onClick={toggleMenu}>
           <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' id='nav_user_icon' />

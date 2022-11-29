@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getCurrUserExpensesThunk } from '../../store/expenses';
-import { getCurrUserPaymentsThunk, deletePaymentThunk } from '../../store/payments';
-import { deleteExpenseThunk } from '../../store/expenses';
+import { getCurrUserPaymentsThunk } from '../../store/payments';
 import './Dashboard.css'
 import LeftMenu from '../LeftMenu';
+import AddExpenseFormModal from '../AddExpenseForm';
+import AddPaymentFormModal from '../AddPaymentForm';
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -13,6 +14,7 @@ const Dashboard = () => {
 
     // const [isLoaded, setIsLoaded] = useState(false)
     const [balance, setBalance] = useState()
+    console.log(balance)
 
 
     useEffect(async() => {
@@ -101,6 +103,10 @@ const Dashboard = () => {
             })
         }
 
+        //if negative balance of one count then add it to other count
+        if(your_owed < 0) you_owe += -(your_owed)
+        if(you_owe < 0) you_owe += -(you_owe)
+
         const netBalance = {total, you_owe, your_owed, splits, user_keys}
         setBalance(netBalance)
     }
@@ -121,8 +127,8 @@ const Dashboard = () => {
                             Dashboard
                         </div>
                         <div id='dash_head_buttons_container'>
-                            <div><button onClick={() => history.push('/add-expense')} className='add_expense_btn'>Add an Expense</button></div>
-                            <div><button onClick={() => history.push('/add-payment')} className='settle_up_btn'>Settle Up</button></div>
+                            <AddExpenseFormModal />
+                            <AddPaymentFormModal />
                         </div>
                     </div>
                     <div id='dash_mid_head_bottom'>
@@ -140,7 +146,7 @@ const Dashboard = () => {
                         </div>
                         <div id='dash_mid_head_owe'>
                             <div>you owe</div>
-                            {balance && balance.you_owe === 0 && (
+                            {balance && balance.you_owe <= 0 && (
                                 <div>$0.00</div>
                             )}
                             {balance && balance.you_owe > 0 && (
@@ -149,7 +155,7 @@ const Dashboard = () => {
                         </div>
                         <div id='dash_mid_head_owed'>
                             <div>you are owed</div>
-                            {balance && balance.your_owed === 0 && (
+                            {balance && balance.your_owed <= 0 && (
                                 <div>$0.00</div>
                             )}
                             {balance && balance.your_owed > 0 && (

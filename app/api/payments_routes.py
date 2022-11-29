@@ -89,6 +89,10 @@ def create_payment():
     if group == None:
         return {"error": "group not found"}, 404
 
+    # validation: current user must be either payee or payer to create
+    if int(current_user.get_id()) != req.get('payer_id') and int(current_user.get_id()) != req.get('payee_id'):
+        return {"error": "Forbidden"}, 403
+
     # validation: current user must be in group to post
     group_members = UsersGroups.query.filter(UsersGroups.group_id == req.get('group_id')).all()
     member_ids = [member.user_id for member in group_members]

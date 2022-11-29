@@ -4,10 +4,14 @@ import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { getGroupExpensesThunk } from '../../store/expenses';
 import { getGroupPaymentsThunk, deletePaymentThunk } from '../../store/payments';
 import { deleteExpenseThunk } from '../../store/expenses';
-import { getCurrGroupMembersThunk } from '../../store/currentGroupMembers';
+import { getGroupMembersThunk } from '../../store/groupMembersForGroupPage'
 import { getCurrUserGroupsThunk } from '../../store/groups';
 import './GroupPage.css'
 import LeftMenu from '../LeftMenu';
+import AddExpenseFormModal from '../AddExpenseForm';
+import AddPaymentFormModal from '../AddPaymentForm';
+import EditExpenseFormModal from '../EditExpenseForm';
+import EditPaymentFormModal from '../EditPaymentForm';
 
 const GroupPage = () => {
     const dispatch = useDispatch()
@@ -23,7 +27,7 @@ const GroupPage = () => {
             await dispatch(getCurrUserGroupsThunk())
             await dispatch(getGroupExpensesThunk(groupId))
             await dispatch(getGroupPaymentsThunk(groupId))
-            await dispatch(getCurrGroupMembersThunk(groupId))
+            await dispatch(getGroupMembersThunk(groupId))
             // setIsLoaded(true)
           }
           fetchData();
@@ -32,7 +36,7 @@ const GroupPage = () => {
     const expenses = useSelector((state) => state.expenses)
     const payments = useSelector((state) => state.payments)
     const user = useSelector((state) => state.session)
-    const group_members = useSelector((state) => state.currGroupMembers)
+    const group_members = useSelector((state) => state.groupMembersForGroupPage)
     const user_groups = useSelector((state) => state.groups)
 
     //redirect if not logged in or not part of group or group not found
@@ -67,26 +71,32 @@ const GroupPage = () => {
         setIsLoaded(true)
     },[expenses, payments])
 
-    const handleExpenseDelete = async(expense_id) => {
+    const handleExpenseDelete = async(expense_id, e) => {
         if (window.confirm("Are you sure you want to delete this expense? You can not recover this expense after deletion.")) {
             try {
                 const data = await dispatch(deleteExpenseThunk(expense_id))
                 if (data.error) {
                     history.push('/error')
                 }
+                //closes details expansion when deleting
+                const details = e.target.parentNode.parentNode.parentNode.nextElementSibling
+                details.classList.remove('active_details')
             } catch (error) {
                 console.log(error)
             }
         }
     }
 
-    const handlePaymentDelete = async(payment_id) => {
+    const handlePaymentDelete = async(payment_id, e) => {
         if (window.confirm("Are you sure you want to delete this payment? You can not recover this payment after deletion.")) {
             try {
                 const data = await dispatch(deletePaymentThunk(payment_id))
                 if (data.error) {
                     history.push('/error')
                 }
+                //closes details expansion when deleting
+                const details = e.target.parentNode.parentNode.parentNode.nextElementSibling
+                details.classList.remove('active_details')
             } catch (error) {
                 console.log(error)
             }
@@ -171,8 +181,8 @@ const GroupPage = () => {
                             {group_members ? group_members.group.name : ""}
                         </div>
                         <div id='group_page_head_buttons_container'>
-                            <div><button onClick={() => history.push('/add-expense')} className='add_expense_btn'>Add an Expense</button></div>
-                            <div><button onClick={() => history.push('/add-payment')} className='settle_up_btn'>Settle Up</button></div>
+                            <AddExpenseFormModal />
+                            <AddPaymentFormModal />
                         </div>
                     </div>
                     <div id='group_page_activity' className='flex_col'>
@@ -212,7 +222,7 @@ const GroupPage = () => {
                                             </div>
                                         </div>
                                         <div className='group_page_activity_expense_delete'>
-                                            <div className='delete_expense_btn' onClick={() => handleExpenseDelete(activity.id)}><i className="fa-solid fa-x"/></div>
+                                            <div className='delete_expense_btn' onClick={(e) => handleExpenseDelete(activity.id, e)}><i className="fa-solid fa-x"/></div>
                                         </div>
                                     </div>
                                     <div className='group_page_activity_expense_details'>
@@ -226,7 +236,7 @@ const GroupPage = () => {
                                                     ${activity.total.toFixed(2)}
                                                 </div>
                                                 <div className='group_page_activity_expense_edit'>
-                                                    <button className='edit_expense_btn' onClick={() => history.push(`/expenses/${activity.id}/edit-expense`)}>Edit Expense</button>
+                                                    <EditExpenseFormModal expenseId={activity.id}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -274,7 +284,7 @@ const GroupPage = () => {
                                             </div>
                                         )}
                                         <div className='group_page_activity_payment_delete'>
-                                            <div className='delete_payment_btn' onClick={() => handlePaymentDelete(activity.id)}><i className="fa-solid fa-x"/></div>
+                                            <div className='delete_payment_btn' onClick={(e) => handlePaymentDelete(activity.id, e)}><i className="fa-solid fa-x"/></div>
                                         </div>
                                     </div>
                                     <div className='group_page_activity_payment_details'>
@@ -286,7 +296,7 @@ const GroupPage = () => {
                                                     ${activity.total.toFixed(2)}
                                                 </div>
                                                 <div>
-                                                    <button className='edit_payment_btn' onClick={() => history.push(`/expenses/${activity.id}/edit-expense`)}>Edit Expense</button>
+                                                    <EditPaymentFormModal paymentId={activity.id} />
                                                 </div>
                                             </div>
                                         </div>

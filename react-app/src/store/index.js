@@ -8,6 +8,7 @@ import { currGroupMembersReducer } from './currentGroupMembers';
 import { currExpenseReducer } from './currentExpense';
 import { currPaymentReducer } from './currentPayment';
 import { currUserFriendsReducer } from './currUserFriends';
+import { groupMembersForGroupPageReducer } from './groupMembersForGroupPage';
 
 const rootReducer = combineReducers({
   session,
@@ -17,7 +18,9 @@ const rootReducer = combineReducers({
   currGroupMembers: currGroupMembersReducer,
   currExpense: currExpenseReducer,
   currPayment: currPaymentReducer,
-  currUserFriends: currUserFriendsReducer
+  currUserFriends: currUserFriendsReducer,
+  groupMembersForGroupPage: groupMembersForGroupPageReducer
+
 });
 
 
