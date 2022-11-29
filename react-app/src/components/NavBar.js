@@ -24,30 +24,32 @@ const NavBar = () => {
   }
 
   return (
-    <nav id='nav'>
-      <div id='logo'>
-        LOGO HERE
-      </div>
-      <div id='menu' onClick={toggleMenu}>
-        <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' id='nav_user_icon' />
-        {user.user && <div>{user.user.username}</div>}
-        <i className="fa-solid fa-caret-down" />
-      </div>
-      <div id='dropdown_menu' className='hidden'>
-        <div className='dropdown_menu_item' onClick={() => history.push('/dashboard')}>
-          Dashboard
+    <div id='nav_wrapper'>
+      <nav id='nav'>
+        <div id='logo'>
+          <i className="fa-solid fa-envelope" />Splitify
         </div>
-        <div className='dropdown_menu_item' onClick={() => history.push('/create-group')}>
-          Create a group
+        <div id='menu' onClick={toggleMenu}>
+          <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' id='nav_user_icon' />
+          {user.user && <div>{user.user.username}</div>}
+          <i className="fa-solid fa-caret-down" />
         </div>
-        <div className='dropdown_menu_item' onClick={() => history.push('/add-friend')}>
-          Add a friend
+        <div id='dropdown_menu' className='hidden'>
+          <div className='dropdown_menu_item' id='dropdown_first' onClick={() => history.push('/dashboard')}>
+            Dashboard
+          </div>
+          <div className='dropdown_menu_item' onClick={() => history.push('/create-group')}>
+            Create a group
+          </div>
+          <div className='dropdown_menu_item' onClick={() => history.push('/add-friend')}>
+            Add a friend
+          </div>
+          <div className='dropdown_menu_item' id='dropdown_last' onClick={onLogout}>
+            Log out
+          </div>
         </div>
-        <div className='dropdown_menu_item' onClick={onLogout}>
-          Log out
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 }
 
