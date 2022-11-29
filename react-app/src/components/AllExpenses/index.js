@@ -283,20 +283,20 @@ const AllExpenses = () => {
                     </div>
                 </div>
                 <div id='all_right'>
-                    <div>YOUR TOTAL BALANCES</div>
+                    <div id='all_right_title'>YOUR TOTAL BALANCES</div>
                     {balance === 0 && (
                         <div>You are settled up</div>
                     )}
                     {balance > 0 && (
                         <>
-                            <div>you are owed</div>
-                            <div style={{ color: 'green' }}>${balance.toFixed(2)}</div>
+                            <div style={{ color: 'green' }} className='all_right_top_total'>you are owed</div>
+                            <div style={{ color: 'green' }} className='all_right_total'>${balance.toFixed(2)}</div>
                         </>
                     )}
                     {balance < 0 && (
                         <>
-                            <div>you owe</div>
-                            <div style={{ color: 'red' }}>${(balance * -1).toFixed(2)}</div>
+                            <div style={{ color: 'red' }} className='all_right_top_total'>you owe</div>
+                            <div style={{ color: 'red' }} className='all_right_total'>${(balance * -1).toFixed(2)}</div>
                         </>
                     )}
                 </div>
