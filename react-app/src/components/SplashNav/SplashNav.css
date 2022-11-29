@@ -10,6 +10,16 @@
     z-index: 1;
 }
 
+#splash_nav_logo {
+    font-family: 'Courgette', cursive;
+    font-size: 30px;
+    color: #70caae;
+    padding-left: 20px;
+}
+#splash_nav_logo > i {
+    padding-right: 5px;
+}
+
 #splash_nav_btns {
     display: flex;
     gap: 20px;
