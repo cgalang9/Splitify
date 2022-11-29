@@ -1,34 +1,101 @@
-#all_head {
-    display: flex;
-    background-color: rgb(223, 223, 223);
-    gap: 30px;
-}
-
 #all_wrapper {
     display: flex;
+    justify-content: center;
 }
 
 #all_left,
 #all_mid,
 #all_right {
-    width: 33%;
     min-height: 100vh;
 }
 
-#all_activity {
-    gap: 20px;
+#all_left,
+#all_right {
+    width: 300px;
+}
+
+#all_right {
+    padding: 0 30px;
+}
+
+#all_page_left {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#all_mid {
+    width: 580px;
+    border-left: 1px solid rgb(193, 193, 193);
+    border-right: 1px solid rgb(193, 193, 193);
+    box-shadow: 1px 0px 15px rgb(225, 225, 225), -1px 0px 15px rgb(225, 225, 225)
 }
 
 .all_activity_expense,
-.all_activity_payment {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+.all_activity_payment,
+#all_head {
+    border-bottom: 1px solid rgb(210, 210, 210);
 }
+
 .all_activity_expense_head,
 .all_activity_payment_head {
     display: flex;
     position: relative;
+    align-items: center;
     gap: 7px;
+}
+
+.all_activity_expense_head {
+    padding: 13px 10px;
+    justify-content: space-between;
+}
+
+.all_activity_expense_date {
+    align-items: center;
+    color: gray;
+}
+
+.all_activity_expense_date_top {
+    font-size: 12px;
+}
+
+.all_activity_expense_date_bottom {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.category_icon {
+    width: 35px;
+}
+
+.all_activity_expense_head_description_container {
+    justify-content: center;
+
+}
+
+.all_activity_expense_head_description {
+    text-align: left;
+    font-size: 18px;
+    font-weight: 700;
+    overflow-x: hidden;
+    word-break: break-word;
+}
+
+.all_activity_expense_head_group {
+    font-size: 10px;
+    margin-top: 2px;
+    /* background-color: rgb(226, 226, 226);
+    border-radius: 5px; */
+}
+
+
+.all_activity_expense_head_left {
+    display: flex;
+    gap: 7px;
+}
+
+.all_activity_expense_head_icon {
+    display: flex;
+    align-items: center;
 }
 
 
@@ -63,9 +130,176 @@
     display: flex;
     align-items: center;
     padding: 2px;
+    margin-right: 15px;
 }
 
 .all_activity_expense_details,
 .all_activity_payment_details {
     background-color: rgb(223, 223, 223);
+}
+
+#all_head_title {
+    display: flex;
+    align-items: center;
+}
+
+#all_head_buttons_container {
+    display: flex;
+    gap: 10px;
+}
+
+#all_head {
+    border-bottom: 1px solid rgb(210, 210, 210);
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(245, 245, 245);
+    gap: 30px;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 15px 10px;
+}
+
+#all_head_buttons_container {
+    display: flex;
+    gap: 10px;
+}
+
+.all_activity_expense_head_quicktotal,
+.all_activity_payment_head_quicktotal {
+    font-size: 12px;
+    display: flex;
+    margin-right: 45px;
+    gap: 20px;
+}
+
+.all_activity_expense_head_quicktotal_payer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.align_right {
+    text-align: right;
+}
+
+.all_activity_expense_head_quicktotal_payer > div,
+.all_activity_expense_head_quicktotal_net > div,
+.all_activity_payment_head_quicktotal > div {
+    overflow-x: hidden;
+    word-break: break-word;
+    width: 100px;
+}
+
+.all_activity_expense_head_quicktotal_payer > div {
+    text-align: right;
+}
+
+.all_activity_expense_details,
+.all_activity_payment_details {
+    background-color: rgb(245, 245, 245);
+    display: none;
+    padding: 10px 15px;
+}
+
+.active_details {
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0px 3px 5px rgb(225, 225, 225), inset 0px -3px 5px rgb(225, 225, 225)
+}
+
+.all_activity_expense_details_head,
+.all_activity_payment_details_head {
+    display: flex;
+    border-bottom: 1px solid rgb(206, 206, 206);
+    padding-bottom: 10px;
+}
+
+.all_activity_expense_details_head > img,
+.all_activity_payment_details_head > img {
+    width: 78px;
+    border: 1px solid rgb(206, 206, 206);
+}
+
+.all_activity_expense_details_head > div,
+.all_activity_payment_details_head > div {
+    justify-content: center;
+    padding-left: 10px;
+    gap: 3px;
+}
+
+.all_activity_expense_details_description,
+.all_activity_payment_details_description{
+    font-size: 18px;
+}
+
+.all_activity_expense_details_total,
+.all_activity_payment_details_total {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.edit_expense_btn,
+.edit_payment_btn {
+    background-color: #f9702b;
+    border: 0.5px solid gray;
+    border-radius: 5px;
+    padding: 2px 6px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.all_activity_expense_details_bottom,
+.all_activity_payment_details_bottom {
+    display: flex;
+}
+
+.user_icon_details {
+    border-radius: 50%;
+    width: 30px;
+    padding: 10px 0;
+}
+
+.all_activity_expense_details_breakdown > div,
+.all_activity_payment_details_breakdown > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.all_activity_expense_details_breakdown > div > div,
+.all_activity_payment_details_breakdown > div > div {
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+    word-break: break-word;
+    font-size: 13px;
+    gap: 5px;
+    width: 250px;
+    flex-wrap: wrap;
+}
+
+.all_activity_expense_details_breakdown > div > div > span,
+.all_activity_payment_details_breakdown > div > div > span {
+    font-weight: 700;
+}
+
+.all_activity_payment_head {
+    font-size: 12px;
+    justify-content: space-between;
+}
+
+.all_activity_payment_head_left {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.money_icon_payment_li {
+    width: 15px;
+    padding: 10px 5px 10px 13px;
+}
+
+.all_activity_payment_head_quicktotal {
+    padding-right: 10px;
 }

@@ -10,8 +10,8 @@ const NavBar = () => {
   const user = useSelector((state) => state.session)
 
   const onLogout = async (e) => {
-    await dispatch(logout());
     history.push('/')
+    await dispatch(logout());
   }
 
   const toggleMenu = () => {
