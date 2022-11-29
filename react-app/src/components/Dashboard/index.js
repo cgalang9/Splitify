@@ -28,6 +28,12 @@ const Dashboard = () => {
     const payments = useSelector((state) => state.payments)
     const user = useSelector((state) => state.session)
 
+    useEffect(() => {
+        if(!user.user) {
+            history.push('/')
+        }
+    },[])
+
 
     const getUserBalance = () => {
         let total = 0

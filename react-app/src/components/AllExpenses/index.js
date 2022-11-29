@@ -28,6 +28,12 @@ const AllExpenses = () => {
     const payments = useSelector((state) => state.payments)
     const user = useSelector((state) => state.session)
 
+    useEffect(() => {
+        if(!user.user) {
+            history.push('/')
+        }
+    },[])
+
     //sort payments and expenses in alphabetical order on one list
     useEffect(async() => {
         let expenses_all = []

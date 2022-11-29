@@ -5,6 +5,7 @@ import { getGroupExpensesThunk } from '../../store/expenses';
 import { getGroupPaymentsThunk, deletePaymentThunk } from '../../store/payments';
 import { deleteExpenseThunk } from '../../store/expenses';
 import { getCurrGroupMembersThunk } from '../../store/currentGroupMembers';
+import { getCurrUserGroupsThunk } from '../../store/groups';
 import './GroupPage.css'
 import LeftMenu from '../LeftMenu';
 
@@ -19,6 +20,7 @@ const GroupPage = () => {
 
     useEffect(async() => {
         async function fetchData() {
+            await dispatch(getCurrUserGroupsThunk())
             await dispatch(getGroupExpensesThunk(groupId))
             await dispatch(getGroupPaymentsThunk(groupId))
             await dispatch(getCurrGroupMembersThunk(groupId))
@@ -31,6 +33,24 @@ const GroupPage = () => {
     const payments = useSelector((state) => state.payments)
     const user = useSelector((state) => state.session)
     const group_members = useSelector((state) => state.currGroupMembers)
+    const user_groups = useSelector((state) => state.groups)
+
+    //redirect if not logged in or not part of group or group not found
+    useEffect(() => {
+        if(!user.user) {
+            history.push('/')
+        }
+    },[])
+
+    useEffect(() => {
+        if(user_groups) {
+            let inGroup = false
+            user_groups.groups.forEach(group => {
+                if (group.id === Number(groupId)) inGroup = true
+            });
+            if (!inGroup) history.push('/dashboard')
+        }
+    },[user_groups])
 
     //sort payments and expenses in alphabetical order on one list
     useEffect(async() => {

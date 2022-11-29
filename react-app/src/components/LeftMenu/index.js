@@ -18,6 +18,12 @@ const LeftMenu = () => {
     const friends = useSelector((state) => state.currUserFriends)
     const user = useSelector((state) => state.session)
 
+    useEffect(() => {
+        if(!user.user) {
+            history.push('/')
+        }
+    },[])
+
     return (
         <div id='left_menu_wrapper' className='flex_col'>
             <NavLink to='/dashboard'
