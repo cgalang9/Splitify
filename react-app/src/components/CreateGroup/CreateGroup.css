@@ -1,9 +1,3 @@
-.errors {
-    display: flex;
-    justify-content: center;
-    padding: 5px 0;
-}
-
 .create_group_form_head {
     display: flex;
     align-items: center;

@@ -10,6 +10,11 @@
 
 .errors {
     color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 5px 5px 5px;
+
 }
 
 body {

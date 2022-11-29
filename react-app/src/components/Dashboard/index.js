@@ -14,8 +14,6 @@ const Dashboard = () => {
 
     // const [isLoaded, setIsLoaded] = useState(false)
     const [balance, setBalance] = useState()
-    console.log(balance)
-
 
     useEffect(async() => {
         async function fetchData() {

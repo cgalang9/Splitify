@@ -19,6 +19,8 @@ const SignUpForm = () => {
       if (data) {
         setErrors(data)
       }
+    } else {
+      setErrors(['Passwords do not match'])
     }
   };
 
@@ -44,51 +46,54 @@ const SignUpForm = () => {
 
   return (
     <div id='signup_form_wrapper'>
-      <form onSubmit={onSignUp}>
-        <h1>Sign up</h1>
-        <div>
+      <form id='signup_form' onSubmit={onSignUp}>
+        <div id='signup_form_title'>Sign up</div>
+        <div className='errors'>
           {errors.map((error, ind) => (
             <div key={ind}>{error}</div>
           ))}
         </div>
-        <div>
-          <label>User Name</label>
+        <div className='auth_form_input_container flex_col'>
+          <div>User Name</div>
           <input
             type='text'
             name='username'
             onChange={updateUsername}
             value={username}
+            required
           ></input>
         </div>
-        <div>
-          <label>Email</label>
+        <div className='auth_form_input_container flex_col'>
+          <div>Email</div>
           <input
-            type='text'
+            type='email'
             name='email'
             onChange={updateEmail}
             value={email}
+            required
           ></input>
         </div>
-        <div>
-          <label>Password</label>
+        <div className='auth_form_input_container flex_col'>
+          <div>Password</div>
           <input
             type='password'
             name='password'
             onChange={updatePassword}
             value={password}
+            required
           ></input>
         </div>
-        <div>
-          <label>Repeat Password</label>
-          <input
-            type='password'
-            name='repeat_password'
-            onChange={updateRepeatPassword}
-            value={repeatPassword}
-            required={true}
-          ></input>
+        <div className='auth_form_input_container flex_col'>
+            <div>Repeat Password</div>
+            <input
+              type='password'
+              name='repeat_password'
+              onChange={updateRepeatPassword}
+              value={repeatPassword}
+              required={true}
+            ></input>
         </div>
-        <button type='submit'>Sign Up</button>
+        <button type='submit' id='signup_btn'>Sign Up</button>
       </form>
     </div>
   );

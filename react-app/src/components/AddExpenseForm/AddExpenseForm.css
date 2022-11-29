@@ -1,8 +1,4 @@
-.errors {
-    display: flex;
-    justify-content: center;
-    padding: 5px 0;
-}
+
 
 .expense_form_head {
     display: flex;

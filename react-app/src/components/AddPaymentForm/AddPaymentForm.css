@@ -1,12 +1,4 @@
-/* .payment_form {
-    align-items: center;
-} */
 
-.errors {
-    display: flex;
-    justify-content: center;
-    padding: 5px 0;
-}
 
 .payment_form_head {
     display: flex;
