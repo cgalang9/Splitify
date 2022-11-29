@@ -110,10 +110,14 @@ const Dashboard = () => {
             </div>
             <div id='dash_mid' className='flex_col'>
                 <div id='dash_mid_head'>
-                    <div id='dash_mid_head_top'>
-                        <div>Dashboard</div>
-                        <div><button onClick={() => history.push('/add-expense')}>Add an Expense</button></div>
-                        <div><button onClick={() => history.push('/add-payment')}>Settle Up</button></div>
+                    <div id='dash_head_top'>
+                        <div id='dash_head_title'>
+                            Dashboard
+                        </div>
+                        <div id='dash_head_buttons_container'>
+                            <div><button onClick={() => history.push('/add-expense')} className='add_expense_btn'>Add an Expense</button></div>
+                            <div><button onClick={() => history.push('/add-payment')} className='settle_up_btn'>Settle Up</button></div>
+                        </div>
                     </div>
                     <div id='dash_mid_head_bottom'>
                         <div id='dash_mid_head_total'>
@@ -151,12 +155,15 @@ const Dashboard = () => {
                 <div id='dash_mid_main'>
                     <div id='dash_mid_main_you_owe' className='flex_col'>
                         <div id='dash_mid_owe_head'>YOU OWE</div>
-                        <div id='dash_mid_owe_li'>
+                        <div id='dash_mid_owe_li' className='flex_col'>
                             {balance && Object.keys(balance.splits).map(el => (
                                 balance.splits[el] < 0 && (
-                                    <div>
-                                        <div>{balance.user_keys[el]}</div>
-                                        <div style={{ color: 'red' }}>you owe ${(balance.splits[el] * -1).toFixed(2)}</div>
+                                    <div className='dash_mid_owe_li_wrapper'>
+                                        <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_dash' />
+                                        <div id='group_page_right_member_details'>
+                                            <div  style={{ fontSize: 16 }}>{balance.user_keys[el]}</div>
+                                            <div style={{ color: 'red', fontSize: 14 }}>you owe ${(balance.splits[el] * -1).toFixed(2)}</div>
+                                        </div>
                                     </div>
                                 )
                             ))}
@@ -164,12 +171,15 @@ const Dashboard = () => {
                     </div>
                     <div id='dash_mid_main_you_are_owed' className='flex_col'>
                         <div id='dash_mid_owed_head'>YOU ARE OWED</div>
-                        <div id='dash_mid_owed_li'>
+                        <div id='dash_mid_owed_li' className='flex_col'>
                         {balance && Object.keys(balance.splits).map(el => (
                                 balance.splits[el] > 0 && (
-                                    <div>
-                                        <div>{balance.user_keys[el]}</div>
-                                        <div style={{ color: 'green' }}>owes you ${balance.splits[el].toFixed(2)}</div>
+                                    <div className='dash_mid_owed_li_wrapper'>
+                                        <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_dash' />
+                                        <div id='group_page_right_member_details'>
+                                            <div style={{ fontSize: 16 }}>{balance.user_keys[el]}</div>
+                                            <div style={{ color: 'green', fontSize: 14 }}>owes you ${balance.splits[el].toFixed(2)}</div>
+                                        </div>
                                     </div>
                                 )
                             ))}

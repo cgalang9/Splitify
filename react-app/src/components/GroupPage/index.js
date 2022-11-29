@@ -305,7 +305,7 @@ const GroupPage = () => {
                                         <div style={{ color: 'green' }}>gets back ${balances[member.user_id].toFixed(2)}</div>
                                     )}
                                     {balances[member.user_id] < 0 && (
-                                        <div style={{ color: 'red' }}>owes ${-(balances[member.user_id].toFixed(2))}</div>
+                                        <div style={{ color: 'red' }}>owes ${(balances[member.user_id] * -1).toFixed(2)}</div>
                                     )}
                                     </>
                                 )}

@@ -9,34 +9,130 @@
     justify-content: center;
 }
 
+#dash_left,
+#dash_mid,
+#dash_right {
+    min-height: 100vh;
+}
+
+#dash_left,
+#dash_right {
+    width: 300px;
+}
+
+#dash_right {
+    padding: 0 30px;
+}
+
+#dash_left {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#dash_mid {
+    width: 580px;
+    border-left: 1px solid rgb(193, 193, 193);
+    border-right: 1px solid rgb(193, 193, 193);
+    box-shadow: 1px 0px 15px rgb(225, 225, 225), -1px 0px 15px rgb(225, 225, 225)
+}
+
+#dash_head_title {
+    display: flex;
+    align-items: center;
+}
+
+#dash_head_buttons_container {
+    display: flex;
+    gap: 10px;
+}
+
+#dash_head_top {
+    border-bottom: 1px solid rgb(210, 210, 210);
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(245, 245, 245);
+    gap: 30px;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 15px 10px;
+}
+
+#dash_head_buttons_container {
+    display: flex;
+    gap: 10px;
+}
+
+
+
+#dash_mid_head_bottom{
+    justify-content: space-between;
+    background-color: rgb(245, 245, 245);
+    border-bottom: 1px solid rgb(210, 210, 210);
+}
+
+#dash_mid_head_bottom > div {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+}
+
+#dash_mid_head_bottom {
+    color: gray
+}
+
+#dash_mid_head_owe {
+    border-right: 1px solid rgb(210, 210, 210);
+    border-left: 1px solid rgb(210, 210, 210);
+}
+
 #dash_mid_main_you_owe,
 #dash_mid_main_you_are_owed {
     height: 100vh;
     width: 50%;
+    /* padding: 15px; */
 }
 
 #dash_mid_owed_head {
     text-align: right;
 }
 
+#dash_mid_owed_head,
+#dash_mid_owe_head {
+    color: gray;
+    font-size: 16px;
+    padding-bottom: 20px;
+    padding: 15px;
+}
+
+
 #dash_mid_owe_li,
 #dash_mid_owed_li {
-    height: 100vh;
     width: 100%;
-    /* border: 1px solid black; */
+
 }
 
-#dash_mid_head {
-    background-color: rgb(223, 223, 223);
+#dash_mid_owe_li {
+    border-right: 1px solid rgb(210, 210, 210);
 }
 
-#dash_mid_head_bottom{
-    justify-content: space-between;
+#dash_mid_owed_li {
+    border-left: 1px solid rgb(210, 210, 210);
 }
 
-#dash_mid,
-#dash_left,
+.dash_mid_owed_li_wrapper,
+.dash_mid_owe_li_wrapper {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.user_icon_dash {
+    border-radius: 50%;
+    height: 30px;
+}
+
 #dash_right {
-    width: 33%;
-    height: 100vh;
+    padding-top: 20px;
 }
