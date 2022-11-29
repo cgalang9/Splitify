@@ -1,0 +1,171 @@
+.errors {
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.expense_form_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 5px 5px 0 0;
+    background-color: #70caae;
+    color: white;
+    width: 350px;
+}
+
+
+.expense_form_x {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.expense_form_x:hover {
+    opacity: 0.7;
+}
+
+.expense_form_users {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border-bottom: 1px solid rgb(193, 193, 193);
+}
+
+.expense_form_users_title {
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.expense_form_users_list {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    width: 200px;
+    font-size: 14px;
+    gap: 5px 10px;
+    padding: 10px 0;
+    /* border: 1px solid red; */
+}
+
+.expense_form_main_inputs {
+    display: flex;
+    justify-content: center;
+    column-gap: 15px;
+    padding: 10px;
+}
+
+.expense_form_cat_icon {
+    width: 65px;
+    border-radius: 5px;
+}
+
+.expense_form_input_decription,
+.expense_form_total_container {
+    border: none;
+    font-size: 20px;
+    display: flex;
+    border-bottom: 1px dotted black;
+}
+
+.expense_form_input_decription {
+    width: 197px;
+}
+
+.expense_form_total_container {
+    font-size: 16px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+.expense_form_total_container > span {
+    padding-right: 3px;
+}
+
+.expense_form_input_total {
+    border: none;
+    font-size: 24px;
+    color: gray;
+    width: 180px;
+}
+
+.expense_form_input_total:focus,
+.expense_form_input_decription:focus {
+    outline: none;
+}
+
+.expense_form_paid_by,
+.expense_form_split_preview {
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.expense_form_input_payer {
+    margin: 0 5px;
+    text-align: center;
+    padding: 2px 2px;
+    color: #62b198;
+}
+
+.expense_form_input_date,
+.expense_form_input_payer,
+.expense_form_input_group {
+    background-color: rgb(247, 247, 247);
+    border-radius: 15px;
+    border: 1px solid gray;
+}
+
+.expense_form_group_container,
+.expense_form_date_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 13px;
+}
+
+
+.expense_form_input_date,
+.expense_form_input_group {
+    padding: 2px 13px;
+}
+
+.expense_form_btn_container {
+    border-top: 1px solid rgb(193, 193, 193);
+    padding: 10px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    border-radius: 5px;
+    column-gap: 10px;
+}
+
+.expense_form_save,
+.expense_form_cancel {
+    font-size: 16px;
+    padding: 7px 10px;
+    border: 1px solid gray;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.expense_form_save {
+    background-color: #70caae;
+    color: white;
+}
+
+.edit_expense_form_group_container {
+    background-color: rgb(247, 247, 247);
+    border-radius: 15px;
+    border: 1px solid gray;
+    padding: 3px 15px;
+    font: 13px;
+    display: flex;
+    margin-top: 13px;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

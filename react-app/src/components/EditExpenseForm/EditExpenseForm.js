@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import './EditExpenseForm.css'
+import '../AddExpenseForm/AddExpenseForm.css'
 import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
 import { getCurrExpenseThunk } from '../../store/currentExpense'
 import { editExpenseThunk } from '../../store/expenses'
 import { getGroupExpensesThunk } from '../../store/expenses';
 
 
-function EditExpenseForm({expenseId}) {
+function EditExpenseForm({ closeModal, expenseId }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -41,7 +41,7 @@ function EditExpenseForm({expenseId}) {
         if(expense) {
             setGroupId(expense.group.id)
             setDescription(expense.description)
-            setTotal(expense.total)
+            setTotal(parseFloat(expense.total).toFixed(2))
             setDate(new Date(expense.date_paid).toISOString().split('T')[0])
             let checkedUsersArr = []
             if (expense.payer.id !== user.user.id) {
@@ -134,18 +134,20 @@ function EditExpenseForm({expenseId}) {
 
 
     return (
-        <div id='edit_expense_form_wrapper'>
-            <form id='edit_expense_form' onSubmit={handleSubmit}>
-                <div>
-                    <h1>Edit expense</h1>
+        <div className='expense_form_wrapper flex_col'>
+            <form className='expense_form flex_col' onSubmit={handleSubmit}>
+                <div className='expense_form_head'>
+                    <div className='expense_form_title'>Edit expense</div>
+                    <div className='expense_form_x' onClick={closeModal}><i className="fa-solid fa-x"/></div>
                 </div>
                 <div className='errors'>
                     {errors && (
                         <div className='errors'>{errors}</div>
                     )}
                 </div>
-                <div>
-                    <label htmlFor="split">With you and: </label>
+                <div className='expense_form_users'>
+                    <div htmlFor="split" className='expense_form_users_title'>With you and: </div>
+                    <div className='expense_form_users_list'>
                         {members && user && members.members.map((member) => (
                             member.user_id !== user.user.id && (
                                 <label htmlFor={member.user_id} key={member.user_id}>
@@ -161,43 +163,42 @@ function EditExpenseForm({expenseId}) {
                                 </label>
                             )
                         ))}
+                    </div>
                 </div>
-                <div>
-                    <label>Description </label>
-                    <input
-                        type="text"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                        minLength={1}
-                        maxLength={40}
-                    />
+                <div className='expense_form_main_inputs'>
+                    <img src='https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/uncategorized/general@2x.png' alt='category_icon' className='expense_form_cat_icon' />
+                    <div className='expense_form_main_inputs_right flex_col'>
+                        <input
+                            type="text"
+                            className='expense_form_input_decription'
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                            minLength={1}
+                            maxLength={40}
+                            placeholder='Enter a description'
+                        />
+                        <div className='expense_form_total_container'>
+                            <span>$</span>
+                            <input
+                                type="number"
+                                className='expense_form_input_total'
+                                step="0.01"
+                                value={total}
+                                onChange={(e) => setTotal(e.target.value)}
+                                required
+                                min={1.00}
+                                placeholder={0.00}
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label>Total </label>
-                    <input
-                        type="number"
-                        step="0.01"
-                        value={total}
-                        onChange={(e) => setTotal(e.target.value)}
-                        required
-                        min={1}
-                    />
-                </div>
-                <div>
-                    <label>Date </label>
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="payer">Paid by
+                <div className='expense_form_paid_by'>
+                <label htmlFor="payer">Paid by
                         {payerId && (
                             <select
                                 name="payer"
+                                className='expense_form_input_payer'
                                 value={payerId}
                                 onChange={(e) => setPayerId(e.target.value)}
                                 required
@@ -213,15 +214,26 @@ function EditExpenseForm({expenseId}) {
                      and split equally​.
                     </label>
                 </div>
-                <div>
+                <div className='expense_form_split_preview'>
                     {`($${total ? (parseFloat((checkedUsers.length > 0 ? total/(checkedUsers.length + 1) : total)).toFixed(2)) : 0.00.toFixed(2)}/person)`}
                 </div>
-                <div>
-                    {expense && <div>Group: {expense.group.name}</div>}
+                <div className='expense_form_date_container'>
+                    <input
+                        type="date"
+                        className='expense_form_input_date'
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        required
+                    />
                 </div>
-                <button type='submit'>Save</button>
+                <div className='edit_expense_form_group_container'>
+                    {expense && <div style={{ fontSize: 14, textAlign: 'center' }}>Group: {expense.group.name}</div>}
+                </div>
+                <div className='expense_form_btn_container'>
+                    <button type="button" className='expense_form_cancel' onClick={closeModal}>Cancel</button>
+                    <button type='submit' className='expense_form_save'>Save</button>
+                </div>
             </form>
-            {/* <button className='cancel-btn' onClick={() => history.push(`/items/${itemId}`)}>Cancel</button> */}
         </div>
     )
 }

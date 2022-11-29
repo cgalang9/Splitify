@@ -54,7 +54,7 @@ function App() {
           <NavBar />
           <AllExpenses />
         </Route>
-        <Route path='/add-expense' exact={true}>
+        {/* <Route path='/add-expense' exact={true}>
           <NavBar />
           <AddExpenseForm />
         </Route>
@@ -85,7 +85,7 @@ function App() {
         <Route path='/signup' exact={true}>
           <SplashNav />
           <SignUpForm />
-        </Route>
+        </Route> */}
         {/* <ProtectedRoute path='/users' exact={true} >
           <NavBar />
           <UsersList/>
