@@ -5,7 +5,7 @@ import './AddFriendForm.css'
 import { getFriendsThunk, addFriendThunk  } from '../../store/currUserFriends'
 
 
-function AddFriendForm() {
+function AddFriendForm({ closeModal }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -61,20 +61,22 @@ function AddFriendForm() {
     useEffect(() => {}, [errors])
 
     return (
-        <div id='edit_payment_form_wrapper'>
-            <form id='edit_payment_form' onSubmit={handleSubmit}>
-                <div>
-                    <h1>Add friend</h1>
+        <div className='add_friend_form_wrapper'>
+            <form className='add_friend_form' onSubmit={handleSubmit}>
+                <div className='add_friend_form_head'>
+                    <div className='add_friend_form_title'>Add a friend</div>
+                    <div className='add_friend_form_x' onClick={closeModal}><i className="fa-solid fa-x"/></div>
                 </div>
                 <div className='errors'>
                     {errors && (
                         <div className='errors'>{errors}</div>
                     )}
                 </div>
-                <div>
+                <div className='add_friend_form_input_container'>
                     <select
                             name="friend"
                             value={friendId}
+                            className='add_friend_form_friend_input'
                             onChange={(e) => setFriendId(e.target.value)}
                             required
                             defaultValue=''
@@ -85,9 +87,11 @@ function AddFriendForm() {
                             ))}
                     </select>
                 </div>
-                <button type='submit'>Add friend</button>
+                <div className='add_friend_form_btn_container'>
+                    <button type="button" className='add_friend_form_cancel' onClick={closeModal}>Cancel</button>
+                    <button type='submit' className='add_friend_form_save'>Add friend</button>
+                </div>
             </form>
-            {/* <button className='cancel-btn' onClick={() => history.push(`/items/${itemId}`)}>Cancel</button> */}
         </div>
     )
 }

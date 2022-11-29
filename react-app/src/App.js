@@ -77,7 +77,7 @@ function App() {
         <Route path='/add-friend' exact={true}>
           <NavBar />
           <AddFriendForm />
-        </Route>
+        </Route> */}
         <Route path='/login' exact={true}>
           <SplashNav />
           <LoginForm />
@@ -85,7 +85,7 @@ function App() {
         <Route path='/signup' exact={true}>
           <SplashNav />
           <SignUpForm />
-        </Route> */}
+        </Route>
         {/* <ProtectedRoute path='/users' exact={true} >
           <NavBar />
           <UsersList/>

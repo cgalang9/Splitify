@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import './EditPaymentForm.css'
+import '../AddPaymentForm/AddPaymentForm.css'
 import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
 import { getCurrPaymentThunk } from '../../store/currentPayment'
 import { editPaymentThunk } from '../../store/payments'
-import { getCurrUserPaymentsThunk } from '../../store/payments';
+import { getGroupPaymentsThunk } from '../../store/payments';
 
 
-function EditPaymentForm({ paymentId }) {
+function EditPaymentForm({ closeModal, paymentId }) {
     const dispatch = useDispatch()
     const history = useHistory()
-    // const { paymentId } = useParams()
 
     useEffect(async() => {
         try {
@@ -42,7 +41,7 @@ function EditPaymentForm({ paymentId }) {
             setGroupId(payment.group.id)
             setPayerId(payment.payer.id)
             setPayeeId(payment.payee.id)
-            setTotal(payment.total)
+            setTotal(parseFloat(payment.total).toFixed(2))
             setDate(new Date(payment.date_paid).toISOString().split('T')[0])
         }
     },[payment])
@@ -86,7 +85,7 @@ function EditPaymentForm({ paymentId }) {
                 await setErrors(data.error);
             } else {
                 await dispatch(clearGroupMembers())
-                dispatch(getCurrUserPaymentsThunk())
+                dispatch(getGroupPaymentsThunk(groupId))
                 history.push(`/groups/${groupId}`)
             }
         } catch (error) {
@@ -99,20 +98,27 @@ function EditPaymentForm({ paymentId }) {
     useEffect(() => {}, [errors])
 
     return (
-        <div id='edit_payment_form_wrapper'>
-            <form id='edit_payment_form' onSubmit={handleSubmit}>
-                <div>
-                    <h1>Edit payment</h1>
+        <div className='payment_form_wrapper'>
+            <form className='payment_form flex_col' onSubmit={handleSubmit}>
+                <div className='payment_form_head'>
+                    <div className='payment_form_title'>Edit payment</div>
+                    <div className='payment_form_x' onClick={closeModal}><i className="fa-solid fa-x"/></div>
                 </div>
                 <div className='errors'>
                     {errors && (
                         <div className='errors'>{errors}</div>
                     )}
                 </div>
-                <div>
+                <div className='payment_form_icon_container'>
+                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_payment_form' />
+                    <i className="fa-solid fa-arrow-right" />
+                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_payment_form' />
+                </div>
+                <div className='payment_form_paid_by'>
                     <select
                             name="payer"
                             value={payerId}
+                            className='payment_form_input_payer'
                             onChange={(e) => setPayerId(e.target.value)}
                             required
                             defaultValue=''
@@ -125,6 +131,7 @@ function EditPaymentForm({ paymentId }) {
                     paid
                     <select
                             name="payee"
+                            className='payment_form_input_payee'
                             value={payeeId}
                             onChange={(e) => setPayeeId(e.target.value)}
                             required
@@ -136,32 +143,36 @@ function EditPaymentForm({ paymentId }) {
                             ))}
                     </select>
                 </div>
-                <div>
-                    <label>Total </label>
+                <div className='payment_form_total_container'>
+                    <span>$</span>
                     <input
                         type="number"
+                        className='payment_form_input_total'
                         step="0.01"
                         value={total}
                         onChange={(e) => setTotal(e.target.value)}
                         required
                         min={0.01}
+                        placeholder={parseFloat(0.00).toFixed(2)}
                     />
                 </div>
-                <div>
-                    <label>Date </label>
+                <div className='payment_form_date_container'>
                     <input
                         type="date"
+                        className='payment_form_input_date'
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    {payment && <div>Group: {payment.group.name}</div>}
+                <div className='edit_payment_form_group_container'>
+                    {payment && <div style={{ fontSize: 14, textAlign: 'center' }}>Group: {payment.group.name}</div>}
                 </div>
-                <button type='submit'>Save</button>
+                <div className='payment_form_btn_container'>
+                    <button type="button" className='payment_form_cancel' onClick={closeModal}>Cancel</button>
+                    <button type='submit' className='payment_form_save'>Save</button>
+                </div>
             </form>
-            {/* <button className='cancel-btn' onClick={() => history.push(`/items/${itemId}`)}>Cancel</button> */}
         </div>
     )
 }

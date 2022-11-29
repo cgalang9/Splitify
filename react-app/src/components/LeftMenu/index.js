@@ -49,7 +49,7 @@ const LeftMenu = () => {
                 <div id='left_menu_groups_head'>GROUPS <button onClick={() => setShowModalGroup(true)} className='add_btn'><i className="fa-solid fa-plus" />add</button></div>
                 {showModalGroup && (
                     <Modal onClose={() => setShowModalGroup(false)}>
-                      <CreateGroup />
+                      <CreateGroup closeModal={() => setShowModalGroup(false)} />
                     </Modal>
                  )}
                 {user_groups && user_groups.groups.map(group => (
@@ -68,7 +68,7 @@ const LeftMenu = () => {
                 <div id='left_menu_friends_head'>FRIENDS <button className='add_btn' onClick={() => setShowModalFriend(true)}><i className="fa-solid fa-plus" />add</button></div>
                 {showModalFriend && (
                     <Modal onClose={() => setShowModalFriend(false)}>
-                      <AddFriendForm />
+                      <AddFriendForm closeModal={() => setShowModalFriend(false)} />
                     </Modal>
                 )}
                 {friends && friends.currUserFriends.map(friend => (

@@ -5,7 +5,7 @@ import './AddPaymentForm.css'
 import { getCurrUserGroupsThunk } from '../../store/groups'
 import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
 import { createPaymentsThunk } from '../../store/payments'
-import { getCurrUserPaymentsThunk } from '../../store/payments';
+import { getGroupPaymentsThunk } from '../../store/payments';
 
 
 function AddPaymentForm({ closeModal }) {
@@ -25,8 +25,8 @@ function AddPaymentForm({ closeModal }) {
     const [payerId, setPayerId] = useState()
     const [payeeId, setPayeeId] = useState(user.user.id)
     const [groupId, setGroupId] = useState()
-    const [total, setTotal] = useState(0)
-    const [date, setDate] = useState("")
+    const [total, setTotal] = useState()
+    const [date, setDate] = useState(new Date().toISOString().split('T')[0])
     const [errors, setErrors] = useState()
 
     //sets a default group when form opened
@@ -84,7 +84,7 @@ function AddPaymentForm({ closeModal }) {
                 await setErrors(data.error);
             } else {
                 await dispatch(clearGroupMembers())
-                dispatch(getCurrUserPaymentsThunk())
+                dispatch(getGroupPaymentsThunk(groupId))
                 history.push(`/groups/${groupId}`)
                 closeModal()
             }
@@ -100,20 +100,27 @@ function AddPaymentForm({ closeModal }) {
     useEffect(() => {}, [errors])
 
     return (
-        <div id='add_payment_form_wrapper'>
-            <form id='add_payment_form' onSubmit={handleSubmit}>
-                <div>
-                    <h1>Settle up</h1>
+        <div className='payment_form_wrapper'>
+            <form className='payment_form flex_col' onSubmit={handleSubmit}>
+                <div className='payment_form_head'>
+                    <div className='payment_form_title'>Settle up</div>
+                    <div className='payment_form_x' onClick={closeModal}><i className="fa-solid fa-x"/></div>
                 </div>
                 <div className='errors'>
                     {errors && (
                         <div className='errors'>{errors}</div>
                     )}
                 </div>
-                <div>
+                <div className='payment_form_icon_container'>
+                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_payment_form' />
+                    <i className="fa-solid fa-arrow-right" />
+                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_payment_form' />
+                </div>
+                <div className='payment_form_paid_by'>
                     <select
                             name="payer"
                             value={payerId}
+                            className='payment_form_input_payer'
                             onChange={(e) => setPayerId(e.target.value)}
                             required
                             defaultValue=''
@@ -126,6 +133,7 @@ function AddPaymentForm({ closeModal }) {
                     paid
                     <select
                             name="payee"
+                            className='payment_form_input_payee'
                             value={payeeId}
                             onChange={(e) => setPayeeId(e.target.value)}
                             required
@@ -137,30 +145,32 @@ function AddPaymentForm({ closeModal }) {
                             ))}
                     </select>
                 </div>
-                <div>
-                    <label>Total </label>
+                <div className='payment_form_total_container'>
+                    <span>$</span>
                     <input
                         type="number"
+                        className='payment_form_input_total'
                         step="0.01"
                         value={total}
                         onChange={(e) => setTotal(e.target.value)}
                         required
                         min={0.01}
+                        placeholder={parseFloat(0.00).toFixed(2)}
                     />
                 </div>
-                <div>
-                    <label>Date </label>
+                <div className='payment_form_date_container'>
                     <input
                         type="date"
+                        className='payment_form_input_date'
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label htmlFor="group">Group</label>
+                <div className='payment_form_group_container'>
                     <select
                         name="group"
+                        className='payment_form_input_group'
                         value={groupId}
                         onChange={(e) => setGroupId(e.target.value)}
                         required
@@ -172,9 +182,11 @@ function AddPaymentForm({ closeModal }) {
                         )}
                     </select>
                 </div>
-                <button type='submit'>Save</button>
+                <div className='payment_form_btn_container'>
+                    <button type="button" className='payment_form_cancel' onClick={closeModal}>Cancel</button>
+                    <button type='submit' className='payment_form_save'>Save</button>
+                </div>
             </form>
-            {/* <button className='cancel-btn' onClick={() => history.push(`/items/${itemId}`)}>Cancel</button> */}
         </div>
     )
 }

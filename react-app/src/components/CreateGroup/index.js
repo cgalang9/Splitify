@@ -6,7 +6,7 @@ import { getFriendsThunk } from '../../store/currUserFriends'
 import { createGroupThunk } from '../../store/groups'
 
 
-function CreateGroup() {
+function CreateGroup({ closeModal }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -61,29 +61,32 @@ function CreateGroup() {
     useEffect(() => {}, [errors])
 
     return (
-        <div id='edit_payment_form_wrapper'>
-            <form id='edit_payment_form' onSubmit={handleSubmit}>
-                <div>
-                    <h1>Create group</h1>
+        <div id='create_group_form_wrapper'>
+            <form id='create_group_form flex_col' onSubmit={handleSubmit}>
+                <div className='create_group_form_head'>
+                    <div className='create_group_form_title'>Create group</div>
+                    <div className='create_group_form_x' onClick={closeModal}><i className="fa-solid fa-x"/></div>
                 </div>
                 <div className='errors'>
                     {errors && (
                         <div className='errors'>{errors}</div>
                     )}
                 </div>
-                <div>
-                    <label>Group Name </label>
+                <div className='create_group_form_container_name'>
                     <input
                         type="text"
+                        className='create_group_form_input_name'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
                         minLength={1}
                         maxLength={20}
+                        placeholder='Enter group name'
                     />
                 </div>
-                <div>
-                    <label htmlFor="users">Add friends to group: </label>
+                <div className='create_group_form_container_members flex_col'>
+                    <div className='create_group_form_members_head'>Add friends to group: </div>
+                    <div className='create_group_form_member_li'>
                         {friends && friends.currUserFriends.map((friend) => (
                             <label htmlFor={friend.id} key={friend.id}>
                                 <input type="checkbox"
@@ -94,10 +97,13 @@ function CreateGroup() {
                                 <span>{friend.username}</span>
                             </label>
                         ))}
+                    </div>
                 </div>
-                <button type='submit'>Save</button>
+                <div className='expense_form_btn_container'>
+                    <button type="button" className='expense_form_cancel' onClick={closeModal}>Cancel</button>
+                    <button type='submit' className='expense_form_save'>Save</button>
+                </div>
             </form>
-            {/* <button className='cancel-btn' onClick={() => history.push(`/items/${itemId}`)}>Cancel</button> */}
         </div>
     )
 }

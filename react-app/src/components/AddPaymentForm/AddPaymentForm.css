@@ -1,0 +1,149 @@
+/* .payment_form {
+    align-items: center;
+} */
+
+.errors {
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.payment_form_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 5px 5px 0 0;
+    background-color: #70caae;
+    color: white;
+    width: 350px;
+}
+
+
+.payment_form_x {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.payment_form_x:hover {
+    opacity: 0.7;
+}
+
+.payment_form_icon_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: gray;
+    font-size: 22px;
+    gap: 10px;
+}
+
+.user_icon_payment_form {
+    border-radius: 50%;
+    width: 60px;
+}
+
+.payment_form_paid_by {
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.payment_form_input_payee,
+.payment_form_input_payer {
+    margin: 0 5px;
+    text-align: center;
+    padding: 2px 2px;
+    color: #62b198;
+    background-color: rgb(247, 247, 247);
+    border-radius: 15px;
+    border: 1px solid gray;
+}
+
+.payment_form_total_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    width: 200px;
+    margin-top: 5px;
+    border: none;
+    font-size: 20px;
+    border-bottom: 1px dotted black;
+    align-self: center;
+}
+
+.payment_form_total_container > span {
+    padding-right: 3px;
+}
+
+.payment_form_input_total {
+    border: none;
+    font-size: 24px;
+    color: gray;
+    width: 180px;
+}
+
+.payment_form_input_total:focus {
+    outline: none;
+}
+
+.payment_form_input_group,
+.payment_form_input_date {
+    background-color: rgb(247, 247, 247);
+    border-radius: 15px;
+    border: 1px solid gray;
+}
+
+.payment_form_group_container,
+.payment_form_date_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 13px;
+}
+
+
+.payment_form_input_date,
+.payment_form_input_group {
+    padding: 2px 13px;
+}
+
+.payment_form_btn_container {
+    border-top: 1px solid rgb(193, 193, 193);
+    padding: 10px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    border-radius: 5px;
+    column-gap: 10px;
+}
+
+.payment_form_save,
+.payment_form_cancel {
+    font-size: 16px;
+    padding: 7px 10px;
+    border: 1px solid gray;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.payment_form_save {
+    background-color: #70caae;
+    color: white;
+}
+
+.edit_payment_form_group_container {
+    background-color: rgb(247, 247, 247);
+    border-radius: 15px;
+    border: 1px solid gray;
+    padding: 3px 15px;
+    font: 13px;
+    display: flex;
+    margin-top: 13px;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
