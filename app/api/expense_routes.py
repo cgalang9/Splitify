@@ -358,11 +358,12 @@ def delete_comment_expense(comment_id):
     Delete an expense comment
     """
     comment = ExpenseComment.query.get(comment_id)
-    expense_id = comment.expense_id
 
     # validation: comment not found
     if comment == None:
         return {"error": "Expense not found"}, 404
+
+    expense_id = comment.expense_id
 
     # validation: can not delete comment of another user
     if comment.user_id != int(current_user.get_id()):

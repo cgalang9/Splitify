@@ -239,8 +239,6 @@ export const expenseReducer = (state = null, action) => {
             new_expense_del['comments'] = action.comments.newComments
             delteCommentExpenseState.expenses[idx_del] = new_expense_del
             return delteCommentExpenseState
-
-            return
         default:
             return state
     }

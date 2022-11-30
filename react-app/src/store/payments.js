@@ -144,6 +144,63 @@ export const deletePaymentThunk = (payment_id) => async (dispatch) => {
     }
 }
 
+//Post a comment on payment
+const ADD_COMMENT_PAYMENT = 'payments/ADD_COMMENT_PAYMENT'
+const addCommentPayment = (payment_id, comments) => {
+    return { type: ADD_COMMENT_PAYMENT, payment_id, comments }
+}
+
+export const addCommentPaymentThunk = (payment_id, comment) => async (dispatch) => {
+    const { text } = comment
+    const response = await fetch(`/api/payments/${payment_id}/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text
+        })
+    })
+
+    if (response.ok) {
+        const comments = await response.json()
+        await dispatch(addCommentPayment(payment_id, comments))
+        return comments
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
+//Delete an payment
+const DELETE_COMMENT_PAYMENT = 'payments/DELETE_COMMENT_PAYMENT'
+const deleteCommentPayment = (comments, payment_id) => {
+    return { type: DELETE_COMMENT_PAYMENT, comments, payment_id }
+}
+
+export const deleteCommentPaymentThunk = (comment_id, payment_id) => async (dispatch) => {
+    const response = await fetch(`/api/payments/comments/${comment_id}`, {
+        method: 'DELETE'
+    })
+
+    if (response.ok) {
+        const comments = await response.json()
+        await dispatch(deleteCommentPayment(comments, payment_id))
+        return comments
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
 
 export const paymentsReducer = (state = null, action) => {
     switch (action.type) {
@@ -164,6 +221,24 @@ export const paymentsReducer = (state = null, action) => {
             } else {
                 return null
             }
+        case ADD_COMMENT_PAYMENT:
+            const addCommentPaymentState = { ...state }
+            const idx = addCommentPaymentState.payments.findIndex(obj => {
+                return obj.id == action.payment_id
+            })
+            const new_payment = {...addCommentPaymentState.payments[idx]}
+            new_payment['comments'] = action.comments.newPayments
+            addCommentPaymentState.payments[idx] = new_payment
+            return addCommentPaymentState
+        case DELETE_COMMENT_PAYMENT:
+            const delteCommentPaymentState = { ...state }
+            const idx_del = delteCommentPaymentState.payments.findIndex(obj => {
+                return obj.id == action.payment_id
+            })
+            const new_payment_del = {...delteCommentPaymentState.payments[idx_del]}
+            new_payment_del['comments'] = action.comments.newComments
+            delteCommentPaymentState.payments[idx_del] = new_payment_del
+            return delteCommentPaymentState
         default:
             return state
     }
