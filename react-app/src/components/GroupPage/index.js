@@ -81,7 +81,7 @@ const GroupPage = () => {
         setIsLoaded(true)
     },[expenses, payments])
 
-    //soru comments by date create for comments section
+    //sort comments by date create for comments section
     const sortComments = (comments) => {
         return comments.sort((a, b) => new Date(a.date_created).getTime() - new Date(b.date_created).getTime())
     }

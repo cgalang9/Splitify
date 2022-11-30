@@ -13,6 +13,10 @@ import EditPaymentFormModal from '../EditPaymentForm';
 import user_icon_img from '../../assests/user_icon_img.png'
 import cat_icon_img from '../../assests/cat_icon_img.png'
 import payment_icon_img from '../../assests/payment_icon_img.png'
+import AddExpenseCommentForm from '../AddExpenseComment';
+import { deleteCommentExpenseThunk } from '../../store/expenses';
+import AddPaymentCommentForm from '../AddPaymentComment';
+import { deleteCommentPaymentThunk } from '../../store/payments';
 
 const AllExpenses = () => {
     const dispatch = useDispatch()
@@ -85,6 +89,37 @@ const AllExpenses = () => {
                 console.log(error)
             }
         }
+    }
+
+    const handleExpenseCommentDelete = async(comment_id, expense_id) => {
+        if (window.confirm("Are you sure you want to delete this comment? You can not recover this comment after deletion.")) {
+            try {
+                const data = await dispatch(deleteCommentExpenseThunk(comment_id, expense_id))
+                if (data.error) {
+                    history.push('/error')
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
+    const handlePaymentCommentDelete = async(comment_id, payment_id) => {
+        if (window.confirm("Are you sure you want to delete this comment? You can not recover this comment after deletion.")) {
+            try {
+                const data = await dispatch(deleteCommentPaymentThunk(comment_id, payment_id))
+                if (data.error) {
+                    history.push('/error')
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
+    //sort comments by date create for comments section
+    const sortComments = (comments) => {
+        return comments.sort((a, b) => new Date(a.date_created).getTime() - new Date(b.date_created).getTime())
     }
 
     const calcPayerOwes = (owed) => {
@@ -235,6 +270,29 @@ const AllExpenses = () => {
                                                     </div>
                                                 ))}
                                             </div>
+                                            <div className='group_page_activity_expense_details_comments flex_col'>
+                                                <div id='group_page_activity_expense_details_comments_head'><i className="fa-solid fa-comment"/> NOTES AND COMMENTS</div>
+                                                {activity.comments.length > 0 && sortComments(activity.comments).map(comment => (
+                                                    <div key={comment.id} className='comment_box flex_col'>
+                                                        <div className='comment_head'>
+                                                            <div className='comment_head_left'>
+                                                                <span className='bold'>{comment.username}</span>
+                                                                <span className='comment_month'>{new Date(comment.date_created).toLocaleString('default', { month: 'short' })}</span>
+                                                                <span className='comment_date'>{new Date(comment.date_created).getDate()}</span>
+                                                            </div>
+                                                            {user.user.id === comment.user_id && (
+                                                                <div className='delete_expense_comment_btn' onClick={(e) => handleExpenseCommentDelete(comment.id, activity.id)}><i className="fa-solid fa-x"/></div>
+                                                            )}
+                                                        </div>
+                                                        <div className='comment_text'>
+                                                            {comment.text}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                <div className='form_container'>
+                                                    <AddExpenseCommentForm expense_id={activity.id} />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -291,6 +349,29 @@ const AllExpenses = () => {
                                                 <div>
                                                     <img src={user_icon_img} alt='user_icon' className='user_icon_details' />
                                                     <div><span>{activity.payee.username}</span> paid <span>${activity.total.toFixed(2)}</span></div>
+                                                </div>
+                                            </div>
+                                            <div className='group_page_activity_expense_details_comments flex_col'>
+                                                <div id='group_page_activity_expense_details_comments_head'><i className="fa-solid fa-comment"/> NOTES AND COMMENTS</div>
+                                                {activity.comments.length > 0 && sortComments(activity.comments).map(comment => (
+                                                    <div key={comment.id} className='comment_box flex_col'>
+                                                        <div className='comment_head'>
+                                                            <div className='comment_head_left'>
+                                                                <span className='bold'>{comment.username}</span>
+                                                                <span className='comment_month'>{new Date(comment.date_created).toLocaleString('default', { month: 'short' })}</span>
+                                                                <span className='comment_date'>{new Date(comment.date_created).getDate()}</span>
+                                                            </div>
+                                                            {user.user.id === comment.user_id && (
+                                                                <div className='delete_expense_comment_btn' onClick={(e) => handlePaymentCommentDelete(comment.id, activity.id)}><i className="fa-solid fa-x"/></div>
+                                                            )}
+                                                        </div>
+                                                        <div className='comment_text'>
+                                                            {comment.text}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                <div className='form_container'>
+                                                    <AddPaymentCommentForm payment_id={activity.id} />
                                                 </div>
                                             </div>
                                         </div>
