@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getGroupExpensesThunk } from '../../store/expenses';
 import { getGroupPaymentsThunk, deletePaymentThunk } from '../../store/payments';
 import { deleteExpenseThunk } from '../../store/expenses';
@@ -87,7 +87,13 @@ const GroupPage = () => {
         }
     }
 
-    const handlePaymentDelete = async(payment_id, e) => {
+    const handlePaymentDelete = async(payment_id, e, payerId, payeeId) => {
+
+        if(payerId !== user.user.id && payeeId !== user.user.id) {
+            alert("You do not have permission to delete this payment")
+            return
+        }
+
         if (window.confirm("Are you sure you want to delete this payment? You can not recover this payment after deletion.")) {
             try {
                 const data = await dispatch(deletePaymentThunk(payment_id))
@@ -284,7 +290,7 @@ const GroupPage = () => {
                                             </div>
                                         )}
                                         <div className='group_page_activity_payment_delete'>
-                                            <div className='delete_payment_btn' onClick={(e) => handlePaymentDelete(activity.id, e)}><i className="fa-solid fa-x"/></div>
+                                            <div className='delete_payment_btn' onClick={(e) => handlePaymentDelete(activity.id, e, activity.payer.id, activity.payee.id)}><i className="fa-solid fa-x"/></div>
                                         </div>
                                     </div>
                                     <div className='group_page_activity_payment_details'>
