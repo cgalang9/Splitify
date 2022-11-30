@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addCommentExpenseThunk } from '../../store/expenses'
-import './AddExpenseComment.css'
+import { addCommentPaymentThunk } from '../../store/payments';
+import './AddPaymentComment.css'
 
 
-function AddExpenseCommentForm({ expense_id }) {
+function AddPaymentCommentForm({ payment_id }) {
     const dispatch = useDispatch()
 
     const [text, setText] = useState('')
@@ -20,7 +20,7 @@ function AddExpenseCommentForm({ expense_id }) {
         }
 
         try {
-            const data = await dispatch(addCommentExpenseThunk(expense_id, comment))
+            const data = await dispatch(addCommentPaymentThunk(payment_id, comment))
             if (data.error) {
                 await setCommentErrors(data.error);
             } else {
@@ -53,4 +53,4 @@ function AddExpenseCommentForm({ expense_id }) {
     );
 }
 
-export default AddExpenseCommentForm;
+export default AddPaymentCommentForm;

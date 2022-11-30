@@ -164,6 +164,7 @@ export const addCommentPaymentThunk = (payment_id, comment) => async (dispatch) 
 
     if (response.ok) {
         const comments = await response.json()
+        console.log(comments)
         await dispatch(addCommentPayment(payment_id, comments))
         return comments
     } else if (response.status < 500) {
@@ -223,11 +224,14 @@ export const paymentsReducer = (state = null, action) => {
             }
         case ADD_COMMENT_PAYMENT:
             const addCommentPaymentState = { ...state }
+            console.log('=============')
+            console.log(addCommentPaymentState)
             const idx = addCommentPaymentState.payments.findIndex(obj => {
                 return obj.id == action.payment_id
             })
+            console.log(idx)
             const new_payment = {...addCommentPaymentState.payments[idx]}
-            new_payment['comments'] = action.comments.newPayments
+            new_payment['comments'] = action.comments.newComments
             addCommentPaymentState.payments[idx] = new_payment
             return addCommentPaymentState
         case DELETE_COMMENT_PAYMENT:
