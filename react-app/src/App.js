@@ -41,17 +41,14 @@ function App() {
         <Route path='/dashboard' exact={true}>
           <NavBar />
           <Dashboard />
-          <Footer />
         </Route>
         <Route path='/groups/:groupId' exact={true}>
           <NavBar />
           <GroupPage />
-          <Footer />
         </Route>
         <Route path='/all' exact={true}>
           <NavBar />
           <AllExpenses />
-          <Footer />
         </Route>
         <Route path='/login' exact={true}>
           <SplashNav />

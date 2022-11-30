@@ -16,7 +16,6 @@
 #splash_row1_wrapper,
 #splash_row4_wrapper {
     width: 100%;
-    background-image: url("https://img.freepik.com/free-vector/white-background-with-triangle-patterns_1017-18410.jpg?w=1800&t=st=1669761611~exp=1669762211~hmac=d186f98e770b32163f7b89958684389506726d784da29f60fe4694af5aafba2e");
     background-size: contain;
     display: flex;
     justify-content: center;
@@ -108,7 +107,6 @@
 }
 
 .splash_box {
-    background-image: url("https://img.freepik.com/free-vector/white-background-with-triangle-patterns_1017-18410.jpg?w=1800&t=st=1669761611~exp=1669762211~hmac=d186f98e770b32163f7b89958684389506726d784da29f60fe4694af5aafba2e");
     background-size: contain;
     color: white;
 }

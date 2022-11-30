@@ -6,6 +6,7 @@ import { getCurrUserGroupsThunk } from '../../store/groups'
 import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
 import { createPaymentsThunk } from '../../store/payments'
 import { getGroupPaymentsThunk } from '../../store/payments';
+import user_icon_img from '../../assests/user_icon_img.png'
 
 
 function AddPaymentForm({ closeModal }) {
@@ -112,9 +113,9 @@ function AddPaymentForm({ closeModal }) {
                     )}
                 </div>
                 <div className='payment_form_icon_container'>
-                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_payment_form' />
+                    <img src={user_icon_img} alt='user_icon' className='user_icon_payment_form' />
                     <i className="fa-solid fa-arrow-right" />
-                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_payment_form' />
+                    <img src={user_icon_img} alt='user_icon' className='user_icon_payment_form' />
                 </div>
                 <div className='payment_form_paid_by'>
                     <select

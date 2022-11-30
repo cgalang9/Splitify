@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
 import './auth.css'
+import background from '../../assests/background.png'
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -35,7 +36,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div id='login_form_wrapper'>
+    <div id='login_form_wrapper' style={{ backgroundImage: `url(${background})`}}>
       <form id='login_form' onSubmit={onLogin}>
         <div id='login_form_title'>Log in</div>
         <div className='errors'>

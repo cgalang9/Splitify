@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import background from '../../assests/background.png'
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
@@ -45,7 +46,7 @@ const SignUpForm = () => {
   }
 
   return (
-    <div id='signup_form_wrapper'>
+    <div id='signup_form_wrapper' style={{ backgroundImage: `url(${background})`}}>
       <form id='signup_form' onSubmit={onSignUp}>
         <div id='signup_form_title'>Sign up</div>
         <div className='errors'>

@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import './Splash.css'
+import phone1 from '../../assests/phone1.png'
+import phone2 from '../../assests/phone2.png'
+import phone3 from '../../assests/phone3.png'
+import phone4 from '../../assests/phone4.png'
+import phone5 from '../../assests/phone5.png'
+import background from '../../assests/background.png'
+
 
 const Splash = () => {
     const dispatch = useDispatch()
@@ -38,7 +45,7 @@ const Splash = () => {
 
     return (
         <div id='splash_wrapper' className='flex_col'>
-            <div id='splash_row1_wrapper'>
+            <div id='splash_row1_wrapper' style={{ backgroundImage: `url(${background})`}}>
                 <div id='splash_row1' className='splash_row'>
                     <div id='splash_row1_left' className='flex_col'>
                         <div id='splash_row1_left_head' className='flex_col'>
@@ -71,38 +78,38 @@ const Splash = () => {
                 </div>
             </div>
             <div id='splash_row2' className='splash_row'>
-                <div id='splash_row2_left' className='splash_box flex_col'>
+                <div id='splash_row2_left' className='splash_box flex_col' style={{ backgroundImage: `url(${background})`}}>
                     <div className='splash_box_head flex_col'>
                         <div className='splash_box_title'>Track balances</div>
                         <div className='splash_box_text'>Keep track of shared expenses, balances, and who owes who.</div>
                     </div>
-                    <img src='https://www.splitwise.com/assets/home_page/fixtures/asset1@2x.png' alt='phone' className='phone_img'></img>
+                    <img src={phone1} alt='phone' className='phone_img'></img>
                 </div>
-                <div id='splash_row2_right' className='splash_box flex_col'>
+                <div id='splash_row2_right' className='splash_box flex_col' style={{ backgroundImage: `url(${background})`}}>
                     <div className='splash_box_head flex_col'>
                         <div className='splash_box_title'>Organize expenses</div>
                         <div className='splash_box_text'>Split expenses with any group: trips, housemates, friends, and family.</div>
                     </div>
-                    <img src='https://www.splitwise.com/assets/home_page/fixtures/asset2@2x.png' alt='phone' className='phone_img'></img>
+                    <img src={phone2} alt='phone' className='phone_img'></img>
                 </div>
             </div>
             <div id='splash_row3' className='splash_row'>
-                <div id='splash_row3_left' className='splash_box flex_col'>
+                <div id='splash_row3_left' className='splash_box flex_col' style={{ backgroundImage: `url(${background})`}}>
                     <div className='splash_box_head flex_col'>
                         <div className='splash_box_title'>Add expenses easily</div>
                         <div className='splash_box_text'>Quickly add expenses on the go before you forget who paid.</div>
                     </div>
-                    <img src='https://www.splitwise.com/assets/home_page/fixtures/asset3@2x.png' alt='phone' className='phone_img'></img>
+                    <img src={phone3} alt='phone' className='phone_img'></img>
                     </div>
-                <div id='splash_row3_right' className='splash_box flex_col'>
+                <div id='splash_row3_right' className='splash_box flex_col' style={{ backgroundImage: `url(${background})`}}>
                     <div className='splash_box_head flex_col'>
                         <div className='splash_box_title'>Pay friends back</div>
                         <div className='splash_box_text'>Settle up with a friend and record any cash or online payment.</div>
                     </div>
-                    <img src='https://www.splitwise.com/assets/home_page/fixtures/asset4@2x.png' alt='phone' className='phone_img'></img>
+                    <img src={phone4} alt='phone' className='phone_img'></img>
                 </div>
             </div>
-            <div id='splash_row4_wrapper'>
+            <div id='splash_row4_wrapper' style={{ backgroundImage: `url(${background})`}}>
                 <div id='splash_row4'>
                     <div id='splash_row4_left'>
                         <div id='splash_row4_left_head_top'>Get even more with PRO</div>
@@ -110,7 +117,7 @@ const Splash = () => {
                         <div id='splash_signup_bottom' onClick={() => history.push('/signup')}>Sign Up</div>
                     </div>
                     <div id='splash_row4_right'>
-                        <img src='https://www.splitwise.com/assets/home_page/fixtures/asset5@2x.png' alt='phone' className='phone_img'></img>
+                        <img src={phone5} alt='phone' className='phone_img'></img>
                     </div>
                 </div>
             </div>

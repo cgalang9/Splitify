@@ -6,6 +6,7 @@ import { getCurrUserGroupsThunk } from '../../store/groups'
 import { getCurrGroupMembersThunk, clearGroupMembers } from '../../store/currentGroupMembers'
 import { createExpenseThunk } from '../../store/expenses'
 import { getGroupExpensesThunk } from '../../store/expenses';
+import cat_icon_img from '../../assests/cat_icon_img.png'
 
 
 function AddExpenseForm({ closeModal }) {
@@ -139,7 +140,7 @@ function AddExpenseForm({ closeModal }) {
                     </div>
                 </div>
                 <div className='expense_form_main_inputs'>
-                    <img src='https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/uncategorized/general@2x.png' alt='category_icon' className='expense_form_cat_icon' />
+                    <img src={cat_icon_img} alt='category_icon' className='expense_form_cat_icon' />
                     <div className='expense_form_main_inputs_right flex_col'>
                         <input
                             type="text"

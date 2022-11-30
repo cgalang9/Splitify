@@ -201,7 +201,7 @@ const Dashboard = () => {
             </div>
             <div id='dash_right'>
                 <div id='dash_right_title'>MY LINKS</div>
-                <a href='https://github.com/cgalang9'><img src={github} alt='github_logo' id='dash_right_github'/></a>
+                <div id='dash_right_github_container'><a href='https://github.com/cgalang9'><img src={github} alt='github_logo' id='dash_right_github'/></a></div>
             </div>
         </div>
     )

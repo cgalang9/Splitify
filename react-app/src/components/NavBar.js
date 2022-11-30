@@ -6,6 +6,7 @@ import { logout } from '../store/session';
 import { Modal } from '../context/Modal';
 import CreateGroup from './CreateGroup'
 import AddFriendForm from './AddFriendForm'
+import user_icon_img from '../assests/user_icon_img.png'
 
 
 
@@ -38,7 +39,7 @@ const NavBar = () => {
           <i className="fa-solid fa-envelope" />Splitify
         </div>
         <div id='menu' onClick={toggleMenu}>
-          <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' id='nav_user_icon' />
+          <img src={user_icon_img} alt='user_icon' id='nav_user_icon' />
           {user.user && <div>{user.user.username}</div>}
           <i className="fa-solid fa-caret-down" />
         </div>
