@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getGroupExpensesThunk } from '../../store/expenses';
+import { getGroupExpensesThunk, addCommentExpenseThunk } from '../../store/expenses';
 import { getGroupPaymentsThunk, deletePaymentThunk } from '../../store/payments';
 import { deleteExpenseThunk } from '../../store/expenses';
 import { getGroupMembersThunk } from '../../store/groupMembersForGroupPage'
@@ -16,6 +16,8 @@ import user_icon_img from '../../assests/user_icon_img.png'
 import cat_icon_img from '../../assests/cat_icon_img.png'
 import group_icon_img from '../../assests/group_icon_img.png'
 import payment_icon_img from '../../assests/payment_icon_img.png'
+import AddExpenseCommentForm from '../AddExpenseComment';
+import { deleteCommentExpenseThunk } from '../../store/expenses';
 
 const GroupPage = () => {
     const dispatch = useDispatch()
@@ -25,6 +27,7 @@ const GroupPage = () => {
     const [sortedActivity, setSortedActivity] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [balances, setBalances] = useState()
+
 
     useEffect(async() => {
         async function fetchData() {
@@ -42,6 +45,7 @@ const GroupPage = () => {
     const user = useSelector((state) => state.session)
     const group_members = useSelector((state) => state.groupMembersForGroupPage)
     const user_groups = useSelector((state) => state.groups)
+
 
     //redirect if not logged in or not part of group or group not found
     useEffect(() => {
@@ -75,6 +79,11 @@ const GroupPage = () => {
         setIsLoaded(true)
     },[expenses, payments])
 
+    //soru comments by date create for comments section
+    const sortComments = (comments) => {
+        return comments.sort((a, b) => new Date(a.date_created).getTime() - new Date(b.date_created).getTime())
+    }
+
     const handleExpenseDelete = async(expense_id, e) => {
         if (window.confirm("Are you sure you want to delete this expense? You can not recover this expense after deletion.")) {
             try {
@@ -107,6 +116,19 @@ const GroupPage = () => {
                 //closes details expansion when deleting
                 const details = e.target.parentNode.parentNode.parentNode.nextElementSibling
                 details.classList.remove('active_details')
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
+    const handleExpenseCommentDelete = async(comment_id, expense_id) => {
+        if (window.confirm("Are you sure you want to delete this comment? You can not recover this comment after deletion.")) {
+            try {
+                const data = await dispatch(deleteCommentExpenseThunk(comment_id, expense_id))
+                if (data.error) {
+                    history.push('/error')
+                }
             } catch (error) {
                 console.log(error)
             }
@@ -175,6 +197,7 @@ const GroupPage = () => {
             }
         }
     }
+
 
 
     return (
@@ -262,6 +285,29 @@ const GroupPage = () => {
                                                         <div><span>{owed.username}</span> owes <span>${owed.amount_owed.toFixed(2)}</span></div>
                                                     </div>
                                                 ))}
+                                            </div>
+                                            <div className='group_page_activity_expense_details_comments flex_col'>
+                                                <div id='group_page_activity_expense_details_comments_head'><i className="fa-solid fa-comment"/> NOTES AND COMMENTS</div>
+                                                {activity.comments.length > 0 && sortComments(activity.comments).map(comment => (
+                                                    <div key={comment.id} className='comment_box flex_col'>
+                                                        <div className='comment_head'>
+                                                            <div className='comment_head_left'>
+                                                                <span className='bold'>{comment.username}</span>
+                                                                <span className='comment_month'>{new Date(comment.date_created).toLocaleString('default', { month: 'short' })}</span>
+                                                                <span className='comment_date'>{new Date(comment.date_created).getDate()}</span>
+                                                            </div>
+                                                            {user.user.id === comment.user_id && (
+                                                                <div className='delete_expense_comment_btn' onClick={(e) => handleExpenseCommentDelete(comment.id, activity.id)}><i className="fa-solid fa-x"/></div>
+                                                            )}
+                                                        </div>
+                                                        <div className='comment_text'>
+                                                            {comment.text}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                <div className='form_container'>
+                                                    <AddExpenseCommentForm expense_id={activity.id} />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -289,6 +289,11 @@
     font-weight: 700;
 }
 
+.group_page_activity_expense_details_comments,
+.group_page_activity_expense_details_breakdown {
+    width: 50%;
+}
+
 .group_page_activity_payment_head {
     font-size: 12px;
     justify-content: space-between;
@@ -336,4 +341,69 @@
     border-radius: 50%;
     width: 40px;
     padding: 10px 0;
+}
+
+/* comments */
+.group_page_activity_expense_details_comments {
+    padding: 5px;
+}
+
+#group_page_activity_expense_details_comments_head {
+    margin-bottom: 10px;
+    color: gray;
+    font-size: 12px;
+}
+.comment_head {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment_head_left {
+    display: flex;
+    column-gap: 3px;
+    align-items: center;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.comment_month {
+    padding-left: 5px;
+}
+.comment_month,
+.comment_date {
+    font-size: 10px;
+    color: gray;
+}
+
+.comment_box {
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    word-break: break-all;
+}
+
+
+.comment_text {
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 3px;
+}
+
+
+
+.delete_expense_comment_btn {
+    color: red;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.delete_expense_comment_btn:hover {
+    opacity: 0.7;
 }

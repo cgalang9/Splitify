@@ -300,3 +300,89 @@ def edit_expense(expense_id):
         "date_paid": expense.date_paid,
         "money_owed": new_splits
     }
+
+@expense_routes.post('/<int:expense_id>/comments')
+@login_required
+def create_comment(expense_id):
+    """
+    Create an expense comment by expense id
+    """
+    req = request.json
+    curr_user_id = int(current_user.get_id())
+
+    expense = Expense.query.get(expense_id)
+
+    # validation: expense_id not found
+    if expense == None:
+        return {"error": "Expense not found"}, 404
+
+    # validation: current user must be in group to post
+    group_members = UsersGroups.query.filter(UsersGroups.group_id == expense.group_id).all()
+    member_ids = [member.user_id for member in group_members]
+    if curr_user_id not in member_ids:
+        return {"error": "Forbidden"}, 403
+
+    # validation: max length of comment is 50
+    if len(req.get('text')) > 50:
+        return {"error": "Comment must be less than 51 characters"}, 400
+
+    new_comment = ExpenseComment(
+        user_id = curr_user_id,
+        expense_id = expense_id,
+        text = req.get('text'),
+    )
+    db.session.add(new_comment)
+    db.session.commit()
+
+    # get update list of commetns for of the expense
+    updated_comments_all = ExpenseComment.query.filter(ExpenseComment.expense_id == expense_id).options(joinedload(ExpenseComment.user)).all()
+    comment_list = []
+    for comment in updated_comments_all:
+        comment_obj = {
+            'id': comment.id,
+            'user_id': comment.user_id,
+            'username': comment.user.username,
+            'expense_id': comment.expense_id,
+            'text': comment.text,
+            'date_created': comment.date_created
+        }
+        comment_list.append(comment_obj)
+
+    return { 'newComments': comment_list}
+
+
+@expense_routes.delete('comments/<int:comment_id>')
+@login_required
+def delete_comment_expense(comment_id):
+    """
+    Delete an expense comment
+    """
+    comment = ExpenseComment.query.get(comment_id)
+    expense_id = comment.expense_id
+
+    # validation: comment not found
+    if comment == None:
+        return {"error": "Expense not found"}, 404
+
+    # validation: can not delete comment of another user
+    if comment.user_id != int(current_user.get_id()):
+        return {"error": "Can not delete comment of another user"}, 400
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    # get update list of commetns for of the expense
+    updated_comments_all = ExpenseComment.query.filter(ExpenseComment.expense_id == expense_id).options(joinedload(ExpenseComment.user)).all()
+    comment_list = []
+    for comment in updated_comments_all:
+        comment_obj = {
+            'id': comment.id,
+            'user_id': comment.user_id,
+            'username': comment.user.username,
+            'expense_id': comment.expense_id,
+            'text': comment.text,
+            'date_created': comment.date_created
+        }
+        comment_list.append(comment_obj)
+
+    return { 'newComments': comment_list}

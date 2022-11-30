@@ -144,6 +144,63 @@ export const deleteExpenseThunk = (expense_id) => async (dispatch) => {
     }
 }
 
+//Post a comment on expense
+const ADD_COMMENT_EXPENSE = 'expenses/ADD_COMMENT_EXPENSE'
+const addCommentExpense = (expense_id, comments) => {
+    return { type: ADD_COMMENT_EXPENSE, expense_id, comments }
+}
+
+export const addCommentExpenseThunk = (expense_id, comment) => async (dispatch) => {
+    const { text } = comment
+    const response = await fetch(`/api/expenses/${expense_id}/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text
+        })
+    })
+
+    if (response.ok) {
+        const comment = await response.json()
+        await dispatch(addCommentExpense(expense_id, comment))
+        return comment
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
+//Delete an expense
+const DELETE_COMMENT_EXPENSE = 'expenses/DELETE_COMMENT_EXPENSE'
+const deleteCommentExpense = (comments, expense_id) => {
+    return { type: DELETE_COMMENT_EXPENSE, comments, expense_id }
+}
+
+export const deleteCommentExpenseThunk = (comment_id, expense_id) => async (dispatch) => {
+    const response = await fetch(`/api/expenses/comments/${comment_id}`, {
+        method: 'DELETE'
+    })
+
+    if (response.ok) {
+        const comments = await response.json()
+        await dispatch(deleteCommentExpense(comments, expense_id))
+        return comments
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
 
 export const expenseReducer = (state = null, action) => {
     switch (action.type) {
@@ -164,6 +221,26 @@ export const expenseReducer = (state = null, action) => {
             } else {
                 return null
             }
+        case ADD_COMMENT_EXPENSE:
+            const addCommentExpenseState = { ...state }
+            const idx = addCommentExpenseState.expenses.findIndex(obj => {
+                return obj.id == action.expense_id
+            })
+            const new_expense = {...addCommentExpenseState.expenses[idx]}
+            new_expense['comments'] = action.comments.newComments
+            addCommentExpenseState.expenses[idx] = new_expense
+            return addCommentExpenseState
+        case DELETE_COMMENT_EXPENSE:
+            const delteCommentExpenseState = { ...state }
+            const idx_del = delteCommentExpenseState.expenses.findIndex(obj => {
+                return obj.id == action.expense_id
+            })
+            const new_expense_del = {...delteCommentExpenseState.expenses[idx_del]}
+            new_expense_del['comments'] = action.comments.newComments
+            delteCommentExpenseState.expenses[idx_del] = new_expense_del
+            return delteCommentExpenseState
+
+            return
         default:
             return state
     }

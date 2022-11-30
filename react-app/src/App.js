@@ -60,6 +60,10 @@ function App() {
           <SignUpForm />
           <Footer />
         </Route>
+        <Route path='/error' exact={true}>
+          <NavBar />
+          <h1>There was an error. Please try again</h1>
+        </Route>
         {/* <ProtectedRoute path='/users' exact={true} >
           <NavBar />
           <UsersList/>
