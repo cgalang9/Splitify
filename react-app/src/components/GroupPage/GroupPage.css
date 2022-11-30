@@ -208,7 +208,7 @@
 .active_details {
     display: flex;
     flex-direction: column;
-    box-shadow: inset 0px 3px 5px rgb(225, 225, 225), inset 0px -3px 5px rgb(225, 225, 225)
+    box-shadow: inset 0px 3px 5px rgb(225, 225, 225), inset 0px -3px 5px rgb(225, 225, 225);
 }
 
 

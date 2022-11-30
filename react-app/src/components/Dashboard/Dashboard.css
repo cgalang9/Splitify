@@ -33,7 +33,7 @@
     width: 580px;
     border-left: 1px solid rgb(193, 193, 193);
     border-right: 1px solid rgb(193, 193, 193);
-    box-shadow: 1px 0px 15px rgb(225, 225, 225), -1px 0px 15px rgb(225, 225, 225)
+    box-shadow: 1px 0px 15px rgb(225, 225, 225), -1px 0px 15px rgb(225, 225, 225);
 }
 
 #dash_head_title {

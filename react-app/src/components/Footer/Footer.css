@@ -1,0 +1,40 @@
+#footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 17px;
+    width: 100%;
+    padding: 25px;
+    background-color: rgb(220, 219, 219);
+    color: black;
+    font-size: 14px;
+    border: 1px solid rgb(227, 227, 227);;
+    margin-bottom: -100px;
+}
+
+
+
+.footer-github-icon > a {
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    position: relative;
+    bottom: 2px;
+    box-shadow: 0px 2px 0px black;
+}
+
+.footer-github-icon > a:hover {
+    box-shadow: none;
+    position: relative;
+    bottom: 0;
+}
+
+
+.foot_link_name {
+    font-size: 16px;
+}

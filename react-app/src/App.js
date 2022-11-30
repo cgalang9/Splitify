@@ -12,13 +12,8 @@ import Splash from './components/Splash';
 import Dashboard from './components/Dashboard';
 import GroupPage from './components/GroupPage';
 import AllExpenses from './components/AllExpenses';
-import AddExpenseForm from './components/AddExpenseForm';
-import EditExpenseForm from './components/EditExpenseForm';
-import AddPaymentForm from './components/AddPaymentForm';
-import EditPaymentForm from './components/EditPaymentForm';
-import AddFriendForm from './components/AddFriendForm';
-import CreateGroup from './components/CreateGroup';
 import SplashNav from './components/SplashNav';
+import Footer from './components/Footer';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -41,50 +36,32 @@ function App() {
         <Route path='/' exact={true}>
           <SplashNav />
           <Splash />
+          <Footer />
         </Route>
         <Route path='/dashboard' exact={true}>
           <NavBar />
           <Dashboard />
+          <Footer />
         </Route>
         <Route path='/groups/:groupId' exact={true}>
           <NavBar />
           <GroupPage />
+          <Footer />
         </Route>
         <Route path='/all' exact={true}>
           <NavBar />
           <AllExpenses />
+          <Footer />
         </Route>
-        {/* <Route path='/add-expense' exact={true}>
-          <NavBar />
-          <AddExpenseForm />
-        </Route>
-        <Route path='/expenses/:expenseId/edit-expense' exact={true}>
-          <NavBar />
-          <EditExpenseForm />
-        </Route>
-        <Route path='/add-payment' exact={true}>
-          <NavBar />
-          <AddPaymentForm />
-        </Route>
-        <Route path='/payments/:paymentId/edit-payment' exact={true}>
-          <NavBar />
-          <EditPaymentForm />
-        </Route>
-        <Route path='/create-group' exact={true}>
-          <NavBar />
-          <CreateGroup />
-        </Route>
-        <Route path='/add-friend' exact={true}>
-          <NavBar />
-          <AddFriendForm />
-        </Route> */}
         <Route path='/login' exact={true}>
           <SplashNav />
           <LoginForm />
+          <Footer />
         </Route>
         <Route path='/signup' exact={true}>
           <SplashNav />
           <SignUpForm />
+          <Footer />
         </Route>
         {/* <ProtectedRoute path='/users' exact={true} >
           <NavBar />
