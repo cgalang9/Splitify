@@ -136,3 +136,14 @@
 #dash_right {
     padding-top: 20px;
 }
+
+#dash_right_title {
+    color: gray;
+    font-size: 14px;
+    padding-bottom: 15px;
+}
+
+#dash_right_github {
+    height: 35px;
+    cursor: pointer;
+}

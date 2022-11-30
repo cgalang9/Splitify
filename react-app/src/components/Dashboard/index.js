@@ -7,6 +7,8 @@ import './Dashboard.css'
 import LeftMenu from '../LeftMenu';
 import AddExpenseFormModal from '../AddExpenseForm';
 import AddPaymentFormModal from '../AddPaymentForm';
+import github from '../../assests/github.png'
+import user_icon_img from '../../assests/user_icon_img.png'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -169,7 +171,7 @@ const Dashboard = () => {
                             {balance && Object.keys(balance.splits).map(el => (
                                 balance.splits[el] < 0 && (
                                     <div className='dash_mid_owe_li_wrapper'>
-                                        <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_dash' />
+                                        <img src={user_icon_img} alt='user_icon' className='user_icon_dash' />
                                         <div id='group_page_right_member_details'>
                                             <div  style={{ fontSize: 16 }}>{balance.user_keys[el]}</div>
                                             <div style={{ color: 'red', fontSize: 14 }}>you owe ${(balance.splits[el] * -1).toFixed(2)}</div>
@@ -185,7 +187,7 @@ const Dashboard = () => {
                         {balance && Object.keys(balance.splits).map(el => (
                                 balance.splits[el] > 0 && (
                                     <div className='dash_mid_owed_li_wrapper'>
-                                        <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_dash' />
+                                        <img src={user_icon_img} alt='user_icon' className='user_icon_dash' />
                                         <div id='group_page_right_member_details'>
                                             <div style={{ fontSize: 16 }}>{balance.user_keys[el]}</div>
                                             <div style={{ color: 'green', fontSize: 14 }}>owes you ${balance.splits[el].toFixed(2)}</div>
@@ -198,7 +200,8 @@ const Dashboard = () => {
                 </div>
             </div>
             <div id='dash_right'>
-                RIGHT
+                <div id='dash_right_title'>MY LINKS</div>
+                <a href='https://github.com/cgalang9'><img src={github} alt='github_logo' id='dash_right_github'/></a>
             </div>
         </div>
     )

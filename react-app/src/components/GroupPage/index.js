@@ -12,6 +12,10 @@ import AddExpenseFormModal from '../AddExpenseForm';
 import AddPaymentFormModal from '../AddPaymentForm';
 import EditExpenseFormModal from '../EditExpenseForm';
 import EditPaymentFormModal from '../EditPaymentForm';
+import user_icon_img from '../../assests/user_icon_img.png'
+import cat_icon_img from '../../assests/cat_icon_img.png'
+import group_icon_img from '../../assests/group_icon_img.png'
+import payment_icon_img from '../../assests/payment_icon_img.png'
 
 const GroupPage = () => {
     const dispatch = useDispatch()
@@ -183,7 +187,7 @@ const GroupPage = () => {
                 <div id='group_page_mid' className='flex_col'>
                     <div id='group_page_head'>
                         <div id='group_page_head_title'>
-                            <img src='https://s3.amazonaws.com/splitwise/uploads/group/default_avatars/avatar-teal41-house-50px.png' alt='group_icon'></img>
+                            <img src={group_icon_img} alt='group_icon'></img>
                             {group_members ? group_members.group.name : ""}
                         </div>
                         <div id='group_page_head_buttons_container'>
@@ -203,7 +207,7 @@ const GroupPage = () => {
                                                 <div className='group_page_activity_expense_date_bottom'>{new Date(activity.date_paid).getDate()}</div>
                                             </div>
                                             <div>
-                                                <img src='https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/uncategorized/general@2x.png' alt='category_icon' className='category_icon'></img>
+                                                <img src={cat_icon_img} alt='category_icon' className='category_icon'></img>
                                             </div>
                                             <div className='group_page_activity_expense_head_description'>
                                                 {activity.description}
@@ -233,7 +237,7 @@ const GroupPage = () => {
                                     </div>
                                     <div className='group_page_activity_expense_details'>
                                         <div className='group_page_activity_expense_details_head'>
-                                            <img src='https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/uncategorized/general@2x.png' alt='category_icon' className='category_icon'></img>
+                                            <img src={cat_icon_img} alt='category_icon' className='category_icon'></img>
                                             <div className='flex_col'>
                                                 <div className='group_page_activity_expense_details_description'>
                                                     {activity.description}
@@ -249,12 +253,12 @@ const GroupPage = () => {
                                         <div className='group_page_activity_expense_details_bottom'>
                                             <div className='group_page_activity_expense_details_breakdown flex_col'>
                                                 <div>
-                                                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
+                                                    <img src={user_icon_img} alt='user_icon' className='user_icon_details' />
                                                     <div><span>{activity.payer.username}</span> paid <span>${activity.total.toFixed(2)}</span> and owes <span>${calcPayerOwes(activity.money_owed)}</span></div>
                                                 </div>
                                                 {activity.money_owed.length > 0 && activity.money_owed.map(owed => (
                                                     <div key={owed.id}>
-                                                        <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
+                                                        <img src={user_icon_img} alt='user_icon' className='user_icon_details' />
                                                         <div><span>{owed.username}</span> owes <span>${owed.amount_owed.toFixed(2)}</span></div>
                                                     </div>
                                                 ))}
@@ -267,7 +271,7 @@ const GroupPage = () => {
                                 <div className='group_page_activity_payment'>
                                     <div className='group_page_activity_payment_head' onClick={toggleDetails}>
                                         <div className='group_page_activity_payment_head_left'>
-                                            <img src='https://assets.splitwise.com/assets/api/payment_icon/square/small/offline.png' alt='money_icon' className='money_icon_payment_li'></img>
+                                            <img src={payment_icon_img} alt='money_icon' className='money_icon_payment_li'></img>
                                             <div className='group_page_activity_li_payment'>
                                                 {activity.payer.username} paid {activity.payee.username} ${activity.total.toFixed(2)}
                                             </div>
@@ -295,7 +299,7 @@ const GroupPage = () => {
                                     </div>
                                     <div className='group_page_activity_payment_details'>
                                         <div className='group_page_activity_payment_details_head'>
-                                            <img src='https://assets.splitwise.com/assets/api/payment_icon/square/small/offline.png' alt='category_icon' className='category_icon'></img>
+                                            <img src={payment_icon_img} alt='category_icon' className='category_icon'></img>
                                             <div className='flex_col'>
                                                 <div className='group_page_activity_payment_details_description'>Payment</div>
                                                 <div className='group_page_activity_payment_details_total'>
@@ -309,11 +313,11 @@ const GroupPage = () => {
                                         <div className='group_page_activity_payment_details_bottom'>
                                             <div className='group_page_activity_payment_details_breakdown'>
                                                 <div>
-                                                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
+                                                    <img src={user_icon_img} alt='user_icon' className='user_icon_details' />
                                                     <div><span>{activity.payer.username}</span> paid <span>${activity.total.toFixed(2)}</span></div>
                                                 </div>
                                                 <div>
-                                                    <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_details' />
+                                                    <img src={user_icon_img} alt='user_icon' className='user_icon_details' />
                                                     <div><span>{activity.payee.username}</span> paid <span>${activity.total.toFixed(2)}</span></div>
                                                 </div>
                                             </div>
@@ -329,7 +333,7 @@ const GroupPage = () => {
                     <div id='group_page_right_title'>GROUP BALANCES</div>
                     {group_members && group_members.members.map(member => (
                         <div key={member.user_id} id='group_page_right_member_item'>
-                            <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal19-200px.png' alt='user_icon' className='user_icon_group_right' />
+                            <img src={user_icon_img} alt='user_icon' className='user_icon_group_right' />
                             <div id='group_page_right_member_details'>
                                 <div>{member.name}</div>
                                 {balances && (

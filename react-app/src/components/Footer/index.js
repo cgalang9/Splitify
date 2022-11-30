@@ -9,7 +9,7 @@ const Footer = () => {
     return (
         <div id='footer'>
             <div className="footer-github-icon">
-                <a href="https://github.com/cgalang9/Splitify">
+                <a href="https://github.com/cgalang9">
                     <i className="fa-brands fa-github" /> <span className='foot_link_name'>Github</span>
                 </a>
             </div>
