@@ -7,6 +7,35 @@ const Splash = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
+    //sets and clear interval that changes active image and words on top row
+    useEffect(() => {
+        const icons = document.querySelectorAll(".main_icon")
+        const words = document.querySelectorAll(".last_line")
+        const left_icons = document.querySelectorAll(".left_icon")
+        let idx = 0
+        function next() {
+            icons[idx].classList.remove("active")
+            words[idx].classList.remove("active")
+            left_icons[idx].classList.remove("left_active")
+        if (idx < 3) {
+            icons[idx + 1].classList.add("active")
+            words[idx + 1].classList.add("active")
+            left_icons[idx + 1].classList.add("left_active")
+            idx = idx + 1
+        } else {
+            icons[0].classList.add("active")
+            words[0].classList.add("active")
+            left_icons[0].classList.add("left_active")
+            idx = 0
+        }
+    }
+        //sets and clear interval
+        let intervalID;
+        intervalID = setInterval(next, 3000)
+        return () => clearInterval(intervalID);
+
+    },[])
+
     return (
         <div id='splash_wrapper' className='flex_col'>
             <div id='splash_row1_wrapper'>
@@ -15,11 +44,17 @@ const Splash = () => {
                         <div id='splash_row1_left_head' className='flex_col'>
                             <div className='splash_head_row'>Less stress when</div>
                             <div className='splash_head_row'>sharing expenses</div>
-                            <div className='splash_head_row' style={{ color: '#70caae' }}>
-                                {/* on trips.
-                                with housemates.
-                                with your partner. */}
-                                with anyone.
+                            <div className='splash_head_row'>
+                                <div style={{ color: '#70caae' }} className='last_line active'>on trips.</div>
+                                <div style={{ color: 'rgb(92, 0, 162)' }} className='last_line'>with housemates.</div>
+                                <div style={{ color: 'red' }} className='last_line'>with your partner.</div>
+                                <div style={{ color: '#70caae' }} className='last_line'>with anyone.</div>
+                            </div>
+                            <div id='splash_row1_left_img_container'>
+                                <div style={{ color: '#70caae' }} className="left_icon left_active"><i className="fa-solid fa-plane"></i></div>
+                                <div style={{ color: 'rgb(92, 0, 162)' }} className="left_icon"><i className="fa-solid fa-house"></i></div>
+                                <div style={{ color: 'red' }} className="left_icon"><i className="fa-solid fa-heart"></i></div>
+                                <div className="left_icon"><i className="fa-solid fa-asterisk"></i></div>
                             </div>
                         </div>
                         <div id='splash_row1_left_foot'>Keep track of your shared expenses and balances with housemates, trips, groups, friends, and family.</div>
@@ -27,10 +62,10 @@ const Splash = () => {
                     </div>
                     <div id='splash_row1_right' className='flex_col'>
                         <div id='splash_row1_right_img_container'>
-                            <i className="fa-solid fa-plane main_icon"></i>
-                            {/* <i className="fa-solid fa-house main_icon"></i> */}
-                            {/* <i className="fa-solid fa-heart main_icon"></i> */}
-                            {/* <i className="fa-solid fa-asterisk main_icon"></i> */}
+                            <div style={{ color: '#70caae' }} className="main_icon active"><i className="fa-solid fa-plane"></i></div>
+                            <div style={{ color: 'rgb(92, 0, 162)' }} className="main_icon"><i className="fa-solid fa-house"></i></div>
+                            <div style={{ color: 'red' }} className="main_icon"><i className="fa-solid fa-heart"></i></div>
+                            <div className="main_icon"><i className="fa-solid fa-asterisk"></i></div>
                         </div>
                     </div>
                 </div>

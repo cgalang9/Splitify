@@ -21,7 +21,7 @@ const SplashNav = () => {
     return (
         <div id='splash_nav'>
             <div id='splash_nav_logo'>
-              <i className="fa-solid fa-envelope" />Splitify
+              <div id='logo_wrapper' onClick={() => history.push('/')}><i className="fa-solid fa-envelope" />Splitify</div>
             </div>
             <div id='splash_nav_btns'>
                 <div id='splash_nav_login' onClick={() => history.push('/login')}>Login</div>

@@ -11,12 +11,15 @@
 }
 
 #splash_nav_logo {
+    padding-left: 20px;
+}
+#logo_wrapper {
     font-family: 'Courgette', cursive;
     font-size: 30px;
     color: #70caae;
-    padding-left: 20px;
+    cursor: pointer;
 }
-#splash_nav_logo > i {
+#logo_wrapper > i {
     padding-right: 5px;
 }
 

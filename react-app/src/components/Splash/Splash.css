@@ -34,7 +34,6 @@
 
 #splash_row1_right_img_container  {
     font-size: 350px;
-    color: #70caae;
 }
 
 #splash_row1_right {
@@ -99,11 +98,6 @@
     width: 300px;
 }
 
-/* #splash_row2_container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-} */
 
 .splash_row > div {
     padding: 20px 40px 0px 40px;
@@ -219,4 +213,56 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
+}
+
+
+.main_icon.active,
+.last_line.active {
+    display: block;
+    opacity: 1;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-name: fadeIn;
+}
+
+.main_icon,
+.last_line {
+    display: none;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#splash_row1_left_img_container {
+    display: flex;
+    font-size: 45px;
+    gap: 25px;
+    padding-top: 15px;
+}
+
+.left_icon {
+    opacity: 0.3;
+}
+
+.left_icon.left_active {
+    opacity: 1;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-name: fadeInLeft;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0.3;
+    }
+    to {
+        opacity: 1;
+    }
 }

@@ -34,7 +34,7 @@ const NavBar = () => {
   return (
     <div id='nav_wrapper'>
       <nav id='nav'>
-        <div id='logo'>
+        <div id='logo' onClick={() => history.push('/dashboard')}>
           <i className="fa-solid fa-envelope" />Splitify
         </div>
         <div id='menu' onClick={toggleMenu}>
