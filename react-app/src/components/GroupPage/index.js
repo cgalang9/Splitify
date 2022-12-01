@@ -213,6 +213,18 @@ const GroupPage = () => {
         }
     }
 
+    //minimize all detials when switching groups
+    useEffect(() => {
+        const payment_detail_sections = document.querySelectorAll('.group_page_activity_payment_details')
+        payment_detail_sections.forEach(section => {
+            section.classList.remove('active_details')
+        })
+        const expense_detail_sections = document.querySelectorAll('.group_page_activity_expense_details')
+        expense_detail_sections.forEach(section => {
+            section.classList.remove('active_details')
+        })
+    },[groupId])
+
 
     return (
         <>
