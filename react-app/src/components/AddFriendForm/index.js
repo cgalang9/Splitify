@@ -50,6 +50,7 @@ function AddFriendForm({ closeModal }) {
                 await setErrors(data.error);
             } else {
                 history.push(`/dashboard`)
+                closeModal()
             }
         } catch (error) {
             console.log(error)

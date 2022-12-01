@@ -96,6 +96,7 @@ function EditExpenseForm({ closeModal, expenseId }) {
                 await dispatch(clearGroupMembers())
                 dispatch(getGroupExpensesThunk(groupId))
                 history.push(`/groups/${groupId}`)
+                closeModal()
             }
         } catch (error) {
             console.log(error)

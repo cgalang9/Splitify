@@ -53,12 +53,6 @@ function AddPaymentForm({ closeModal }) {
     },[members])
 
 
-    // useEffect(() => {
-    //     return async() => {
-    //         await dispatch(clearGroupMembers())
-    //     }
-    // }, [])
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 

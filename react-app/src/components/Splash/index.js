@@ -38,7 +38,7 @@ const Splash = () => {
     }
         //sets and clear interval
         let intervalID;
-        intervalID = setInterval(next, 3000)
+        intervalID = setInterval(next, 4000)
         return () => clearInterval(intervalID);
 
     },[])

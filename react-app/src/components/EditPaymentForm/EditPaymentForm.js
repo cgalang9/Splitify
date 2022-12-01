@@ -88,6 +88,7 @@ function EditPaymentForm({ closeModal, paymentId }) {
                 await dispatch(clearGroupMembers())
                 dispatch(getGroupPaymentsThunk(groupId))
                 history.push(`/groups/${groupId}`)
+                closeModal()
             }
         } catch (error) {
             console.log(error)
