@@ -83,14 +83,21 @@ const ExpenseListItem = ({ activity }) => {
         }
     }
 
+    //Fixes bug: when creating date obj from string in store, date always 1 day behind. This function corrects the date
+    const parseCorrectDate = (date) => {
+        const correct_date = new Date(date)
+        correct_date.setDate(correct_date.getDate() + 1);
+        return correct_date
+    }
+
 
     return (
         <div className='activity_expense'>
             <div className='activity_expense_head' onClick={toggleDetails}>
                 <div className='activity_expense_head_left'>
                     <div className='activity_expense_date flex_col'>
-                        <div className='activity_expense_date_top'>{new Date(activity.date_paid).toLocaleString('default', { month: 'short' }).toUpperCase()}</div>
-                        <div className='activity_expense_date_bottom'>{new Date(activity.date_paid).getDate()}</div>
+                        <div className='activity_expense_date_top'>{parseCorrectDate(activity.date_paid).toLocaleString('default', { month: 'short' }).toUpperCase()}</div>
+                        <div className='activity_expense_date_bottom'>{parseCorrectDate(activity.date_paid).getDate()}</div>
                     </div>
                     <div>
                         <img src={cat_icon_img} alt='category_icon' className='category_icon'></img>
