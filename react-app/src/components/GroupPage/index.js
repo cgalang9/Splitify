@@ -225,7 +225,6 @@ const GroupPage = () => {
         })
     },[groupId])
 
-
     return (
         <>
         {isLoaded && (
