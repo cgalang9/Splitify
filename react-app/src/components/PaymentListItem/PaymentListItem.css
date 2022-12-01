@@ -84,12 +84,11 @@
 }
 
 /* current ecitve details css below - to edit, change in ExpenseListItem.css */
-
-/* .active_details {
+.active_details {
     display: flex;
     flex-direction: column;
     box-shadow: inset 0px 3px 5px rgb(225, 225, 225), inset 0px -3px 5px rgb(225, 225, 225);
-} */
+}
 
 
 /* details head */
@@ -175,6 +174,59 @@
     font-size: 12px;
 }
 
+/* comments */
+.activity_expense_details_comments {
+    padding: 15px 5px 5px 15px;
+}
+
+.activity_expense_details_comments_head {
+    margin-bottom: 10px;
+    color: gray;
+    font-size: 12px;
+}
+
+.comment_head {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment_head_left {
+    display: flex;
+    column-gap: 3px;
+    align-items: center;
+}
+
+.comment_username {
+    font-weight: 700;
+}
+
+.comment_month {
+    padding-left: 5px;
+}
+
+.comment_month,
+.comment_date {
+    font-size: 10px;
+    color: gray;
+}
+
+.comment_box {
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    word-break: break-all;
+}
+
+.comment_text {
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 3px;
+}
+
 .delete_payment_comment_btn {
     color: red;
     font-size: 13px;
@@ -185,5 +237,3 @@
 .delete_payment_comment_btn:hover {
     opacity: 0.7;
 }
-
-/* Rest of css for comments section located in ExpenseListItem.css  */
