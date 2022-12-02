@@ -13,6 +13,7 @@ import user_icon_img from '../../assests/user_icon_img.png'
 import group_icon_img from '../../assests/group_icon_img.png'
 import ExpenseListItem from '../ExpenseListItem';
 import PaymentListItem from '../PaymentListItem';
+import github from '../../assests/github.png'
 
 const GroupPage = () => {
     const dispatch = useDispatch()
@@ -175,6 +176,8 @@ const GroupPage = () => {
                             </div>
                         </div>
                     ))}
+                    <div id='all_right_links_title'>MY LINKS</div>
+                    <div id='all_right_github_container'><a href='https://github.com/cgalang9'><img src={github} alt='github_logo' id='all_right_github'/></a></div>
                 </div>
             </div>
         )}

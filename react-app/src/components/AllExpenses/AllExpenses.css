@@ -325,3 +325,37 @@
     font-size: 24px;
     font-weight: 700;
 }
+
+#all_right_links_title {
+    color: gray;
+    font-size: 14px;
+    padding-bottom: 15px;
+    margin-top: 50px;
+}
+
+#all_right_github {
+    height: 35px;
+    cursor: pointer;
+}
+
+#all_right_github_container > a {
+    color: black;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    position: relative;
+    bottom: 2px;
+    box-shadow: 0px 2px 0px black;
+}
+
+#all_right_github_container > a:hover {
+    box-shadow: none;
+    position: relative;
+    bottom: 0;
+}
+
+#all_right_github_container {
+    display: flex;
+    align-items: center;
+    background-color: white;
+}

@@ -9,6 +9,7 @@ import AddExpenseFormModal from '../AddExpenseForm';
 import AddPaymentFormModal from '../AddPaymentForm';
 import ExpenseListItem from '../ExpenseListItem';
 import PaymentListItem from '../PaymentListItem';
+import github from '../../assests/github.png'
 
 const AllExpenses = () => {
     const dispatch = useDispatch()
@@ -142,6 +143,8 @@ const AllExpenses = () => {
                             <div style={{ color: 'red' }} className='all_right_total'>${(balance * -1).toFixed(2)}</div>
                         </>
                     )}
+                    <div id='all_right_links_title'>MY LINKS</div>
+                    <div id='all_right_github_container'><a href='https://github.com/cgalang9'><img src={github} alt='github_logo' id='all_right_github'/></a></div>
                 </div>
             </div>
         )}
