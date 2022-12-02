@@ -30,6 +30,8 @@
     margin-right: 45px;
     gap: 20px;
     padding-right: 10px;
+    overflow-x: hidden;
+    word-break: break-word;
 }
 
 .align_right {
@@ -200,6 +202,7 @@
 
 .comment_username {
     font-weight: 700;
+    max-width: 170px;
 }
 
 .comment_month {

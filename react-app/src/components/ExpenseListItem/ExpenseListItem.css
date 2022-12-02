@@ -216,6 +216,7 @@
 
 .comment_username {
     font-weight: 700;
+    max-width: 170px;
 }
 
 .comment_month {
