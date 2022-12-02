@@ -60,6 +60,11 @@ def sign_up():
     Creates a new user and logs them in
     """
     form = SignUpForm()
+
+    print(form.data['username'])
+    if len(form.data['username']) > 40:
+        return {"errors": ["Username must be less than 41 characters"]}, 400
+
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         user = User(

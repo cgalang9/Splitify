@@ -62,6 +62,8 @@ const SignUpForm = () => {
             onChange={updateUsername}
             value={username}
             required
+            minLength={1}
+            maxLength={40}
           ></input>
         </div>
         <div className='auth_form_input_container flex_col'>
