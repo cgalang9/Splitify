@@ -52,7 +52,7 @@ const NavBar = () => {
           </div>
           {showModalGroup && (
             <Modal onClose={() => setShowModalGroup(false)}>
-              <CreateGroup />
+              <CreateGroup closeModal={() => setShowModalGroup(false)}/>
             </Modal>
           )}
           <div className='dropdown_menu_item' onClick={() => setShowModalFriend(true)}>
@@ -60,7 +60,7 @@ const NavBar = () => {
           </div>
           {showModalFriend && (
             <Modal onClose={() => setShowModalFriend(false)}>
-              <AddFriendForm />
+              <AddFriendForm closeModal={() => setShowModalFriend(false)} />
             </Modal>
           )}
           <div className='dropdown_menu_item' id='dropdown_last' onClick={onLogout}>
