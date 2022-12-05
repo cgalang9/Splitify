@@ -319,3 +319,47 @@ def delete_comment_expense(comment_id):
         comment_list.append(comment_obj)
 
     return { 'newComments': comment_list}
+
+
+
+@payments_routes.put('comments/<int:comment_id>')
+@login_required
+def edit_comment_payment(comment_id):
+    """
+    Edit a payment comment
+    """
+    req = request.json
+    comment = PaymentComment.query.get(comment_id)
+
+    # validation: comment not found
+    if comment == None:
+        return {"error": "Payment not found"}, 404
+
+    payment_id = comment.payment_id
+
+    # validation: can not edit comment of another user
+    if comment.user_id != int(current_user.get_id()):
+        return {"error": "Can not edit comment of another user"}, 400
+
+    # validation: max length of comment is 50
+    if len(req.get('text')) > 50:
+        return {"error": "Comment must be less than 51 characters"}, 400
+
+    comment.text = req.get('text')
+    db.session.commit()
+
+    # get update list of commetns for of the expense
+    updated_comments_all = PaymentComment.query.filter(PaymentComment.payment_id == payment_id).options(joinedload(PaymentComment.user)).all()
+    comment_list = []
+    for comment in updated_comments_all:
+        comment_obj = {
+            'id': comment.id,
+            'user_id': comment.user_id,
+            'username': comment.user.username,
+            'payment_id': comment.payment_id,
+            'text': comment.text,
+            'date_created': comment.date_created
+        }
+        comment_list.append(comment_obj)
+
+    return { 'newComments': comment_list}
