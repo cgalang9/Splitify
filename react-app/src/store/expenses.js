@@ -201,6 +201,38 @@ export const deleteCommentExpenseThunk = (comment_id, expense_id) => async (disp
     }
 }
 
+//Edit a comment on expense
+const EDIT_COMMENT_EXPENSE = 'expenses/EDIT_COMMENT_EXPENSE'
+const editCommentExpense = (expense_id, comments) => {
+    return { type: EDIT_COMMENT_EXPENSE, expense_id, comments }
+}
+
+export const editCommentExpenseThunk = (expense_id, comment_id, comment) => async (dispatch) => {
+    const { text } = comment
+    const response = await fetch(`/api/expenses/comments/${comment_id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text
+        })
+    })
+
+    if (response.ok) {
+        const comment = await response.json()
+        await dispatch(editCommentExpense(expense_id, comment))
+        return comment
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
 
 export const expenseReducer = (state = null, action) => {
     switch (action.type) {
@@ -239,6 +271,15 @@ export const expenseReducer = (state = null, action) => {
             new_expense_del['comments'] = action.comments.newComments
             delteCommentExpenseState.expenses[idx_del] = new_expense_del
             return delteCommentExpenseState
+        case EDIT_COMMENT_EXPENSE:
+            const editCommentExpenseState = { ...state }
+            const idx_edit = editCommentExpenseState.expenses.findIndex(obj => {
+                return obj.id == action.expense_id
+            })
+            const edited_expense = {...editCommentExpenseState.expenses[idx_edit]}
+            edited_expense['comments'] = action.comments.newComments
+            editCommentExpenseState.expenses[idx_edit] = edited_expense
+            return editCommentExpenseState
         default:
             return state
     }
