@@ -203,6 +203,39 @@ export const deleteCommentPaymentThunk = (comment_id, payment_id) => async (disp
 }
 
 
+//Edit a comment on payment
+const EDIT_COMMENT_PAYMENT = 'payments/EDIT_COMMENT_PAYMENT'
+const editCommentPayment = (payment_id, comments) => {
+    return { type: EDIT_COMMENT_PAYMENT, payment_id, comments }
+}
+
+export const editCommentPaymentThunk = (payment_id, comment_id, comment) => async (dispatch) => {
+    const { text } = comment
+    const response = await fetch(`/api/payments/comments/${comment_id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text
+        })
+    })
+
+    if (response.ok) {
+        const comment = await response.json()
+        await dispatch(editCommentPayment(payment_id, comment))
+        return comment
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.error) {
+            return data;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+}
+
+
 export const paymentsReducer = (state = null, action) => {
     switch (action.type) {
         case GET_GROUP_PAYMENTS:
@@ -224,12 +257,9 @@ export const paymentsReducer = (state = null, action) => {
             }
         case ADD_COMMENT_PAYMENT:
             const addCommentPaymentState = { ...state }
-            console.log('=============')
-            console.log(addCommentPaymentState)
             const idx = addCommentPaymentState.payments.findIndex(obj => {
                 return obj.id == action.payment_id
             })
-            console.log(idx)
             const new_payment = {...addCommentPaymentState.payments[idx]}
             new_payment['comments'] = action.comments.newComments
             addCommentPaymentState.payments[idx] = new_payment
@@ -243,6 +273,15 @@ export const paymentsReducer = (state = null, action) => {
             new_payment_del['comments'] = action.comments.newComments
             delteCommentPaymentState.payments[idx_del] = new_payment_del
             return delteCommentPaymentState
+        case EDIT_COMMENT_PAYMENT:
+            const editCommentPaymentState = { ...state }
+            const idx_edit = editCommentPaymentState.payments.findIndex(obj => {
+                return obj.id == action.payment_id
+            })
+            const edited_expense = {...editCommentPaymentState.payments[idx_edit]}
+            edited_expense['comments'] = action.comments.newComments
+            editCommentPaymentState.payments[idx_edit] = edited_expense
+            return editCommentPaymentState
         default:
             return state
     }
