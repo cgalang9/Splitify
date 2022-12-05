@@ -387,3 +387,46 @@ def delete_comment_expense(comment_id):
         comment_list.append(comment_obj)
 
     return { 'newComments': comment_list}
+
+
+@expense_routes.put('comments/<int:comment_id>')
+@login_required
+def edit_comment_expense(comment_id):
+    """
+    Edit an expense comment
+    """
+    req = request.json
+    comment = ExpenseComment.query.get(comment_id)
+
+    # validation: comment not found
+    if comment == None:
+        return {"error": "Expense not found"}, 404
+
+    expense_id = comment.expense_id
+
+    # validation: can not edit comment of another user
+    if comment.user_id != int(current_user.get_id()):
+        return {"error": "Can not edit comment of another user"}, 400
+
+    # validation: max length of comment is 50
+    if len(req.get('text')) > 50:
+        return {"error": "Comment must be less than 51 characters"}, 400
+
+    comment.text = req.get('text')
+    db.session.commit()
+
+    # get update list of commetns for of the expense
+    updated_comments_all = ExpenseComment.query.filter(ExpenseComment.expense_id == expense_id).options(joinedload(ExpenseComment.user)).all()
+    comment_list = []
+    for comment in updated_comments_all:
+        comment_obj = {
+            'id': comment.id,
+            'user_id': comment.user_id,
+            'username': comment.user.username,
+            'expense_id': comment.expense_id,
+            'text': comment.text,
+            'date_created': comment.date_created
+        }
+        comment_list.append(comment_obj)
+
+    return { 'newComments': comment_list}
