@@ -240,3 +240,16 @@
 .delete_payment_comment_btn:hover {
     opacity: 0.7;
 }
+
+.edit_payment_comment_btn {
+    width: 50px;
+    background-color: #f9702b;
+    border: 0.5px solid gray;
+    border-radius: 5px;
+    padding: 2px 6px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin: 5px 0;
+}

@@ -44,7 +44,7 @@ function EditExpenseCommentForm({ expense_id, comment_id, original_text, toggleE
         }
     }
     return (
-        <form className='edit_comment_form flex_col display_none' onSubmit={handleSubmitEdit} id={`comment${comment_id}`}>
+        <form className='edit_comment_form flex_col display_none' onSubmit={handleSubmitEdit} id={`expense_comment${comment_id}`}>
             <div className='edit_comment_form_title'>Edit comment:</div>
             <div className='errors'>
                 {commentErrors && (

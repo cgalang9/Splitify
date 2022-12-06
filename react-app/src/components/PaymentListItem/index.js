@@ -7,6 +7,7 @@ import user_icon_img from '../../assests/user_icon_img.png'
 import payment_icon_img from '../../assests/payment_icon_img.png'
 import AddPaymentCommentForm from '../AddPaymentComment';
 import { deleteCommentPaymentThunk } from '../../store/payments';
+import EditPaymentCommentForm from '../EditPaymentComment';
 import './PaymentListItem.css'
 
 const PaymentListItem = ({ activity }) => {
@@ -62,6 +63,21 @@ const PaymentListItem = ({ activity }) => {
                 details.classList.remove('active_details')
             } else {
                 details.classList.add('active_details')
+            }
+        }
+    }
+
+    //open/close edit comments form
+    function toggleEditComment(comment_id) {
+        const edit_comment_form = document.querySelector(`#payment_comment${comment_id}`)
+        const original_comment = document.querySelector(`#payment_comment_box${comment_id}`)
+        if (edit_comment_form) {
+            if(edit_comment_form.classList.contains('display_none')) {
+                edit_comment_form.classList.remove('display_none')
+                original_comment.classList.add('display_none')
+            } else {
+                edit_comment_form.classList.add('display_none')
+                original_comment.classList.remove('display_none')
             }
         }
     }
@@ -125,19 +141,27 @@ const PaymentListItem = ({ activity }) => {
                         <div className='activity_expense_details_comments_head'><i className="fa-solid fa-comment"/> NOTES AND COMMENTS</div>
                         {activity.comments.length > 0 && sortComments(activity.comments).map(comment => (
                             <div key={comment.id} className='comment_box flex_col'>
-                                <div className='comment_head'>
-                                    <div className='comment_head_left'>
-                                        <span className='bold'>{comment.username}</span>
-                                        <span className='comment_month'>{new Date(comment.date_created).toLocaleString('default', { month: 'short' })}</span>
-                                        <span className='comment_date'>{new Date(comment.date_created).getDate()}</span>
+                                <div className='flex_col' id={`payment_comment_box${comment.id}`}>
+                                    <div className='comment_head'>
+                                        <div className='comment_head_left'>
+                                            <span className='bold'>{comment.username}</span>
+                                            <span className='comment_month'>{new Date(comment.date_created).toLocaleString('default', { month: 'short' })}</span>
+                                            <span className='comment_date'>{new Date(comment.date_created).getDate()}</span>
+                                        </div>
+                                        {user.user.id === comment.user_id && (
+                                            <div className='delete_payment_comment_btn' onClick={(e) => handlePaymentCommentDelete(comment.id, activity.id)}><i className="fa-solid fa-x"/></div>
+                                        )}
+                                    </div>
+                                    <div className='comment_text'>
+                                        {comment.text}
                                     </div>
                                     {user.user.id === comment.user_id && (
-                                        <div className='delete_payment_comment_btn' onClick={(e) => handlePaymentCommentDelete(comment.id, activity.id)}><i className="fa-solid fa-x"/></div>
+                                        <button className='edit_payment_comment_btn' onClick={() => toggleEditComment(comment.id)}>Edit</button>
                                     )}
                                 </div>
-                                <div className='comment_text'>
-                                    {comment.text}
-                                </div>
+                                {user.user.id === comment.user_id && (
+                                    <EditPaymentCommentForm payment_id={activity.id} comment_id={comment.id} original_text={comment.text} toggleEditComment={() => toggleEditComment(comment.id)}/>
+                                )}
                             </div>
                         ))}
                         <div className='form_container'>

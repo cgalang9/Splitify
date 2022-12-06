@@ -91,11 +91,10 @@ const ExpenseListItem = ({ activity }) => {
         return correct_date
     }
 
-    //open/close edit edit comments form
+    //open/close edit comments form
     function toggleEditComment(comment_id) {
-        const edit_comment_form = document.querySelector(`#comment${comment_id}`)
-        const original_comment = document.querySelector(`#comment_box${comment_id}`)
-        console.log(original_comment)
+        const edit_comment_form = document.querySelector(`#expense_comment${comment_id}`)
+        const original_comment = document.querySelector(`#expense_comment_box${comment_id}`)
         if (edit_comment_form) {
             if(edit_comment_form.classList.contains('display_none')) {
                 edit_comment_form.classList.remove('display_none')
@@ -176,8 +175,8 @@ const ExpenseListItem = ({ activity }) => {
                     <div className='activity_expense_details_comments flex_col'>
                         <div className='activity_expense_details_comments_head'><i className="fa-solid fa-comment"/> NOTES AND COMMENTS</div>
                         {activity.comments.length > 0 && sortComments(activity.comments).map(comment => (
-                            <div key={comment.id} className='comment_box flex_col' id>
-                                <div className='flex_col' id={`comment_box${comment.id}`}>
+                            <div key={comment.id} className='comment_box flex_col'>
+                                <div className='flex_col' id={`expense_comment_box${comment.id}`}>
                                     <div className='comment_head'>
                                         <div className='comment_head_left'>
                                             <span className='comment_username'>{comment.username}</span>
