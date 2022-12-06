@@ -81,15 +81,18 @@
 /* details section */
 .activity_payment_details {
     background-color: rgb(245, 245, 245);
-    display: none;
-    padding: 10px 15px;
+    max-height: 0px;
+    transition: max-height .5s ease-in-out;
+    overflow: hidden;
+    box-shadow: inset 0px 3px 5px rgb(225, 225, 225), inset 0px -3px 5px rgb(225, 225, 225);
 }
 
 /* current ecitve details css below - to edit, change in ExpenseListItem.css */
 .active_details {
+    max-height: 5000px;
+    transition: max-height 1.25s ease-in-out;
     display: flex;
     flex-direction: column;
-    box-shadow: inset 0px 3px 5px rgb(225, 225, 225), inset 0px -3px 5px rgb(225, 225, 225);
 }
 
 
@@ -98,6 +101,7 @@
     display: flex;
     border-bottom: 1px solid rgb(206, 206, 206);
     padding-bottom: 10px;
+    padding: 10px 15px;
 }
 
 .activity_payment_details_head > img {
@@ -133,6 +137,7 @@
 /* details bottom */
 .activity_payment_details_bottom {
     display: flex;
+    padding: 10px 15px;
 }
 
 .activity_payment_details_comments,

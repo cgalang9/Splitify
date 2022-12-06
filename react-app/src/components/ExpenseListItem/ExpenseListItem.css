@@ -110,20 +110,24 @@
 /* details section */
 .activity_expense_details {
     background-color: rgb(245, 245, 245);
-    display: none;
-    padding: 10px 15px;
+    max-height: 0px;
+    transition: max-height .5s ease-in-out;
+    overflow: hidden;
+    box-shadow: inset 0px 3px 5px rgb(225, 225, 225), inset 0px -3px 5px rgb(225, 225, 225);
 }
 
 .active_details {
+    max-height: 5000px;
+    transition: max-height 1.25s ease-in-out;
     display: flex;
     flex-direction: column;
-    box-shadow: inset 0px 3px 5px rgb(225, 225, 225), inset 0px -3px 5px rgb(225, 225, 225);
 }
 
 /* details head */
 .activity_expense_details_head {
     display: flex;
     border-bottom: 1px solid rgb(206, 206, 206);
+    padding: 10px 15px;
     padding-bottom: 10px;
 }
 
@@ -160,6 +164,7 @@
 /* details bottom */
 .activity_expense_details_bottom {
     display: flex;
+    padding: 10px 15px;
 }
 
 .activity_expense_details_comments,
