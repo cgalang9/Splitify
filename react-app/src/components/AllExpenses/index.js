@@ -83,16 +83,16 @@ const AllExpenses = () => {
         getUserBalance()
     },[sortedActivity])
 
-    function toggleDetails(e) {
-        const details = e.target.parentNode.nextElementSibling
-        if (e.target.parentNode.nextElementSibling) {
-            if(details.classList.contains('active_details')) {
-                details.classList.remove('active_details')
-            } else {
-                details.classList.add('active_details')
-            }
-        }
-    }
+    // function toggleDetails(e) {
+    //     const details = e.target.parentNode.nextElementSibling
+    //     if (e.target.parentNode.nextElementSibling) {
+    //         if(details.classList.contains('active_details')) {
+    //             details.classList.remove('active_details')
+    //         } else {
+    //             details.classList.add('active_details')
+    //         }
+    //     }
+    // }
 
 
 
