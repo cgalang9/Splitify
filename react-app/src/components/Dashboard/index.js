@@ -203,7 +203,7 @@ const Dashboard = () => {
                 <div id='dash_right_title'>MY LINKS</div>
                 <div id='dash_right_github_container'><a href='https://github.com/cgalang9'><img src={github} alt='github_logo' id='dash_right_github'/></a></div>
                 <div id='linkedin_container'><a href="https://www.linkedin.com/in/carmelino-galang-53369a205">
-                    <i class="fab fa-linkedin-in"></i><span id='linkedin_text'>LinkedIn</span>
+                    <i className="fab fa-linkedin-in"></i><span id='linkedin_text'>LinkedIn</span>
                 </a></div>
             </div>
         </div>

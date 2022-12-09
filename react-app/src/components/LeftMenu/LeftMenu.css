@@ -7,7 +7,7 @@
 
 
 .left_nav_link > i,
-.left_menu_friend_li >i {
+.left_menu_friend_li >  i {
     padding-right: 5px;
 }
 
@@ -17,7 +17,26 @@
     flex-wrap: nowrap;
     word-break: break-word;
     padding-left: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
 
+}
+
+.left_menu_friend_li:hover .friend_icon,
+.left_menu_friend_li .friend_x {
+    display: none;
+}
+.left_menu_friend_li:hover .friend_x {
+    display: inline;
+}
+
+.friend_x {
+    cursor: pointer;
+}
+
+.friend_x:hover {
+    color: red;
 }
 
 .left_nav_link {

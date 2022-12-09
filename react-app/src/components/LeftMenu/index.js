@@ -6,6 +6,7 @@ import { getFriendsThunk } from '../../store/currUserFriends';
 import CreateGroup from '../CreateGroup';
 import AddFriendForm from '../AddFriendForm';
 import { Modal } from '../../context/Modal';
+import { deleteFriendThunk } from '../../store/currUserFriends';
 import './LeftMenu.css'
 
 const LeftMenu = () => {
@@ -28,6 +29,19 @@ const LeftMenu = () => {
             history.push('/')
         }
     },[])
+
+    const deleteFriend = async (friendId, name) => {
+        if (window.confirm(`Are you sure you want to remove ${name} as a friend?`)) {
+            try {
+                const data = await dispatch(deleteFriendThunk(friendId))
+                if (data.error) {
+                    history.push('/error')
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
 
     return (
         <div id='left_menu_wrapper' className='flex_col'>
@@ -73,7 +87,9 @@ const LeftMenu = () => {
                 )}
                 {friends && friends.currUserFriends.map(friend => (
                     <div key={friend.id} className='left_menu_friend_li'>
-                        <i className="fa-solid fa-user" />{friend.username}
+                        <i className="fa-solid fa-user friend_icon" />
+                        <i className="fa-solid fa-x friend_x" onClick={() => deleteFriend(friend.id, friend.username)}/>
+                        {friend.username}
                     </div>
                 ))}
             </div>
