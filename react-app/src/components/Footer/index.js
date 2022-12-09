@@ -8,13 +8,19 @@ const Footer = () => {
 
     return (
         <div id='footer'>
-            <div className="footer-github-icon">
-                <a href="https://github.com/cgalang9">
-                    <i className="fa-brands fa-github" /> <span className='foot_link_name'>Github</span>
-                </a>
-            </div>
-            <div>
+            <div id='footer-left'>
                 Splitify created by Carmelino Galang
+            </div>
+            <div className="footer-github-icon">
+                Connect:
+                <a href="https://github.com/cgalang9">
+                    <i className="fa-brands fa-github" />
+                    <span>GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/carmelino-galang-53369a205">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
             </div>
         </div>
     )
