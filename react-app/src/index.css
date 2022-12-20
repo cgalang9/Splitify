@@ -1,31 +1,29 @@
 * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+  font-family: "Be Vietnam Pro", sans-serif;
 }
 
 .flex_col {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .errors {
-    color: red;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8px 5px 5px 5px;
-
+  color: red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 5px 5px 5px;
 }
 
 body {
-    padding: 0;
-    margin: 35px 0 0;
+  padding: 0;
+  margin: 35px 0 0;
 }
 
 .green {
-    color: green;
+  color: green;
 }
 
 .red {
-    color: red
+  color: red;
 }
