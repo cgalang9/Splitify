@@ -1,63 +1,60 @@
 #login_form_wrapper,
 #signup_form_wrapper {
-    margin-top: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 0;
-    background-size: contain;
-    height: 500px;
+  margin-top: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0;
+  background-size: contain;
+  min-height: 80vh;
 }
 
 #login_form,
 #signup_form {
-    display: flex;
-    flex-direction: column;
-    background-color:white;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgb(129, 129, 129);
-    padding: 25px 40px;
-    width: 33%;
-
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgb(129, 129, 129);
+  padding: 25px 40px;
+  width: 33%;
 }
 
 #login_form_title,
 #signup_form_title {
-    font-size: 32px;
+  font-size: 32px;
 }
 
-.auth_form_input_container{
-    padding-top: 15px;
-    row-gap: 2px;
+.auth_form_input_container {
+  padding-top: 15px;
+  row-gap: 2px;
 }
 
 .auth_form_input_container > input {
-    height: 30px;
-    font-size: 18px;
-    padding: 5px;
+  height: 30px;
+  font-size: 18px;
+  padding: 5px;
 }
-
-
 
 #login_btn,
 #signup_btn {
-    background-color: #70caae;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0px 2px 0px rgb(145, 145, 145);
-    position: relative;
-    bottom: 2px;
-    border: none;
-    margin-top: 25px;
-    font-size: 18px;
+  background-color: #70caae;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 2px 0px rgb(145, 145, 145);
+  position: relative;
+  bottom: 2px;
+  border: none;
+  margin-top: 25px;
+  font-size: 18px;
 }
 
 #login_btn:hover,
 #signup_btn:hover {
-    border: none;
-    box-shadow: none;
-    position: relative;
-    bottom: 0;
+  border: none;
+  box-shadow: none;
+  position: relative;
+  bottom: 0;
 }

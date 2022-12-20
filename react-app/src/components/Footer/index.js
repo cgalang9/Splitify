@@ -9,7 +9,7 @@ const Footer = () => {
     <div id="footer">
       <div id="footer-left">Splitify created by Carmelino Galang</div>
       <div className="footer-github-icon">
-        Connect:
+        Connect with me
         <a
           target="_blank"
           rel="noopener noreferrer"
