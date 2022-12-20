@@ -60,7 +60,7 @@ const GroupPage = () => {
     }
   }, [user_groups]);
 
-  //sort payments and expenses in alphabetical order on one list
+  //sort payments and expenses in chronological order on one list
   useEffect(async () => {
     let expenses_all = [];
     let payments_all = [];
@@ -79,7 +79,7 @@ const GroupPage = () => {
     );
   }, [expenses, payments]);
 
-  //calculate balances of all users in group for display on right side
+  //calculate balances of all users in group for display on right side col
   const getBalancePerUser = () => {
     let totals = {};
 

@@ -1,276 +1,275 @@
 .activity_expense {
-    border-bottom: 1px solid rgb(225, 225, 225);
+  border-bottom: 1px solid rgb(225, 225, 225);
+  cursor: pointer;
 }
 
 /* header */
 .activity_expense_head {
-    display: flex;
-    align-items: center;
-    position: relative;
-    gap: 7px;
-    padding: 13px 10px;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 7px;
+  padding: 13px 10px;
+  justify-content: space-between;
 }
 
 /* header left */
 .activity_expense_head_left {
-    display: flex;
-    gap: 7px;
+  display: flex;
+  gap: 7px;
 }
 
 .activity_expense_head_left > div {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .category_icon {
-    width: 35px;
+  width: 35px;
 }
 
 /* header left date */
 .activity_expense_date {
-    align-items: center;
-    color: gray;
+  align-items: center;
+  color: gray;
 }
 
 .activity_expense_date_top {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 .activity_expense_date_bottom {
-    font-size: 18px;
-    font-weight: 700;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 /* header expense title/description */
 .activity_expense_head_description {
-    font-size: 18px;
-    font-weight: 700;
-    overflow-x: hidden;
-    word-break: break-word;
+  font-size: 18px;
+  font-weight: 700;
+  overflow-x: hidden;
+  word-break: break-word;
 }
 
 /* header right totals */
 .activity_expense_head_quicktotal {
-    font-size: 12px;
-    display: flex;
-    margin-right: 45px;
-    gap: 20px;
+  font-size: 12px;
+  display: flex;
+  margin-right: 45px;
+  gap: 20px;
 }
 
 .activity_expense_head_quicktotal_payer {
-
-    align-items: center;
+  align-items: center;
 }
 
 .activity_expense_head_quicktotal_payer > div,
 .activity_expense_head_quicktotal_net > div {
-    overflow-x: hidden;
-    word-break: break-word;
-    width: 100px;
+  overflow-x: hidden;
+  word-break: break-word;
+  width: 100px;
 }
 
 .activity_expense_head_quicktotal_payer > div {
-    text-align: right;
+  text-align: right;
 }
 
 /* head delete button */
 /* displays delete when hovering on header */
 .activity_expense_delete {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: transparent;
 }
 
 .activity_expense_delete:hover {
-    color: red;
+  color: red;
 }
 
 .delete_expense_btn:hover {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 .delete_expense_btn {
-    display: flex;
-    align-items: center;
-    padding: 2px;
-    margin-right: 15px;
-    font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  margin-right: 15px;
+  font-size: 16px;
 }
 
 /* details section */
 .activity_expense_details {
-    background-color: rgb(245, 245, 245);
-    max-height: 0px;
-    transition: max-height .5s ease-in-out;
-    overflow: hidden;
-    box-shadow: inset 0px 3px 5px rgb(225, 225, 225), inset 0px -3px 5px rgb(225, 225, 225);
+  background-color: rgb(245, 245, 245);
+  max-height: 0px;
+  transition: max-height 0.5s ease-in-out;
+  overflow: hidden;
+  box-shadow: inset 0px 3px 5px rgb(225, 225, 225),
+    inset 0px -3px 5px rgb(225, 225, 225);
 }
 
 .active_details {
-    max-height: 5000px;
-    transition: max-height 1.25s ease-in-out;
-    display: flex;
-    flex-direction: column;
+  max-height: 5000px;
+  transition: max-height 1.25s ease-in-out;
+  display: flex;
+  flex-direction: column;
 }
 
 /* details head */
 .activity_expense_details_head {
-    display: flex;
-    border-bottom: 1px solid rgb(206, 206, 206);
-    padding: 10px 15px;
-    padding-bottom: 10px;
+  display: flex;
+  border-bottom: 1px solid rgb(206, 206, 206);
+  padding: 10px 15px;
+  padding-bottom: 10px;
 }
 
 .activity_expense_details_head > img {
-    width: 78px;
-    border: 1px solid rgb(206, 206, 206);
+  width: 78px;
+  border: 1px solid rgb(206, 206, 206);
 }
 
 .activity_expense_details_head > div {
-    justify-content: center;
-    padding-left: 10px;
-    gap: 3px;
+  justify-content: center;
+  padding-left: 10px;
+  gap: 3px;
 }
 
 .activity_expense_details_description {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .activity_expense_details_total {
-    font-size: 20px;
-    font-weight: 700;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .edit_expense_btn {
-    background-color: #f9702b;
-    border: 0.5px solid gray;
-    border-radius: 5px;
-    padding: 2px 6px;
-    color: white;
-    font-size: 12px;
-    cursor: pointer;
+  background-color: #f9702b;
+  border: 0.5px solid gray;
+  border-radius: 5px;
+  padding: 2px 6px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 /* details bottom */
 .activity_expense_details_bottom {
-    display: flex;
-    padding: 10px 15px;
+  display: flex;
+  padding: 10px 15px;
 }
 
 .activity_expense_details_comments,
 .activity_expense_details_breakdown {
-    width: 50%;
-    padding-top: 5px;
+  width: 50%;
+  padding-top: 5px;
 }
 
 /* details left side */
 .activity_expense_details_breakdown > div {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .activity_expense_details_breakdown > div > div {
-    display: flex;
-    align-items: center;
-    overflow-x: hidden;
-    word-break: break-word;
-    font-size: 13px;
-    gap: 5px;
-    width: 250px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  word-break: break-word;
+  font-size: 13px;
+  gap: 5px;
+  width: 250px;
+  flex-wrap: wrap;
 }
 
 .activity_expense_details_breakdown > div > div > span {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 /* comments */
 .activity_expense_details_comments {
-    padding: 15px 5px 5px 15px;
+  padding: 15px 5px 5px 15px;
 }
 
 .activity_expense_details_comments_head {
-    margin-bottom: 10px;
-    color: gray;
-    font-size: 12px;
+  margin-bottom: 10px;
+  color: gray;
+  font-size: 12px;
 }
 
 .comment_head {
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .comment_head_left {
-    display: flex;
-    column-gap: 3px;
-    align-items: center;
+  display: flex;
+  column-gap: 3px;
+  align-items: center;
 }
 
 .comment_username {
-    font-weight: 700;
-    max-width: 170px;
+  font-weight: 700;
+  max-width: 170px;
 }
 
 .comment_month {
-    padding-left: 5px;
+  padding-left: 5px;
 }
 
 .comment_month,
 .comment_date {
-    font-size: 10px;
-    color: gray;
+  font-size: 10px;
+  color: gray;
 }
 
 .comment_box {
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    padding: 5px 10px;
-    word-break: break-all;
-    position: relative;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  word-break: break-all;
+  position: relative;
 }
 
-
 .comment_text {
-    font-size: 13px;
-    margin-top: 5px;
-    margin-bottom: 3px;
+  font-size: 13px;
+  margin-top: 5px;
+  margin-bottom: 3px;
 }
 
 .delete_expense_comment_btn {
-    color: red;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
+  color: red;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .delete_expense_comment_btn:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 
 .edit_expense_comment_btn {
-    width: 50px;
-    background-color: #f9702b;
-    border: 0.5px solid gray;
-    border-radius: 5px;
-    padding: 2px 6px;
-    color: white;
-    font-size: 12px;
-    cursor: pointer;
-    align-self: flex-end;
-    margin: 5px 0;
+  width: 50px;
+  background-color: #f9702b;
+  border: 0.5px solid gray;
+  border-radius: 5px;
+  padding: 2px 6px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  align-self: flex-end;
+  margin: 5px 0;
 }

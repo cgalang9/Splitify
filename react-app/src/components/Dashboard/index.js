@@ -43,8 +43,6 @@ const Dashboard = () => {
     let splits = {}; //keeps track of who you owe or owes you by user id
     let user_keys = {}; //keeps track of usernames in split obj
 
-    // const curr_user_id = user.user.id
-
     if (expenses) {
       expenses.expenses.forEach((expense) => {
         if (expense.payer.id === user.user.id) {
