@@ -5,8 +5,7 @@
   padding-right: 20px;
 }
 
-.left_nav_link > i,
-.left_menu_friend_li > i {
+.left_nav_link > i {
   padding-right: 5px;
 }
 
@@ -15,7 +14,6 @@
   overflow: scroll;
   flex-wrap: nowrap;
   word-break: break-word;
-  padding-left: 10px;
   display: flex;
   align-items: center;
   position: relative;

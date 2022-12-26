@@ -27,7 +27,7 @@ const GroupPage = () => {
   useEffect(async () => {
     setIsLoaded(false);
     async function fetchData() {
-      await dispatch(getCurrUserGroupsThunk()).then(() => {});
+      await dispatch(getCurrUserGroupsThunk());
       await dispatch(getGroupPaymentsThunk(groupId));
       await dispatch(getGroupMembersThunk(groupId));
       await dispatch(getGroupExpensesThunk(groupId)).then(() => {
