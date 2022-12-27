@@ -99,16 +99,35 @@ const PaymentListItem = ({ activity }) => {
     }
   }
 
+  //underline description in head on hover
+  const underlineTitle = (e) => {
+    let title = document.querySelector(`#head_title_${activity.id}`);
+    title.classList.add("underline");
+  };
+
+  const removeUnderlineTitle = (e) => {
+    let title = document.querySelector(`#head_title_${activity.id}`);
+    title.classList.remove("underline");
+  };
+
   return (
     <div className="activity_payment">
-      <div className="activity_payment_head" onClick={toggleDetails}>
+      <div
+        className="activity_payment_head"
+        onClick={toggleDetails}
+        onMouseEnter={underlineTitle}
+        onMouseLeave={removeUnderlineTitle}
+      >
         <div className="activity_payment_head_left">
           <img
             src={payment_icon_img}
             alt="money_icon"
             className="money_icon_payment_li"
           ></img>
-          <div className="group_page_activity_li_payment">
+          <div
+            className="group_page_activity_li_payment"
+            id={`head_title_${activity.id}`}
+          >
             {activity.payer.username} paid {activity.payee.username} $
             {activity.total.toFixed(2)}
           </div>

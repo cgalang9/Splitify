@@ -121,10 +121,12 @@ const ExpenseListItem = ({ activity }) => {
     }
   }
 
+  //underline description in head on hover
   const underlineTitle = (e) => {
     let title = document.querySelector(`#head_description_${activity.id}`);
     title.classList.add("underline");
   };
+
   const removeUnderlineTitle = (e) => {
     let title = document.querySelector(`#head_description_${activity.id}`);
     title.classList.remove("underline");
