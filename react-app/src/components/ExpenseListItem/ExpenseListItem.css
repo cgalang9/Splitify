@@ -131,6 +131,10 @@
   padding-bottom: 10px;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .activity_expense_details_head > img {
   width: 78px;
   border: 1px solid rgb(206, 206, 206);
