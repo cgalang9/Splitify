@@ -135,17 +135,6 @@ export default function FriendPage() {
     getUserBalance();
   }, [expenses, payments, friendId]);
 
-  //underline description in head on hover
-  const underlineTitle = (e) => {
-    let title = e.target.firstChild.firstChild.nextSibling;
-    title.classList.add("underline");
-  };
-
-  const removeUnderlineTitle = (e) => {
-    let title = e.target.firstChild.firstChild.nextSibling;
-    title.classList.remove("underline");
-  };
-
   return (
     <div id="friends_page_wrapper">
       <div id="friends_page_left">
@@ -172,10 +161,8 @@ export default function FriendPage() {
                 {splits[groupId].net !== 0 && (
                   <div
                     className="friends_page_li_wrapper"
-                    key={`${groupId}_wrapper`}
+                    key={`${groupId}`}
                     onClick={() => history.push(`../groups/${groupId}`)}
-                    onMouseEnter={underlineTitle}
-                    onMouseLeave={removeUnderlineTitle}
                   >
                     <div className="friends_page_li_left">
                       <div>
