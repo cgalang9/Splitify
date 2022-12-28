@@ -1,6 +1,5 @@
 .activity_expense {
   border-bottom: 1px solid rgb(225, 225, 225);
-  cursor: pointer;
 }
 
 /* header */
@@ -11,6 +10,11 @@
   gap: 7px;
   padding: 13px 10px;
   justify-content: space-between;
+  cursor: pointer;
+}
+
+.activity_expense_head:hover {
+  background-color: rgb(245, 245, 245);
 }
 
 /* header left */

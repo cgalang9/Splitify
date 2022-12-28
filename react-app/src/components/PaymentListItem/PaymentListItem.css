@@ -1,6 +1,5 @@
 .activity_payment {
   border-bottom: 1px solid rgb(225, 225, 225);
-  cursor: pointer;
 }
 
 /* head */
@@ -11,6 +10,11 @@
   gap: 7px;
   font-size: 12px;
   justify-content: space-between;
+  cursor: pointer;
+}
+
+.activity_payment_head:hover {
+  background-color: rgb(245, 245, 245);
 }
 
 .activity_payment_head_left {

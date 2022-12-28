@@ -135,14 +135,31 @@
   height: 30px;
 }
 
+/* right col */
 #friends_page_right {
   padding-top: 20px;
+}
+
+#friends_page_right_bal_title {
+  color: gray;
+  font-size: 14px;
+  padding-bottom: 15px;
+}
+
+.friends_page_right_top_total {
+  font-size: 18px;
+}
+
+.friends_page_right_total {
+  font-size: 24px;
+  font-weight: 700;
 }
 
 #friends_page_right_title {
   color: gray;
   font-size: 14px;
   padding-bottom: 15px;
+  padding-top: 20px;
 }
 
 #friends_page_right_github {
