@@ -9,6 +9,7 @@ import AddExpenseFormModal from "../AddExpenseForm";
 import AddPaymentFormModal from "../AddPaymentForm";
 import github from "../../assests/github.png";
 import user_icon_img from "../../assests/user_icon_img.png";
+import group_icon_img from "../../assests/group_icon_img.png";
 import { deleteFriendThunk } from "../../store/currUserFriends";
 
 export default function FriendPage() {
@@ -66,7 +67,7 @@ export default function FriendPage() {
               if (expense.group) {
                 if (!splits[expense.group.id]) {
                   splits[expense.group.id] = {
-                    group_name: expense.group.id,
+                    group_name: expense.group.name,
                     net: owed.amount_owed,
                   };
                 } else {
@@ -75,14 +76,15 @@ export default function FriendPage() {
               }
             }
           });
-        } else if (expense.payer.id === friendId) {
+        } else if (expense.payer.id === Number(friendId)) {
           expense.money_owed.forEach((owed) => {
+            console.log(owed);
             if (owed.user_id === user.user.id) {
               total -= owed.amount_owed;
               if (expense.group) {
                 if (!splits[expense.group.id]) {
                   splits[expense.group.id] = {
-                    group_name: expense.group.id,
+                    group_name: expense.group.name,
                     net: -owed.amount_owed,
                   };
                 } else {
@@ -104,7 +106,7 @@ export default function FriendPage() {
           total -= payment.total;
           if (!splits[payment.group.id]) {
             splits[payment.group.id] = {
-              group_name: payment.group.id,
+              group_name: payment.group.name,
               net: -payment.total,
             };
           } else {
@@ -118,7 +120,7 @@ export default function FriendPage() {
           total += payment.total;
           if (!splits[payment.group.id]) {
             splits[payment.group.id] = {
-              group_name: payment.group.id,
+              group_name: payment.group.name,
               net: payment.total,
             };
           } else {
@@ -134,6 +136,8 @@ export default function FriendPage() {
   useEffect(() => {
     getUserBalance();
   }, [expenses, payments, friendId]);
+
+  if (splits) console.log(splits);
 
   return (
     <div id="friends_page_wrapper">
@@ -153,7 +157,54 @@ export default function FriendPage() {
             </div>
           </div>
         </div>
-        <div id="friends_page_head_bottom"></div>
+        <div id="friends_page_head_bottom">
+          {splits &&
+            currFriend &&
+            Object.keys(splits).map((groupId) => (
+              <div key={groupId}>
+                {splits[groupId].net !== 0 && (
+                  <div
+                    className="friends_page_li_wrapper"
+                    key={`${groupId}_wrapper`}
+                  >
+                    <div className="friends_page_li_left">
+                      <div>
+                        <img
+                          src={group_icon_img}
+                          alt="group_icon"
+                          className="group_icon_friends"
+                        ></img>
+                      </div>
+                      <div className="friends_page_li_group_title">
+                        Group: {splits[groupId].group_name}
+                      </div>
+                    </div>
+                    <div className="friends_page_li_right">
+                      <div className="friends_page_li_total flex_col">
+                        <div style={{ color: "gray" }}>
+                          {splits[groupId].net < 0
+                            ? `you owe ${currFriend.username}`
+                            : `${currFriend.username} owes you`}
+                        </div>
+                        <div
+                          style={{
+                            fontWeight: 700,
+                            fontSize: 16,
+                            color: splits[groupId].net < 0 ? "red" : "green",
+                          }}
+                        >
+                          $
+                          {splits[groupId].net < 0
+                            ? (splits[groupId].net * -1).toFixed(2)
+                            : splits[groupId].net.toFixed(2)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+        </div>
       </div>
       <div id="friends_page_right">
         <div id="friends_page_right_bal_title">YOUR BALANCE</div>
@@ -185,7 +236,7 @@ export default function FriendPage() {
               you owe
             </div>
             <div style={{ color: "red" }} className="friends_page_right_total">
-              ${total.toFixed(2)}
+              ${(total * -1).toFixed(2)}
             </div>
           </>
         )}

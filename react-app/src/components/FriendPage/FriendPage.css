@@ -29,6 +29,8 @@
   justify-content: flex-end;
 }
 
+/* middle col */
+
 #friends_page_mid {
   width: 580px;
   border-left: 1px solid rgb(193, 193, 193);
@@ -86,16 +88,58 @@
   color: gray;
 }
 
-#friends_page_mid_head_owe {
-  border-right: 1px solid rgb(210, 210, 210);
-  border-left: 1px solid rgb(210, 210, 210);
+.friends_page_li_wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 7px;
+  padding: 13px 10px;
+  justify-content: space-between;
+  cursor: pointer;
+  border-bottom: 1px solid rgb(225, 225, 225);
 }
 
-#friends_page_mid_main_you_owe,
+.friends_page_li_wrapper:hover {
+  background-color: rgb(245, 245, 245);
+}
+
+.friends_page_li_left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.group_icon_friends {
+  width: 28px;
+  border-radius: 50%;
+}
+
+.friends_page_li_group_title {
+  font-size: 18px;
+  font-weight: 700;
+  overflow-x: hidden;
+  word-break: break-word;
+}
+
+.friends_page_li_right {
+  width: 150px;
+}
+
+.friends_page_li_total {
+  justify-content: center;
+  font-size: 15px;
+  padding-right: 10px;
+}
+
+/* #friends_page_mid_head_owe {
+  border-right: 1px solid rgb(210, 210, 210);
+  border-left: 1px solid rgb(210, 210, 210);
+} */
+
+/* #friends_page_mid_main_you_owe,
 #friends_page_mid_main_you_are_owed {
   height: 100vh;
   width: 50%;
-  /* padding: 15px; */
 }
 
 #friends_page_mid_owed_head {
@@ -128,7 +172,7 @@
   display: flex;
   align-items: center;
   padding: 15px;
-}
+} */
 
 .user_icon_dash {
   border-radius: 50%;
