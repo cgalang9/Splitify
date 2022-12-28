@@ -78,7 +78,6 @@ export default function FriendPage() {
           });
         } else if (expense.payer.id === Number(friendId)) {
           expense.money_owed.forEach((owed) => {
-            console.log(owed);
             if (owed.user_id === user.user.id) {
               total -= owed.amount_owed;
               if (expense.group) {
@@ -102,7 +101,6 @@ export default function FriendPage() {
           payment.payee.id === user.user.id &&
           payment.payer.id === Number(friendId)
         ) {
-          console.log(payment);
           total -= payment.total;
           if (!splits[payment.group.id]) {
             splits[payment.group.id] = {
@@ -137,7 +135,16 @@ export default function FriendPage() {
     getUserBalance();
   }, [expenses, payments, friendId]);
 
-  if (splits) console.log(splits);
+  //underline description in head on hover
+  const underlineTitle = (e) => {
+    let title = e.target.firstChild.firstChild.nextSibling;
+    title.classList.add("underline");
+  };
+
+  const removeUnderlineTitle = (e) => {
+    let title = e.target.firstChild.firstChild.nextSibling;
+    title.classList.remove("underline");
+  };
 
   return (
     <div id="friends_page_wrapper">
@@ -166,6 +173,9 @@ export default function FriendPage() {
                   <div
                     className="friends_page_li_wrapper"
                     key={`${groupId}_wrapper`}
+                    onClick={() => history.push(`../groups/${groupId}`)}
+                    onMouseEnter={underlineTitle}
+                    onMouseLeave={removeUnderlineTitle}
                   >
                     <div className="friends_page_li_left">
                       <div>
@@ -173,32 +183,34 @@ export default function FriendPage() {
                           src={group_icon_img}
                           alt="group_icon"
                           className="group_icon_friends"
-                        ></img>
+                        />
                       </div>
                       <div className="friends_page_li_group_title">
                         Group: {splits[groupId].group_name}
                       </div>
                     </div>
                     <div className="friends_page_li_right">
-                      <div className="friends_page_li_total flex_col">
-                        <div style={{ color: "gray" }}>
-                          {splits[groupId].net < 0
-                            ? `you owe ${currFriend.username}`
-                            : `${currFriend.username} owes you`}
+                      {splits[groupId].net !== 0 && (
+                        <div className="friends_page_li_total flex_col">
+                          <div style={{ color: "gray" }}>
+                            {splits[groupId].net < 0
+                              ? `you owe ${currFriend.username}`
+                              : `${currFriend.username} owes you`}
+                          </div>
+                          <div
+                            style={{
+                              fontWeight: 700,
+                              fontSize: 16,
+                              color: splits[groupId].net < 0 ? "red" : "green",
+                            }}
+                          >
+                            $
+                            {splits[groupId].net < 0
+                              ? (splits[groupId].net * -1).toFixed(2)
+                              : splits[groupId].net.toFixed(2)}
+                          </div>
                         </div>
-                        <div
-                          style={{
-                            fontWeight: 700,
-                            fontSize: 16,
-                            color: splits[groupId].net < 0 ? "red" : "green",
-                          }}
-                        >
-                          $
-                          {splits[groupId].net < 0
-                            ? (splits[groupId].net * -1).toFixed(2)
-                            : splits[groupId].net.toFixed(2)}
-                        </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 )}
