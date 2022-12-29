@@ -135,6 +135,37 @@ export default function FriendPage() {
     getUserBalance();
   }, [expenses, payments, friendId]);
 
+  const deleteFriend = async () => {
+    if (
+      currFriend &&
+      window.confirm(
+        `Are you sure you want to remove ${currFriend.username} as a friend? Balances within groups will NOT change`
+      )
+    ) {
+      try {
+        const data = await dispatch(deleteFriendThunk(friendId));
+        if (data.error) {
+          history.push("/error");
+        } else {
+          history.push("/dashboard");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  //underline description in head on hover
+  const underlineTitle = (e, groupId) => {
+    let title = document.querySelector(`#li_title_${groupId}`);
+    title.classList.add("underline");
+  };
+
+  const removeUnderlineTitle = (e, groupId) => {
+    let title = document.querySelector(`#li_title_${groupId}`);
+    title.classList.remove("underline");
+  };
+
   return (
     <div id="friends_page_wrapper">
       <div id="friends_page_left">
@@ -163,6 +194,8 @@ export default function FriendPage() {
                     className="friends_page_li_wrapper"
                     key={`${groupId}`}
                     onClick={() => history.push(`../groups/${groupId}`)}
+                    onMouseEnter={(e) => underlineTitle(e, groupId)}
+                    onMouseLeave={(e) => removeUnderlineTitle(e, groupId)}
                   >
                     <div className="friends_page_li_left">
                       <div>
@@ -172,7 +205,10 @@ export default function FriendPage() {
                           className="group_icon_friends"
                         />
                       </div>
-                      <div className="friends_page_li_group_title">
+                      <div
+                        className="friends_page_li_group_title"
+                        id={`li_title_${groupId}`}
+                      >
                         Group: {splits[groupId].group_name}
                       </div>
                     </div>
@@ -239,9 +275,11 @@ export default function FriendPage() {
             </div>
           </>
         )}
-        {/* <div id="friends_page_delete_friend">
-          <button>Delete Friend</button>
-        </div> */}
+        <div>
+          <button id="friends_page_delete_friend" onClick={deleteFriend}>
+            Delete Friend
+          </button>
+        </div>
         <div id="friends_page_right_title">MY LINKS</div>
         <div id="friends_page_right_github_container">
           <a

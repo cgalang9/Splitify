@@ -19,23 +19,6 @@
   position: relative;
 }
 
-.left_menu_friend_li:hover .friend_icon,
-.left_menu_friend_li .friend_x {
-  display: none;
-}
-.left_menu_friend_li:hover .friend_x {
-  display: inline;
-}
-
-.friend_x {
-  cursor: pointer;
-  color: rgb(213, 1, 1);
-}
-
-.friend_x:hover {
-  color: red;
-}
-
 .left_nav_link {
   overflow: hidden;
   flex-wrap: nowrap;
